@@ -9,7 +9,7 @@ CXX = g++ -O2 -fopenmp -Wall -pedantic
 F90C = gfortran -O2 -fopenmp -Wall -Wextra -Wconversion-extra -cpp
 
 # Mathematica related variables - adjust as necessary
-MLINKDIR = /opt/Wolfram/Mathematica/9.0.1/SystemFiles/Links/MathLink/DeveloperKit
+MLINKDIR = /home/local/Wolfram/Mathematica/9.0/SystemFiles/Links/MathLink/DeveloperKit
 # Set this value with the result of evaluating $SystemID:
 SYS = Linux-x86-64
 # Set these with appropriate libs for your system:
