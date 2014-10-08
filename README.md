@@ -47,6 +47,8 @@ the files in question are given here.
   * Transfer function: 
     tf_fit.c
     38ef737fe3bab405bac17db78815559f
+    power.c
+    32c6a5912acd36f5522d0a81c8f8c5d7
     http://background.uchicago.edu/~whu/transfer/transferpage.html
     Daniel Eisenstein and Wayne Hu 
 
@@ -128,7 +130,7 @@ a demonstration.
 Version
 =======
 
-This is version 0.2. Since this is an alpha status, backwards compatibility
+This is version 0.3. Since this is an alpha status, backwards compatibility
 may be broken in future releases.
 
 
