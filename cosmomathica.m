@@ -33,7 +33,7 @@ Halofit::usage="Halofit[OmegaM, OmegaL, gammaShape, sigma8, ns, betaP, z0] provi
 
 CosmicEmu::usage="CosmicEmu[omegaM, omegaB, sigma8, ns, w] provides an interface to the CosmicEmulator by Earl Lawrence. It takes \!\(\*SubscriptBox[\(\[Omega]\), \(M\)]\), \!\(\*SubscriptBox[\(\[Omega]\), \(b\)]\), \!\(\*SubscriptBox[\(\[Sigma]\), \(8\)]\), \!\(\*SubscriptBox[\(n\), \(s\)]\), and the equation of state w, and returns the nonlinear matter power spectrum at five different redshifts as well as z, H, d (all at last scattering), and the sound horizon.";
 
-FrankenEmu::usage="FrankenEmu[omegaM, omegaB, h, sigma8, ns, w] provides an interface to FrankenEmu by Earl Lawrence. It takes \!\(\*SubscriptBox[\(\[Omega]\), \(M\)]\), \!\(\*SubscriptBox[\(\[Omega]\), \(b\)]\), h, \!\(\*SubscriptBox[\(\[Sigma]\), \(8\)]\), \!\(\*SubscriptBox[\(n\), \(s\)]\), and the equation of state w, and returns the nonlinear matter power spectrum at five different redshifts as well as z, H, d (all at last scattering), and the sound horizon. The Hubble parameter h can also be omitted, in which case it will be determined from the CMB just as in CosmicEmu. Additional cosmological parameters are only returned if h is missing.";
+FrankenEmu::usage="FrankenEmu[omegaM, omegaB, h, sigma8, ns, w, arange] provides an interface to FrankenEmu by Earl Lawrence. It takes \!\(\*SubscriptBox[\(\[Omega]\), \(M\)]\), \!\(\*SubscriptBox[\(\[Omega]\), \(b\)]\), h, \!\(\*SubscriptBox[\(\[Sigma]\), \(8\)]\), \!\(\*SubscriptBox[\(n\), \(s\)]\), and the equation of state w, and returns the nonlinear matter power spectrum at five the redshifts given by arange, as well as z, H, d (all at last scattering), and the sound horizon. The Hubble parameter h can also be omitted, in which case it will be determined from the CMB just as in CosmicEmu. Additional cosmological parameters are only returned if h is missing.";
 
 CAMB::usage="CAMB[OmegaC, OmegaB, OmegaL, h, w] provides an interface to CAMB by Antony Lewis and Anthony Challinor. It takes a few parameters as well as a number of options as input, and returns various cosmological quantities. The distinction between parameters and options is in principle arbitrary. However, since some physical parameters are often assumed to take on a default value, they are being interpreted as an option here. To see the default options, type `Options[CAMB]`.";
 
@@ -360,10 +360,9 @@ CosmicEmu["hubblecmb"]->(result[[All,2]])[[1,4]]}
 ];
 
 
-FrankenEmu[omegaM_?NumericQ,omegaB_?NumericQ,h_?NumericQ,sigma8_?NumericQ,ns_?NumericQ,w_?NumericQ]:=Module[
-{link,result,labels,limits,parameters,check, arange},
+FrankenEmu[omegaM_?NumericQ,omegaB_?NumericQ,h_?NumericQ,sigma8_?NumericQ,ns_?NumericQ,w_?NumericQ,arango_?VectorQ]:=Module[
+{link,result,labels,limits,parameters,check},
 
-arange=Range[.2,1.,.1];
 labels={"\!\(\*SubscriptBox[\(\[Omega]\), \(M\)]\)","\!\(\*SubscriptBox[\(\[Omega]\), \(b\)]\)","\!\(\*SubscriptBox[\(\[Sigma]\), \(8\)]\)","\!\(\*SubscriptBox[\(n\), \(s\)]\)","w","h"};
 limits={{.12,.155},{.0215,.0235},{.6,.9},{.85,1.05},{-1.3,-.7},{.55,.85}};
 (*these are hard limits as given by the authors of the cosmic emulator - the program will crash if any parameter is outside its bounds*)
@@ -374,20 +373,20 @@ Do[If[!check[[i]],Message[Interface::OutsideBounds,labels[[i]],parameters[[i]],l
 If[!And@@check,Abort[]];
 
 link=Install[$location<>"ext/math_link2"];
-result=Table[{Transpose@Partition[#[[1]],Length@#[[1]]/2],#[[2]]}&@Global`FrankenCEGetPkNL[N@omegaM,N@omegaB,N@h,N@ns,N@sigma8,N@w,1/a-1],{a,arange}];
+result=Table[{Transpose@Partition[#[[1]],Length@#[[1]]/2],#[[2]]}&@Global`FrankenCEGetPkNL[N@omegaM,N@omegaB,N@h,N@ns,N@sigma8,N@w,1/a-1],{a,arango}];
  (*CosmicEmu only does these five redshifts, everything else is interpolated*)
 validateresult[(result[[1,1]]),"FrankenEmu"];
 Uninstall[link];
 
 (*Just return the raw numbers*)
-{FrankenEmu["zvalues"]->Table[1/a-1,{a,arange}],
+{FrankenEmu["zvalues"]->Table[1/a-1,{a,arango}],
 FrankenEmu["pk"]->result[[All,1]]}~Join~If[h<0,
 {FrankenEmu["soundhorizon"]->(result[[All,2]])[[1,1]],
 FrankenEmu["zlss"]->(result[[All,2]])[[1,2]],
 FrankenEmu["dlss"]->(result[[All,2]])[[1,3]],
 FrankenEmu["hubblecmb"]->(result[[All,2]])[[1,4]]},{}]
 ];
-FrankenEmu[omegaM_?NumericQ,omegaB_?NumericQ,sigma8_?NumericQ,ns_?NumericQ,w_?NumericQ]:=FrankenEmu[omegaM,omegaB,-1.,sigma8,ns,w];
+FrankenEmu[omegaM_?NumericQ,omegaB_?NumericQ,sigma8_?NumericQ,ns_?NumericQ,w_?NumericQ,arango_?VectorQ]:=FrankenEmu[omegaM,omegaB,-1.,sigma8,ns,w,arango];
 
 
 Copter[OmegaM_,OmegaB_,h_,ns_,sigma8_,transfer_,z_,type_,opts:OptionsPattern[]]:=Module[{link,result,return,kmax},

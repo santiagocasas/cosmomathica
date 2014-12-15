@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       157,          7]
-NotebookDataLength[     32244,        928]
+NotebookDataLength[     32245,        928]
 NotebookOptionsPosition[     28215,        806]
-NotebookOutlinePosition[     28650,        823]
-CellTagsIndexPosition[     28607,        820]
+NotebookOutlinePosition[     28651,        823]
+CellTagsIndexPosition[     28608,        820]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -804,8 +804,8 @@ Cell[BoxData[
 }, Open  ]]
 }, Open  ]]
 },
-WindowSize->{740, 865},
-WindowMargins->{{406, Automatic}, {0, Automatic}},
+WindowSize->{740, 705},
+WindowMargins->{{386, Automatic}, {-9, Automatic}},
 PrivateNotebookOptions->{"VersionedStylesheet"->{"Default.nb"[8.] -> False}},
 ShowSelection->True,
 FrontEndVersion->"9.0 for Linux x86 (64-bit) (February 7, 2013)",
@@ -824,8 +824,8 @@ CellTagsIndex->{}
 Notebook[{
 Cell[CellGroupData[{
 Cell[579, 22, 96, 1, 92, "Title"],
-Cell[678, 25, 218, 5, 30, "Subsubtitle"],
-Cell[899, 32, 213, 4, 31, "Text"],
+Cell[678, 25, 218, 5, 50, "Subsubtitle"],
+Cell[899, 32, 213, 4, 30, "Text"],
 Cell[CellGroupData[{
 Cell[1137, 40, 112, 1, 80, "Section"],
 Cell[CellGroupData[{
@@ -866,7 +866,7 @@ Cell[7310, 228, 844, 22, 99, "Input"],
 Cell[8157, 252, 313, 5, 51, "Text"],
 Cell[8473, 259, 173, 4, 32, "Input"],
 Cell[8649, 265, 160, 3, 30, "Text"],
-Cell[8812, 270, 1077, 28, 165, "Input"]
+Cell[8812, 270, 1077, 28, 187, "Input"]
 }, Open  ]],
 Cell[CellGroupData[{
 Cell[9926, 303, 103, 1, 44, "Subsection"],
@@ -886,7 +886,7 @@ Cell[12087, 369, 152, 2, 30, "Text"],
 Cell[12242, 373, 352, 8, 32, "Input"],
 Cell[12597, 383, 99, 1, 30, "Text"],
 Cell[12699, 386, 199, 5, 32, "Input"],
-Cell[12901, 393, 490, 13, 55, "Input"]
+Cell[12901, 393, 490, 13, 77, "Input"]
 }, Open  ]],
 Cell[CellGroupData[{
 Cell[13428, 411, 92, 1, 44, "Subsection"],

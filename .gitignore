@@ -12,3 +12,6 @@ ext/math_link_tm.c
 ext/tags
 doc/*log
 doc/*aux
+ext/Makefile
+ext/patchmakefile.sh
+
