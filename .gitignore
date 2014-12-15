@@ -12,3 +12,10 @@ ext/math_link_tm.c
 ext/tags
 doc/*log
 doc/*aux
+ext/camb_wrapper.o
+ext/cambwrapper.mod
+ext/copter_wrapper.o
+ext/extcosmo.zip
+ext/math_link.o
+ext/math_link2.o
+ext/math_link_tm.o
