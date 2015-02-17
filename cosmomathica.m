@@ -31,6 +31,8 @@ TFPower::usage="TFPower[OmegaM, OmegaB, OmegaMN, DegenNu, OmegaL, h, z] provides
 
 Halofit::usage="Halofit[OmegaM, OmegaL, gammaShape, sigma8, ns, betaP, z0] provides an interface to the halofit algorithm by Robert E. Smith et al. (reimplemented in C by Martin Kilbinger). It takes the total matter density \!\(\*SubscriptBox[\(\[CapitalOmega]\), \(M\)]\), the vacuum energy density \!\(\*SubscriptBox[\(\[CapitalOmega]\), \(L\)]\), a shape factor, \!\(\*SubscriptBox[\(\[Sigma]\), \(8\)]\), \!\(\*SubscriptBox[\(n\), \(s\)]\), \!\(\*SubscriptBox[\(\[Beta]\), \(p\)]\), and a fixed redshift \!\(\*SubscriptBox[\(z\), \(0\)]\) as input, and returns the nonlinear matter power spectrum (computed in three ways: linearly with the BBKS alogorithm, nonlinear with the algorithm by Peacock and Dobbs, or nonlinearly with the Halofit algorithm) at 20 different values of the scale factor and the convergence power spectrum in tabulated form.";
 
+HaloFitCorrection::usage="HaloFitCorrection[LinearPS, OmegaM, OmegaL] applies nonlinear corrections to a linear power spectrum given in tabulated form {{\!\(\*SubscriptBox[\(k\), \(1\)]\),P(\!\(\*SubscriptBox[\(k\), \(1\)]\))},...}."
+
 CosmicEmu::usage="CosmicEmu[omegaM, omegaB, sigma8, ns, w] provides an interface to the CosmicEmulator by Earl Lawrence. It takes \!\(\*SubscriptBox[\(\[Omega]\), \(M\)]\), \!\(\*SubscriptBox[\(\[Omega]\), \(b\)]\), \!\(\*SubscriptBox[\(\[Sigma]\), \(8\)]\), \!\(\*SubscriptBox[\(n\), \(s\)]\), and the equation of state w, and returns the nonlinear matter power spectrum at five different redshifts as well as z, H, d (all at last scattering), and the sound horizon.";
 
 FrankenEmu::usage="FrankenEmu[omegaM, omegaB, h, sigma8, ns, w, arange] provides an interface to FrankenEmu by Earl Lawrence. It takes \!\(\*SubscriptBox[\(\[Omega]\), \(M\)]\), \!\(\*SubscriptBox[\(\[Omega]\), \(b\)]\), h, \!\(\*SubscriptBox[\(\[Sigma]\), \(8\)]\), \!\(\*SubscriptBox[\(n\), \(s\)]\), and the equation of state w, and returns the nonlinear matter power spectrum at five the redshifts given by arange, as well as z, H, d (all at last scattering), and the sound horizon. The Hubble parameter h can also be omitted, in which case it will be determined from the CMB just as in CosmicEmu. Additional cosmological parameters are only returned if h is missing.";
@@ -113,6 +115,9 @@ Class::Error="`1` => `2`";
 
 
 Begin["`Private`"]
+
+
+Needs["NumericalCalculus`"]
 
 
 $location=DirectoryName[$InputFileName];
@@ -294,6 +299,58 @@ result=Global`TFOneK/@krange;
 Uninstall[link];
 Transpose[{krange,result}]
 ];
+
+
+(**Halofit Correction formulas**)
+deltaLsq[k_?NumericQ]:=linearPS[k]k^3/(2 Pi^2);
+sigmaSq[R_?NumericQ] :=NIntegrate[deltaLsq[Exp@lk]Exp[-Exp[2lk] R^2],{lk,Log[kmin],Log[kmax]},PrecisionGoal->5,MaxRecursion->12];
+
+(*if omega_m < 1 and lambda = 0*)
+f1a=omegaM^-.0732;
+f2a=omegaM^-.1423;
+f3a=omegaM^.0725;
+
+(*if omega_m + lambda = 1*)
+f1b=omegaM^-.0307;
+f2b=omegaM^-.0585;
+f3b=omegaM^.0743;
+
+(*interpolation of the two*)
+f1=(1-omegaM-omegaL)/(1-omegaM)f1a+omegaL/(1-omegaM) f1b;
+f2=(1-omegaM-omegaL)/(1-omegaM)f2a+omegaL/(1-omegaM)f2b;
+f3=(1-omegaM-omegaL)/(1-omegaM)f3a+omegaL/(1-omegaM)f3b;
+
+an:=10^(1.5222+2.8553 neff+2.3706 neff^2 +.9903neff^3+.2250neff^4-0.6038curve);
+bn:=10^(-.5642+.5864neff+.5716neff^2-1.5474curve);
+cn:=10^(.3698+2.0404neff+.8161neff^2+.5869curve);
+mun:=0;
+nun:=10^(5.2105+3.6902neff);
+gamman:=.1971-.0843neff+.8460curve;
+alphan:=Abs[6.0835+1.3373neff-.1959neff^2-5.5274curve];
+betan:=2.0379-0.7354neff+.3157neff^2+1.249neff^3+.3980neff^4-.1682curve;
+
+deltaHsqPrime[k_]:=an (k/ksig)^(3f1)/(1+bn (k/ksig)^f2+(cn f3 k/ksig)^(3-gamman));
+
+deltaHsq[k_]:=deltaHsqPrime[k]/(1+ ksig/k (mun+ nun ksig/k));
+
+f[y_]:=y/4+y^2/8;
+
+deltaQsq[k_]:=deltaLsq[k]*(1+deltaLsq[k])^betan/(1+alphan deltaLsq[k])Exp[-f[k/ksig]];
+
+deltaNLsq[k_]:=deltaQsq[k]+deltaHsq[k];
+nonlinearPS[k_]:=deltaNLsq[k]*2Pi^2/k^3;
+
+HaloFitCorrection[LinearPS_,OmegaM_,OmegaL_]:=Block[{linearPS=Interpolation[LinearPS],omegaM=OmegaM,omegaL=OmegaL,kmin=LinearPS[[1,1]],kmax=LinearPS[[-1,1]]},
+ksig=Exp@x/.FindRoot[sigmaSq[1/Exp@x]==1,{x,-3,3},Method->"Secant"];
+neff=-3+2NIntegrate[deltaLsq[Exp@lk]Exp[2lk]/ksig^2Exp[-Exp[2lk]/ksig^2],{lk,Log[kmin],Log[kmax]},PrecisionGoal->5,MaxRecursion->12];
+curve=(3+neff)^2+4NIntegrate[deltaLsq[Exp@lk](Exp[2lk]/ksig^2-Exp[4lk]/ksig^4)Exp[-Exp[2lk]/ksig^2],{lk,Log[kmin],Log[kmax]},PrecisionGoal->5,MaxRecursion->12];
+(*neff=-3-ND[Log@sigmaSq[Exp@lR],lR,Log@ksig];
+curve=-ND[Log@sigmaSq[Exp@lR],{lR,2},Log@ksig];*)
+Table[{k,nonlinearPS[k]},{k,LinearPS[[All,1]]}]
+];
+
+
+
 
 
 Halofit[OmegaM_?NumericQ,OmegaL_?NumericQ,gammaShape_?NumericQ,sigma8_?NumericQ,ns_?NumericQ,betaP_?NumericQ,z0_?NumericQ]:=Module[{link,Tf={},Kappa={},arange,krange,ellrange,labels,limits,parameters,check},
