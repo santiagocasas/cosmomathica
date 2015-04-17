@@ -179,7 +179,9 @@ result
 ];
 
 
-CAMB[OmegaC_?NumericQ,OmegaB_?NumericQ,OmegaL_?NumericQ,h_?NumericQ,w_?NumericQ,opts:OptionsPattern[]]:=Module[{j,link,result,resultfloat,resultint,floats,ints,initialcond,nonlinear,massivenu,limits,check,getDimensions,dimensions,array,redshifts},
+CAMB[OmegaC_?NumericQ,OmegaB_?NumericQ,OmegaL_?NumericQ,h_?NumericQ,w_?NumericQ,opts:OptionsPattern[]]:=
+CAMB[OmegaC,OmegaB,OmegaL,h,w,opts]=Module[{j,link,result,resultfloat,resultint,floats,ints,initialcond,nonlinear,
+massivenu,limits,check,getDimensions,dimensions,array,redshifts},
 
 getDimensions[list_]:=Module[{i,r},
 i=1;r={};
@@ -262,7 +264,9 @@ Options[validatestring]=Options[CAMB];
 
 
 (*Transfer function*)
-Transfer[OmegaM_?NumericQ,fBaryon_?NumericQ,Tcmb_?NumericQ,h_?NumericQ]:=Module[{result,link,krange,fitonek,horizon,peak,OmegaC},
+Transfer[OmegaM_?NumericQ,fBaryon_?NumericQ,Tcmb_?NumericQ,h_?NumericQ]:=
+Transfer[OmegaM,fBaryon,Tcmb,h]=Module[{result,link,krange,fitonek,
+horizon,peak,OmegaC},
 validatelimits[fBaryon,"fBaryon",.0001,1,"Transfer"];
 OmegaC=OmegaM-fBaryon*OmegaM;
 link=Install[$location<>"ext/math_link"];
@@ -276,7 +280,7 @@ If[!validateresult[horizon,"transfer"],Return[$Failed];Abort[]];
 fitonek[k_]:=Join[Global`TFFitOneK[k*N@h],{
 Global`TFNoWiggles[N@OmegaM,N@fBaryon,N@h,N@Tcmb,k],
 Global`TFZeroBaryon[N@OmegaM,N@h,N@Tcmb,k]}]; 
-krange=10^Range[-6.,4.,.01];
+krange=10^Range[-5.,2.,.01];
 result=Transpose[fitonek/@krange];
 Uninstall[link];
 
@@ -292,7 +296,7 @@ Transfer["zerobaryons"]->result[[5]]}
 
 
 TFPower[OmegaM_,OmegaB_,OmegaH_,Degen_,OmegaL_,h_,z_]:=Module[{result,link,krange},
-krange=10^Range[-6.,4.,.01];
+krange=10^Range[-5.,2.,.01];
 link=Install[$location<>"ext/math_link"];
 Global`TFSetCosmology[N@OmegaM,N@OmegaB,N@OmegaH,Degen,N@OmegaL,N@h,N@z];
 result=Global`TFOneK/@krange;
@@ -357,7 +361,7 @@ Halofit[OmegaM_?NumericQ,OmegaL_?NumericQ,gammaShape_?NumericQ,sigma8_?NumericQ,
 link=Install[$location<>"ext/math_link"];
 
 arange=Most[10^Range[-2,0,.1]]~Join~{.99999};
-krange=10^Range[-4,4,.1]*2998;(*halofit uses units c Mpc/h*)
+krange=10^Range[-4,2,.1]*2998;(*halofit uses units c Mpc/h*)
 ellrange=10^Range[-2,6,.1];
 
 labels={"\!\(\*SubscriptBox[\(\[CapitalOmega]\), \(M\)]\)","\!\(\*SubscriptBox[\(\[CapitalOmega]\), \(b\)]\)","\!\(\*SubscriptBox[\(\[Sigma]\), \(8\)]\)","\!\(\*SubscriptBox[\(n\), \(s\)]\)","Gamma","\!\(\*SubscriptBox[\(\[Beta]\), \(p\)]\)","\!\(\*SubscriptBox[\(z\), \(0\)]\)"};
