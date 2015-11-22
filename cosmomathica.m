@@ -435,7 +435,7 @@ If[!And@@check,Abort[]];
 
 link=Install[$location<>"ext/math_link2"];
 result=Table[{Transpose@Partition[#[[1]],Length@#[[1]]/2],#[[2]]}&@Global`FrankenCEGetPkNL[N@omegaM,N@omegaB,N@h,N@ns,N@sigma8,N@w,1/a-1],{a,arango}];
- (*CosmicEmu only does these five redshifts, everything else is interpolated*)
+ (*CosmicEmu  and FrankenEmu do only five redshifts, everything else is interpolated*)
 validateresult[(result[[1,1]]),"FrankenEmu"];
 Uninstall[link];
 
