@@ -13,7 +13,6 @@ ext/math_link_tm.c
 ext/tags
 doc/*log
 doc/*aux
-ext/Makefile
 ext/patchmakefile.sh
 ext/camb_wrapper.o
 ext/cambwrapper.mod
@@ -27,4 +26,4 @@ ext/Makefile-backup
 ext/Makefile~
 ext/patchmakefile-backup.sh
 ext/patchmakefile.sh~
-ext/Makefile
+ext/EFT*
