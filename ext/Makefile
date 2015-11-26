@@ -8,16 +8,7 @@ CXX = g++ -O2 -fopenmp -Wall -pedantic
 # compiler
 F90C = gfortran -O3 -fopenmp -ffast-math -fmax-errors=4 -ffixed-line-length-0 -std=legacy
 
-# Mathematica related variables - adjust as necessary
-MLINKDIR = /opt/Wolfram/Mathematica/9.0.1/SystemFiles/Links/MathLink/DeveloperKit
-# Set this value with the result of evaluating $SystemID:
-SYS = Linux-x86-64
-# Set these with appropriate libs for your system:
-EXTRALIBS = -lm -lpthread -lrt -lstdc++ 
-# Set this to ML64i3 if using a 64-bit system:
-MLLIB = ML64i3
-
-
+include Makefile_mathlink 
 # No changes necessary below this line
 # ====================================
 
