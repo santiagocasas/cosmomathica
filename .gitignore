@@ -25,5 +25,4 @@ ext/Makefile-backup
 ext/Makefile
 ext/patchmakefile-backup.sh
 ext/patchmakefile.sh~
-ext/Makefile_mathlink
 ext/EFT*
