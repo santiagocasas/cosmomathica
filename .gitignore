@@ -22,7 +22,7 @@ ext/math_link2.o
 ext/math_link_tm.o
 backup/
 ext/Makefile-backup
-./ext/Makefile
+ext/Makefile
 ext/patchmakefile-backup.sh
 ext/patchmakefile.sh~
 ext/Makefile_mathlink
