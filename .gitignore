@@ -23,6 +23,8 @@ ext/math_link_tm.o
 backup/
 ext/Makefile-backup
 ext/Makefile
+ext/Makefile_mathlink-bck
+ext/Makefile_mathlink
 ext/patchmakefile-backup.sh
 ext/patchmakefile.sh~
 ext/EFT*
