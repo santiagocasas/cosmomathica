@@ -1,5 +1,4 @@
 ext/math_link
-ext/notes-on-make
 ext/math_link2
 ext/testwrapper
 ext/HighLExtrapTemplate_lenspotentialCls.dat
@@ -23,7 +22,8 @@ ext/math_link2.o
 ext/math_link_tm.o
 backup/
 ext/Makefile-backup
+./ext/Makefile
 ext/patchmakefile-backup.sh
 ext/patchmakefile.sh~
-ext/EFT*
 ext/Makefile_mathlink
+ext/EFT*

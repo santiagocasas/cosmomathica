@@ -43,7 +43,6 @@ float TFmdm_onek_hmpc(float kk);
 
 #include <math.h>
 #include <stdio.h>
-#include <stdlib.h>
 
 /* Convenience from Numerical Recipes in C, 2nd edition */
 static float sqrarg;

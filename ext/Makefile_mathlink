@@ -1,9 +1,9 @@
 # Mathematica related variables - adjust as necessary
 
 #standard Ubuntu laptop
-#MLINKDIR = /usr/local/Wolfram/Mathematica/9.0/SystemFiles/Links/MathLink/DeveloperKit
+MLINKDIR = /usr/local/Wolfram/Mathematica/9.0/SystemFiles/Links/MathLink/DeveloperKit
 ##ITP computers:
-MLINKDIR = /opt/Wolfram/Mathematica/9.0.1/SystemFiles/Links/MathLink/DeveloperKit
+#MLINKDIR = /opt/Wolfram/Mathematica/9.0.1/SystemFiles/Links/MathLink/DeveloperKit
 
 # Set this value with the result of evaluating $SystemID:
 SYS = Linux-x86-64
