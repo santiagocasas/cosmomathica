@@ -7,7 +7,7 @@ ext/camb/*
 ext/CosmicEmulator/*
 ext/FrankenEmu/*
 ext/halofit/*
-ext/tf/*
+ext/tf/*.o
 ext/copter-0.8.7/*
 ext/math_link_tm.c
 ext/tags
@@ -23,7 +23,7 @@ ext/math_link2.o
 ext/math_link_tm.o
 backup/
 ext/Makefile-backup
-ext/Makefile~
 ext/patchmakefile-backup.sh
 ext/patchmakefile.sh~
 ext/EFT*
+ext/Makefile_mathlink
