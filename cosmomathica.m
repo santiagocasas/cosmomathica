@@ -35,7 +35,7 @@ HaloFitCorrection::usage="HaloFitCorrection[LinearPS, OmegaM, OmegaL] applies no
 
 CosmicEmu::usage="CosmicEmu[omegaM, omegaB, sigma8, ns, w] provides an interface to the CosmicEmulator by Earl Lawrence. It takes \!\(\*SubscriptBox[\(\[Omega]\), \(M\)]\), \!\(\*SubscriptBox[\(\[Omega]\), \(b\)]\), \!\(\*SubscriptBox[\(\[Sigma]\), \(8\)]\), \!\(\*SubscriptBox[\(n\), \(s\)]\), and the equation of state w, and returns the nonlinear matter power spectrum at five different redshifts as well as z, H, d (all at last scattering), and the sound horizon.";
 
-FrankenEmu::usage="FrankenEmu[omegaM, omegaB, h, sigma8, ns, w, arange] provides an interface to FrankenEmu by Earl Lawrence. It takes \!\(\*SubscriptBox[\(\[Omega]\), \(M\)]\), \!\(\*SubscriptBox[\(\[Omega]\), \(b\)]\), h, \!\(\*SubscriptBox[\(\[Sigma]\), \(8\)]\), \!\(\*SubscriptBox[\(n\), \(s\)]\), and the equation of state w, and returns the nonlinear matter power spectrum at five the redshifts given by arange, as well as z, H, d (all at last scattering), and the sound horizon. The Hubble parameter h can also be omitted, in which case it will be determined from the CMB just as in CosmicEmu. Additional cosmological parameters are only returned if h is missing.";
+FrankenEmu::usage="FrankenEmu[omegaM, omegaB, h, sigma8, ns, w] provides an interface to FrankenEmu by Earl Lawrence. It takes \!\(\*SubscriptBox[\(\[Omega]\), \(M\)]\), \!\(\*SubscriptBox[\(\[Omega]\), \(b\)]\), h, \!\(\*SubscriptBox[\(\[Sigma]\), \(8\)]\), \!\(\*SubscriptBox[\(n\), \(s\)]\), and the equation of state w, and returns the nonlinear matter power spectrum at five different redshifts as well as z, H, d (all at last scattering), and the sound horizon. The Hubble parameter h can also be omitted, in which case it will be determined from the CMB just as in CosmicEmu. Additional cosmological parameters are only returned if h is missing.";
 
 CAMB::usage="CAMB[OmegaC, OmegaB, OmegaL, h, w] provides an interface to CAMB by Antony Lewis and Anthony Challinor. It takes a few parameters as well as a number of options as input, and returns various cosmological quantities. The distinction between parameters and options is in principle arbitrary. However, since some physical parameters are often assumed to take on a default value, they are being interpreted as an option here. To see the default options, type `Options[CAMB]`.";
 
@@ -179,9 +179,7 @@ result
 ];
 
 
-CAMB[OmegaC_?NumericQ,OmegaB_?NumericQ,OmegaL_?NumericQ,h_?NumericQ,w_?NumericQ,opts:OptionsPattern[]]:=
-CAMB[OmegaC,OmegaB,OmegaL,h,w,opts]=Module[{j,link,result,resultfloat,resultint,floats,ints,initialcond,nonlinear,
-massivenu,limits,check,getDimensions,dimensions,array,redshifts},
+CAMB[OmegaC_?NumericQ,OmegaB_?NumericQ,OmegaL_?NumericQ,h_?NumericQ,w_?NumericQ,opts:OptionsPattern[]]:=Module[{j,link,result,resultfloat,resultint,floats,ints,initialcond,nonlinear,massivenu,limits,check,getDimensions,dimensions,array,redshifts},
 
 getDimensions[list_]:=Module[{i,r},
 i=1;r={};
@@ -264,9 +262,7 @@ Options[validatestring]=Options[CAMB];
 
 
 (*Transfer function*)
-Transfer[OmegaM_?NumericQ,fBaryon_?NumericQ,Tcmb_?NumericQ,h_?NumericQ]:=
-Transfer[OmegaM,fBaryon,Tcmb,h]=Module[{result,link,krange,fitonek,
-horizon,peak,OmegaC},
+Transfer[OmegaM_?NumericQ,fBaryon_?NumericQ,Tcmb_?NumericQ,h_?NumericQ]:=Module[{result,link,krange,fitonek,horizon,peak,OmegaC},
 validatelimits[fBaryon,"fBaryon",.0001,1,"Transfer"];
 OmegaC=OmegaM-fBaryon*OmegaM;
 link=Install[$location<>"ext/math_link"];
@@ -280,7 +276,7 @@ If[!validateresult[horizon,"transfer"],Return[$Failed];Abort[]];
 fitonek[k_]:=Join[Global`TFFitOneK[k*N@h],{
 Global`TFNoWiggles[N@OmegaM,N@fBaryon,N@h,N@Tcmb,k],
 Global`TFZeroBaryon[N@OmegaM,N@h,N@Tcmb,k]}]; 
-krange=10^Range[-5.,2.,.01];
+krange=10^Range[-6.,4.,.01];
 result=Transpose[fitonek/@krange];
 Uninstall[link];
 
@@ -296,7 +292,7 @@ Transfer["zerobaryons"]->result[[5]]}
 
 
 TFPower[OmegaM_,OmegaB_,OmegaH_,Degen_,OmegaL_,h_,z_]:=Module[{result,link,krange},
-krange=10^Range[-5.,2.,.01];
+krange=10^Range[-6.,4.,.01];
 link=Install[$location<>"ext/math_link"];
 Global`TFSetCosmology[N@OmegaM,N@OmegaB,N@OmegaH,Degen,N@OmegaL,N@h,N@z];
 result=Global`TFOneK/@krange;
@@ -361,7 +357,7 @@ Halofit[OmegaM_?NumericQ,OmegaL_?NumericQ,gammaShape_?NumericQ,sigma8_?NumericQ,
 link=Install[$location<>"ext/math_link"];
 
 arange=Most[10^Range[-2,0,.1]]~Join~{.99999};
-krange=10^Range[-4,2,.1]*2998;(*halofit uses units c Mpc/h*)
+krange=10^Range[-4,4,.1]*2998;(*halofit uses units c Mpc/h*)
 ellrange=10^Range[-2,6,.1];
 
 labels={"\!\(\*SubscriptBox[\(\[CapitalOmega]\), \(M\)]\)","\!\(\*SubscriptBox[\(\[CapitalOmega]\), \(b\)]\)","\!\(\*SubscriptBox[\(\[Sigma]\), \(8\)]\)","\!\(\*SubscriptBox[\(n\), \(s\)]\)","Gamma","\!\(\*SubscriptBox[\(\[Beta]\), \(p\)]\)","\!\(\*SubscriptBox[\(z\), \(0\)]\)"};
@@ -421,9 +417,10 @@ CosmicEmu["hubblecmb"]->(result[[All,2]])[[1,4]]}
 ];
 
 
-FrankenEmu[omegaM_?NumericQ,omegaB_?NumericQ,h_?NumericQ,sigma8_?NumericQ,ns_?NumericQ,w_?NumericQ,arango_?VectorQ]:=Module[
-{link,result,labels,limits,parameters,check},
+FrankenEmu[omegaM_?NumericQ,omegaB_?NumericQ,h_?NumericQ,sigma8_?NumericQ,ns_?NumericQ,w_?NumericQ]:=Module[
+{link,result,labels,limits,parameters,check, arange},
 
+arange=Range[.2,1.,.1];
 labels={"\!\(\*SubscriptBox[\(\[Omega]\), \(M\)]\)","\!\(\*SubscriptBox[\(\[Omega]\), \(b\)]\)","\!\(\*SubscriptBox[\(\[Sigma]\), \(8\)]\)","\!\(\*SubscriptBox[\(n\), \(s\)]\)","w","h"};
 limits={{.12,.155},{.0215,.0235},{.6,.9},{.85,1.05},{-1.3,-.7},{.55,.85}};
 (*these are hard limits as given by the authors of the cosmic emulator - the program will crash if any parameter is outside its bounds*)
@@ -434,20 +431,20 @@ Do[If[!check[[i]],Message[Interface::OutsideBounds,labels[[i]],parameters[[i]],l
 If[!And@@check,Abort[]];
 
 link=Install[$location<>"ext/math_link2"];
-result=Table[{Transpose@Partition[#[[1]],Length@#[[1]]/2],#[[2]]}&@Global`FrankenCEGetPkNL[N@omegaM,N@omegaB,N@h,N@ns,N@sigma8,N@w,1/a-1],{a,arango}];
- (*CosmicEmu  and FrankenEmu do only five redshifts, everything else is interpolated*)
+result=Table[{Transpose@Partition[#[[1]],Length@#[[1]]/2],#[[2]]}&@Global`FrankenCEGetPkNL[N@omegaM,N@omegaB,N@h,N@ns,N@sigma8,N@w,1/a-1],{a,arange}];
+ (*CosmicEmu only does these five redshifts, everything else is interpolated*)
 validateresult[(result[[1,1]]),"FrankenEmu"];
 Uninstall[link];
 
 (*Just return the raw numbers*)
-{FrankenEmu["zvalues"]->Table[1/a-1,{a,arango}],
+{FrankenEmu["zvalues"]->Table[1/a-1,{a,arange}],
 FrankenEmu["pk"]->result[[All,1]]}~Join~If[h<0,
 {FrankenEmu["soundhorizon"]->(result[[All,2]])[[1,1]],
 FrankenEmu["zlss"]->(result[[All,2]])[[1,2]],
 FrankenEmu["dlss"]->(result[[All,2]])[[1,3]],
 FrankenEmu["hubblecmb"]->(result[[All,2]])[[1,4]]},{}]
 ];
-FrankenEmu[omegaM_?NumericQ,omegaB_?NumericQ,sigma8_?NumericQ,ns_?NumericQ,w_?NumericQ,arango_?VectorQ]:=FrankenEmu[omegaM,omegaB,-1.,sigma8,ns,w,arango];
+FrankenEmu[omegaM_?NumericQ,omegaB_?NumericQ,sigma8_?NumericQ,ns_?NumericQ,w_?NumericQ]:=FrankenEmu[omegaM,omegaB,-1.,sigma8,ns,w];
 
 
 Copter[OmegaM_,OmegaB_,h_,ns_,sigma8_,transfer_,z_,type_,opts:OptionsPattern[]]:=Module[{link,result,return,kmax},
