@@ -21,6 +21,7 @@ ext/math_link.o
 ext/math_link2.o
 ext/math_link_tm.o
 backup/
+ext/class*
 ext/Makefile-backup
 ext/Makefile
 ext/Makefile_mathlink-bck
@@ -28,3 +29,6 @@ ext/Makefile_mathlink
 ext/patchmakefile-backup.sh
 ext/patchmakefile.sh~
 ext/EFT*
+*.zip
+*.tar.gz
+*.idea

@@ -1,0 +1,40 @@
+copy full folder containing repository (of course with .git files)
+
+configure all your git stuff (name, email, ssh keys and so on)
+
+go to folder
+
+$git status
+
+this shows all the files as files which have been modified
+do:
+
+$git checkout .
+
+this ensures that the files go to their last repository version
+
+with 
+
+$git pull
+
+check that this is indeed the case
+
+-----
+
+cosmomathica
+
+You need gfortran and developer libraries for gsl.
+
+go to ext/Makefile
+
+and add the correct directory that leads to your MathLink (mathematica) installation in the line:
+
+MLINKDIR = /usr/local/Wolfram/Mathematica/9.0/SystemFiles/Links/MathLink/DeveloperKit
+
+go to ext/camb and make sure that the Makefile points to the correct gfortran paths.
+
+
+In ext/halofit/Makefile do this if you get an error message of libraries:
+put the library flags beyond the .o files:
+
+$(CC) -o smith2demo smith2demo.o smith2.o $(lflags) 
