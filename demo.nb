@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       157,          7]
-NotebookDataLength[   1020849,      18412]
-NotebookOptionsPosition[   1011196,      18111]
-NotebookOutlinePosition[   1012805,      18160]
-CellTagsIndexPosition[   1012491,      18150]
+NotebookDataLength[   1021744,      18437]
+NotebookOptionsPosition[   1011756,      18126]
+NotebookOutlinePosition[   1013589,      18181]
+CellTagsIndexPosition[   1013140,      18168]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -77,8 +77,8 @@ temperature and the dimensionless Hubble constant h as input, and returns the \
 sound horizon, the wavenumber \!\(\*SubscriptBox[\(k\), \(peak\)]\) where the \
 spectrum has a maximum, the transfer function for CDM, baryons, both, or with \
 no baryons or no wiggles.\"\>", "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.7125688694333153`*^9},
- CellTags->"Info3712576067-1169993"]
+ CellChangeTimes->{3.713023340411919*^9},
+ CellTags->"Info3713030540-8535015"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -88,19 +88,18 @@ Cell[BoxData[
  CellChangeTimes->{{3.6217708938794537`*^9, 3.621770896317482*^9}}],
 
 Cell[BoxData[
- StyleBox["\<\"\\\"TFPower[OmegaM, OmegaB, OmegaMN, DegenNu, OmegaL, h, z] \
+ StyleBox["\<\"TFPower[OmegaM, OmegaB, OmegaMN, DegenNu, OmegaL, h, z] \
 provides an interface to Eisenstein & Hu's fitting formula for the transfer \
 function (mixed matter case). It takes the total matter density \
-\\!\\(\\*SubscriptBox[\\(\[CapitalOmega]\\), \\(M\\)]\\), the baryon density \
-\\!\\(\\*SubscriptBox[\\(\[CapitalOmega]\\), \\(b\\)]\\), the massive \
-neutrino density \\!\\(\\*SubscriptBox[\\(\[CapitalOmega]\\), \
-\\(\[Nu]\\)]\\), the integer number of degenerate massive neutrino species, \
-the dark energy density \\!\\(\\*SubscriptBox[\\(\[CapitalOmega]\\), \\(L\\)]\
-\\), the dimensionless Hubble constant h, and the redshift z as input, and \
-return the transfer function at the given redshift.\\\"\"\>", "MSG"]], "Print",\
- "PrintUsage",
- CellChangeTimes->{3.712568870161478*^9},
- CellTags->"Info3712576069-1169993"]
+\!\(\*SubscriptBox[\(\[CapitalOmega]\), \(M\)]\), the baryon density \
+\!\(\*SubscriptBox[\(\[CapitalOmega]\), \(b\)]\), the massive neutrino \
+density \!\(\*SubscriptBox[\(\[CapitalOmega]\), \(\[Nu]\)]\), the integer \
+number of degenerate massive neutrino species, the dark energy density \
+\!\(\*SubscriptBox[\(\[CapitalOmega]\), \(L\)]\), the dimensionless Hubble \
+constant h, and the redshift z as input, and return the transfer function at \
+the given redshift.\"\>", "MSG"]], "Print", "PrintUsage",
+ CellChangeTimes->{3.713023341410696*^9},
+ CellTags->"Info3713030541-8535015"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -110,22 +109,21 @@ Cell[BoxData[
  CellChangeTimes->{{3.592130409995932*^9, 3.592130411439022*^9}}],
 
 Cell[BoxData[
- StyleBox["\<\"\\\"Halofit[OmegaM, OmegaL, gammaShape, sigma8, ns, betaP, z0] \
+ StyleBox["\<\"Halofit[OmegaM, OmegaL, gammaShape, sigma8, ns, betaP, z0] \
 provides an interface to the halofit algorithm by Robert E. Smith et al. \
 (reimplemented in C by Martin Kilbinger). It takes the total matter density \
-\\!\\(\\*SubscriptBox[\\(\[CapitalOmega]\\), \\(M\\)]\\), the vacuum energy \
-density \\!\\(\\*SubscriptBox[\\(\[CapitalOmega]\\), \\(L\\)]\\), a shape \
-factor, \\!\\(\\*SubscriptBox[\\(\[Sigma]\\), \\(8\\)]\\), \
-\\!\\(\\*SubscriptBox[\\(n\\), \\(s\\)]\\), \
-\\!\\(\\*SubscriptBox[\\(\[Beta]\\), \\(p\\)]\\), and a fixed redshift \\!\\(\
-\\*SubscriptBox[\\(z\\), \\(0\\)]\\) as input, and returns the nonlinear \
-matter power spectrum (computed in three ways: linearly with the BBKS \
-alogorithm, nonlinear with the algorithm by Peacock and Dobbs, or nonlinearly \
-with the Halofit algorithm) at 20 different values of the scale factor and \
-the convergence power spectrum in tabulated form.\\\"\"\>", "MSG"]], "Print", \
+\!\(\*SubscriptBox[\(\[CapitalOmega]\), \(M\)]\), the vacuum energy density \
+\!\(\*SubscriptBox[\(\[CapitalOmega]\), \(L\)]\), a shape factor, \
+\!\(\*SubscriptBox[\(\[Sigma]\), \(8\)]\), \!\(\*SubscriptBox[\(n\), \
+\(s\)]\), \!\(\*SubscriptBox[\(\[Beta]\), \(p\)]\), and a fixed redshift \!\(\
+\*SubscriptBox[\(z\), \(0\)]\) as input, and returns the nonlinear matter \
+power spectrum (computed in three ways: linearly with the BBKS alogorithm, \
+nonlinear with the algorithm by Peacock and Dobbs, or nonlinearly with the \
+Halofit algorithm) at 20 different values of the scale factor and the \
+convergence power spectrum in tabulated form.\"\>", "MSG"]], "Print", \
 "PrintUsage",
- CellChangeTimes->{3.712568870599986*^9},
- CellTags->"Info3712576070-1169993"]
+ CellChangeTimes->{3.713023342234639*^9},
+ CellTags->"Info3713030542-8535015"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -135,16 +133,16 @@ Cell[BoxData[
  CellChangeTimes->{{3.592130427427087*^9, 3.592130432199151*^9}}],
 
 Cell[BoxData[
- StyleBox["\<\"\\\"CosmicEmu[omegaM, omegaB, sigma8, ns, w] provides an \
-interface to the CosmicEmulator by Earl Lawrence. It takes \
-\\!\\(\\*SubscriptBox[\\(\[Omega]\\), \\(M\\)]\\), \\!\\(\\*SubscriptBox[\\(\
-\[Omega]\\), \\(b\\)]\\), \\!\\(\\*SubscriptBox[\\(\[Sigma]\\), \\(8\\)]\\), \
-\\!\\(\\*SubscriptBox[\\(n\\), \\(s\\)]\\), and the equation of state w, and \
-returns the nonlinear matter power spectrum at five different redshifts as \
-well as z, H, d (all at last scattering), and the sound horizon.\\\"\"\>", 
-  "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.712568871000606*^9},
- CellTags->"Info3712576070-1169993"]
+ StyleBox["\<\"CosmicEmu[omegaM, omegaB, sigma8, ns, w] provides an interface \
+to the CosmicEmulator by Earl Lawrence. It takes \
+\!\(\*SubscriptBox[\(\[Omega]\), \(M\)]\), \!\(\*SubscriptBox[\(\[Omega]\), \
+\(b\)]\), \!\(\*SubscriptBox[\(\[Sigma]\), \(8\)]\), \
+\!\(\*SubscriptBox[\(n\), \(s\)]\), and the equation of state w, and returns \
+the nonlinear matter power spectrum at five different redshifts as well as z, \
+H, d (all at last scattering), and the sound horizon.\"\>", "MSG"]], "Print", \
+"PrintUsage",
+ CellChangeTimes->{3.71302334328484*^9},
+ CellTags->"Info3713030543-8535015"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -154,18 +152,18 @@ Cell[BoxData[
  CellChangeTimes->{{3.602230219776084*^9, 3.602230220944396*^9}}],
 
 Cell[BoxData[
- StyleBox["\<\"\\\"FrankenEmu[omegaM, omegaB, h, sigma8, ns, w] provides an \
-interface to FrankenEmu by Earl Lawrence. It takes \\!\\(\\*SubscriptBox[\\(\
-\[Omega]\\), \\(M\\)]\\), \\!\\(\\*SubscriptBox[\\(\[Omega]\\), \\(b\\)]\\), \
-h, \\!\\(\\*SubscriptBox[\\(\[Sigma]\\), \\(8\\)]\\), \
-\\!\\(\\*SubscriptBox[\\(n\\), \\(s\\)]\\), and the equation of state w, and \
-returns the nonlinear matter power spectrum at five different redshifts as \
-well as z, H, d (all at last scattering), and the sound horizon. The Hubble \
-parameter h can also be omitted, in which case it will be determined from the \
-CMB just as in CosmicEmu. Additional cosmological parameters are only \
-returned if h is missing.\\\"\"\>", "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.712568871577691*^9},
- CellTags->"Info3712576071-1169993"]
+ StyleBox["\<\"FrankenEmu[omegaM, omegaB, h, sigma8, ns, w] provides an \
+interface to FrankenEmu by Earl Lawrence. It takes \!\(\*SubscriptBox[\(\
+\[Omega]\), \(M\)]\), \!\(\*SubscriptBox[\(\[Omega]\), \(b\)]\), h, \
+\!\(\*SubscriptBox[\(\[Sigma]\), \(8\)]\), \!\(\*SubscriptBox[\(n\), \
+\(s\)]\), and the equation of state w, and returns the nonlinear matter power \
+spectrum at five different redshifts as well as z, H, d (all at last \
+scattering), and the sound horizon. The Hubble parameter h can also be \
+omitted, in which case it will be determined from the CMB just as in \
+CosmicEmu. Additional cosmological parameters are only returned if h is \
+missing.\"\>", "MSG"]], "Print", "PrintUsage",
+ CellChangeTimes->{3.713023344963284*^9},
+ CellTags->"Info3713030544-8535015"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -183,8 +181,8 @@ The distinction between parameters and options is in principle arbitrary. \
 However, since some physical parameters are often assumed to take on a \
 default value, they are being interpreted as an option here. To see the \
 default options, type `Options[CAMB]`.\"\>", "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.712568871958499*^9},
- CellTags->"Info3712576071-1169993"]
+ CellChangeTimes->{3.71302334569422*^9},
+ CellTags->"Info3713030545-8535015"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -194,20 +192,20 @@ Cell[BoxData[
  CellChangeTimes->{{3.602230216511298*^9, 3.6022302173198023`*^9}}],
 
 Cell[BoxData[
- StyleBox["\<\"\\\"Copter[OmegaM, OmegaB, h, ns, sigma8, transfer, z, type] \
+ StyleBox["\<\"Copter[OmegaM, OmegaB, h, ns, sigma8, transfer, z, type] \
 provides an interface to Copter by Jordan Carlson. It takes \
-\\!\\(\\*SubscriptBox[\\(\[CapitalOmega]\\), \\(M\\)]\\), \
-\\!\\(\\*SubscriptBox[\\(\[CapitalOmega]\\), \\(b\\)]\\), h, \
-\\!\\(\\*SubscriptBox[\\(n\\), \\(s\\)]\\), \\!\\(\\*SubscriptBox[\\(\[Sigma]\
-\\), \\(8\\)]\\), the transfer function in shape of a list of value pairs and \
-returns the power spectrum and other quantities. The 'type' variable \
-specifies which pertubration theory is used and must take one of the \
-following values (as a string): 'SPT' (Standard PT), 'RPT' (Renormalized PT), \
-'LPT' (Lagrangian PT), 'FWT' (Flowing with time, TRG), 'LargeN', 'HSPT' \
-(Higher order PT), 'NW' (no wiggles, Eisenstein&Hu algorithm), 'Linear'. \
-Several options can be specified.\\\"\"\>", "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.712568872286059*^9},
- CellTags->"Info3712576072-1169993"]
+\!\(\*SubscriptBox[\(\[CapitalOmega]\), \(M\)]\), \!\(\*SubscriptBox[\(\
+\[CapitalOmega]\), \(b\)]\), h, \!\(\*SubscriptBox[\(n\), \(s\)]\), \
+\!\(\*SubscriptBox[\(\[Sigma]\), \(8\)]\), the transfer function in shape of \
+a list of value pairs and returns the power spectrum and other quantities. \
+The 'type' variable specifies which pertubration theory is used and must take \
+one of the following values (as a string): 'SPT' (Standard PT), 'RPT' \
+(Renormalized PT), 'LPT' (Lagrangian PT), 'FWT' (Flowing with time, TRG), \
+'LargeN', 'HSPT' (Higher order PT), 'NW' (no wiggles, Eisenstein&Hu \
+algorithm), 'Linear'. Several options can be specified.\"\>", "MSG"]], "Print",\
+ "PrintUsage",
+ CellChangeTimes->{3.7130233471412773`*^9},
+ CellTags->"Info3713030547-8535015"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -222,8 +220,18 @@ You need to specifiy all Class parameters in the form of options. \
 Cosmomathica then writes all options into an ini-file, where each line \
 contains \\\"parameter = value\\\". This file is fed to Class and the output \
 is returned.\"\>", "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.712568872701942*^9},
- CellTags->"Info3712576072-1169993"]
+ CellChangeTimes->{3.713023348566341*^9},
+ CellTags->"Info3713030548-8535015"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"NotebookDirectory", "[", "]"}]], "Input",
+ CellChangeTimes->{{3.713023627716331*^9, 3.713023631304008*^9}}],
+
+Cell[BoxData["\<\"/home/santiago/CosmoProjects/cosmomathica/\"\>"], "Output",
+ CellChangeTimes->{3.7130236316251183`*^9}]
 }, Open  ]]
 }, Open  ]],
 
@@ -269,7 +277,7 @@ Cell[BoxData[
    RowBox[{"Transfer", "[", "\<\"cdm\"\>", "]"}], ",", 
    RowBox[{"Transfer", "[", "\<\"nowiggles\"\>", "]"}], ",", 
    RowBox[{"Transfer", "[", "\<\"zerobaryons\"\>", "]"}]}], "}"}]], "Output",
- CellChangeTimes->{3.712568873244282*^9}]
+ CellChangeTimes->{3.712568873244282*^9, 3.713023360166676*^9}]
 }, Open  ]],
 
 Cell["\<\
@@ -287,7 +295,7 @@ Cell[BoxData[
  CellChangeTimes->{{3.592131190928648*^9, 3.592131201768701*^9}}],
 
 Cell[BoxData["128.77259826660156`"], "Output",
- CellChangeTimes->{3.71256887332022*^9}]
+ CellChangeTimes->{3.71256887332022*^9, 3.713023361487379*^9}]
 }, Open  ]],
 
 Cell["or for the various transfer functions", "Text",
@@ -2036,7 +2044,7 @@ g4uWSAlX7D7uAv8HPhuW/Q==
        Thickness[0.001]}}, {-2.419118909249997, 
       FormBox["\"\"", TraditionalForm], {0.00375, 0.}, {
        Thickness[0.001]}}}}]], "Output",
- CellChangeTimes->{3.712568873637993*^9}]
+ CellChangeTimes->{3.712568873637993*^9, 3.7130233640444927`*^9}]
 }, Open  ]],
 
 Cell["The mixed matter case is a bit simpler :", "Text",
@@ -2924,7 +2932,7 @@ fwEv
        Thickness[0.001]}}, {-0.11653381625595151`, 
       FormBox["\"\"", TraditionalForm], {0.00375, 0.}, {
        Thickness[0.001]}}}}]], "Output",
- CellChangeTimes->{3.712568873875287*^9}]
+ CellChangeTimes->{3.712568873875287*^9, 3.713023367407934*^9}]
 }, Open  ]]
 }, Open  ]],
 
@@ -2971,7 +2979,7 @@ Cell[BoxData[
    RowBox[{"Halofit", "[", "\<\"PD96\"\>", "]"}], ",", 
    RowBox[{"Halofit", "[", "\<\"kappaHalofit\"\>", "]"}], ",", 
    RowBox[{"Halofit", "[", "\<\"Halofit\"\>", "]"}]}], "}"}]], "Output",
- CellChangeTimes->{3.712568874715728*^9}]
+ CellChangeTimes->{3.712568874715728*^9, 3.713023375655202*^9}]
 }, Open  ]],
 
 Cell["\<\
@@ -4100,7 +4108,7 @@ LgJUTWF9CislQNe3uqZSLMD/AIu3SP4=
        Thickness[0.001]}}, {-13.932044374220226`, 
       FormBox["\"\"", TraditionalForm], {0.00375, 0.}, {
        Thickness[0.001]}}}}]], "Output",
- CellChangeTimes->{3.71256887488869*^9}]
+ CellChangeTimes->{3.71256887488869*^9, 3.713023377286043*^9}]
 }, Open  ]],
 
 Cell["\<\
@@ -4131,7 +4139,7 @@ Cell[BoxData[
    "0.3981071705534973`", ",", "0.5011872336272725`", ",", 
    "0.6309573444801934`", ",", "0.7943282347242817`", ",", "1.`"}], 
   "}"}]], "Output",
- CellChangeTimes->{3.712568874979211*^9}]
+ CellChangeTimes->{3.712568874979211*^9, 3.7130233816637*^9}]
 }, Open  ]],
 
 Cell["\<\
@@ -4668,7 +4676,7 @@ il+9wOoys/pctRYTbDy9oUIsfnKb0GFeZ5AwecAbng273DrTp+P4+gD4uy8O
        Thickness[0.001]}}, {-18.537214560208316`, 
       FormBox["\"\"", TraditionalForm], {0.00375, 0.}, {
        Thickness[0.001]}}}}]], "Output",
- CellChangeTimes->{3.7125688751494427`*^9}]
+ CellChangeTimes->{3.7125688751494427`*^9, 3.7130233854615107`*^9}]
 }, Open  ]]
 }, Open  ]],
 
@@ -12172,8 +12180,8 @@ The distinction between parameters and options is in principle arbitrary. \
 However, since some physical parameters are often assumed to take on a \
 default value, they are being interpreted as an option here. To see the \
 default options, type `Options[CAMB]`.\"\>", "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.712568876924498*^9},
- CellTags->"Info3712576076-1169993"]
+ CellChangeTimes->{3.713023394903561*^9},
+ CellTags->"Info3713030594-8535015"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -12240,7 +12248,8 @@ Cell[BoxData[
    RowBox[{"DerivedParameters", "\[Rule]", "True"}], ",", 
    RowBox[{"MassiveNuMethod", "\[Rule]", "\<\"best\"\>"}]}], "}"}]], "Output",\
 
- CellChangeTimes->{3.69546577484116*^9, 3.712568877270426*^9}]
+ CellChangeTimes->{3.69546577484116*^9, 3.712568877270426*^9, 
+  3.7130234005094147`*^9}]
 }, Open  ]],
 
 Cell[TextData[{
@@ -12287,7 +12296,8 @@ Cell[BoxData[
    3.592206000923951*^9}, {3.5922094266985207`*^9, 3.59220944589929*^9}, {
    3.5922168385776157`*^9, 3.592216843279711*^9}, {3.592216889805276*^9, 
    3.592216919445101*^9}, 3.592219550939205*^9, {3.592563619916642*^9, 
-   3.5925636202685547`*^9}, {3.592567496497699*^9, 3.592567496894991*^9}}],
+   3.5925636202685547`*^9}, {3.592567496497699*^9, 3.592567496894991*^9}, {
+   3.7130242358667727`*^9, 3.713024250018292*^9}}],
 
 Cell[CellGroupData[{
 
@@ -12319,7 +12329,8 @@ Cell[BoxData[
    RowBox[{"CAMB", "[", "\<\"PSlinear\"\>", "]"}], ",", 
    RowBox[{"CAMB", "[", "\<\"PSnonlinear\"\>", "]"}], ",", 
    RowBox[{"CAMB", "[", "\<\"Transfer\"\>", "]"}]}], "}"}]], "Output",
- CellChangeTimes->{3.6954658177852993`*^9, 3.7125688798102713`*^9}]
+ CellChangeTimes->{3.6954658177852993`*^9, 3.7125688798102713`*^9, 
+  3.713023407440943*^9}]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -12333,11 +12344,13 @@ Cell[BoxData[
  RowBox[{
   RowBox[{"CAMB", "[", "\<\"age\"\>", "]"}], "\[Rule]", 
   "14.787271927700989`"}]], "Output",
- CellChangeTimes->{3.6954658640679913`*^9, 3.7125688801292543`*^9}]
+ CellChangeTimes->{3.6954658640679913`*^9, 3.7125688801292543`*^9, 
+  3.7130234091505127`*^9}]
 }, Open  ]],
 
-Cell["Age of the universe:", "Text",
- CellChangeTimes->{{3.592208888428232*^9, 3.5922088921243134`*^9}}],
+Cell["Age of the universe:\[LineSeparator]", "Text",
+ CellChangeTimes->{{3.592208888428232*^9, 3.5922088921243134`*^9}, 
+   3.713023430363915*^9}],
 
 Cell[CellGroupData[{
 
@@ -12347,7 +12360,8 @@ Cell[BoxData[
  CellChangeTimes->{{3.592208893663045*^9, 3.592208897761714*^9}}],
 
 Cell[BoxData["14.787271927700989`"], "Output",
- CellChangeTimes->{3.6954658839767647`*^9, 3.712568880413788*^9}]
+ CellChangeTimes->{3.6954658839767647`*^9, 3.712568880413788*^9, 
+  3.713023431607785*^9}]
 }, Open  ]],
 
 Cell[TextData[{
@@ -12371,7 +12385,7 @@ Cell[BoxData[
   RowBox[{
    RowBox[{"{", "0.3530799444594213`", "}"}], ",", 
    RowBox[{"{", "0.6804051183550118`", "}"}]}], "}"}]], "Output",
- CellChangeTimes->{3.712568880708424*^9}]
+ CellChangeTimes->{3.712568880708424*^9, 3.713023434273683*^9}]
 }, Open  ]],
 
 Cell["Plot the scalar angular power spectrum", "Text",
@@ -14330,7 +14344,8 @@ VFkkgIl/e66dNWMnw/8BNF2aeg==
      ImageScaled[{0.5, 0.5}], {360., 222.4922359499622}]}, {}},
   ContentSelectable->True,
   PlotRangePadding->{6, 5}]], "Output",
- CellChangeTimes->{3.695465905512004*^9, 3.712568881169753*^9}]
+ CellChangeTimes->{3.695465905512004*^9, 3.712568881169753*^9, 
+  3.713023440404365*^9}]
 }, Open  ]],
 
 Cell["\<\
@@ -14353,7 +14368,7 @@ Cell[BoxData[
   "9.`", ",", "8.`", ",", "7.`", ",", "6.`", ",", "5.`", ",", "4.`", ",", 
    "3.`", ",", "2.`", ",", "1.5`", ",", "1.`", ",", "0.`"}], "}"}]], "Output",\
 
- CellChangeTimes->{3.7125688814029016`*^9}]
+ CellChangeTimes->{3.7125688814029016`*^9, 3.713023443999506*^9}]
 }, Open  ]],
 
 Cell[TextData[{
@@ -15502,7 +15517,7 @@ dLyN6gw/E6DqXVJBQq0a/A/L+fsk
        Thickness[0.001]}}, {9.104979856318357, 
       FormBox["\"\"", TraditionalForm], {0.00375, 0.}, {
        Thickness[0.001]}}}}]], "Output",
- CellChangeTimes->{3.712568881691456*^9}]
+ CellChangeTimes->{3.712568881691456*^9, 3.7130234496710377`*^9}]
 }, Open  ]],
 
 Cell["Plot the CDM transfer function at the first redshift", "Text",
@@ -16081,7 +16096,7 @@ A1Zv8jlXd47yrodk6FfU0oB6jxdGX5jmtU70uKanr4dCcUtzio+cR6trHvjK
        Thickness[0.001]}}, {13.698976741708323`, 
       FormBox["\"\"", TraditionalForm], {0.00375, 0.}, {
        Thickness[0.001]}}}}]], "Output",
- CellChangeTimes->{3.712568881969117*^9}]
+ CellChangeTimes->{3.712568881969117*^9, 3.713023453378227*^9}]
 }, Open  ]]
 }, Open  ]],
 
@@ -18110,7 +18125,7 @@ qMquyfnHMyjkRmf83x3yEPsbq+DOnSX0Pwg6YjQ=
 }, Open  ]]
 },
 WindowSize->{1918, 1009},
-WindowMargins->{{Automatic, -9}, {-9, Automatic}},
+WindowMargins->{{Automatic, -9}, {Automatic, 2}},
 PrivateNotebookOptions->{"VersionedStylesheet"->{"Default.nb"[8.] -> False}},
 ShowSelection->True,
 FrontEndVersion->"9.0 for Linux x86 (64-bit) (February 7, 2013)",
@@ -18121,40 +18136,46 @@ StyleDefinitions->"Default.nb"
 (* Internal cache information *)
 (*CellTagsOutline
 CellTagsIndex->{
- "Info3712576067-1169993"->{
-  Cell[2048, 69, 778, 11, 62, "Print",
-   CellTags->"Info3712576067-1169993"]},
- "Info3712576069-1169993"->{
-  Cell[2984, 89, 858, 13, 61, "Print",
-   CellTags->"Info3712576069-1169993"]},
- "Info3712576070-1169993"->{
-  Cell[3998, 111, 1063, 16, 80, "Print",
-   CellTags->"Info3712576070-1169993"],
-  Cell[5219, 136, 650, 10, 60, "Print",
-   CellTags->"Info3712576070-1169993"]},
- "Info3712576071-1169993"->{
-  Cell[6028, 155, 837, 12, 60, "Print",
-   CellTags->"Info3712576071-1169993"],
-  Cell[7066, 177, 629, 9, 60, "Print",
-   CellTags->"Info3712576071-1169993"]},
- "Info3712576072-1169993"->{
-  Cell[7852, 195, 961, 14, 78, "Print",
-   CellTags->"Info3712576072-1169993"],
-  Cell[8967, 218, 440, 7, 42, "Print",
-   CellTags->"Info3712576072-1169993"]},
- "Info3712576076-1169993"->{
-  Cell[691702, 12166, 629, 9, 60, "Print",
-   CellTags->"Info3712576076-1169993"]}
+ "Info3713030540-8535015"->{
+  Cell[2048, 69, 776, 11, 62, "Print",
+   CellTags->"Info3713030540-8535015"]},
+ "Info3713030541-8535015"->{
+  Cell[2982, 89, 816, 12, 61, "Print",
+   CellTags->"Info3713030541-8535015"]},
+ "Info3713030542-8535015"->{
+  Cell[3954, 110, 1005, 15, 80, "Print",
+   CellTags->"Info3713030542-8535015"]},
+ "Info3713030543-8535015"->{
+  Cell[5117, 134, 608, 10, 60, "Print",
+   CellTags->"Info3713030543-8535015"]},
+ "Info3713030544-8535015"->{
+  Cell[5884, 153, 797, 12, 60, "Print",
+   CellTags->"Info3713030544-8535015"]},
+ "Info3713030545-8535015"->{
+  Cell[6882, 175, 628, 9, 60, "Print",
+   CellTags->"Info3713030545-8535015"]},
+ "Info3713030547-8535015"->{
+  Cell[7667, 193, 923, 14, 78, "Print",
+   CellTags->"Info3713030547-8535015"]},
+ "Info3713030548-8535015"->{
+  Cell[8744, 216, 440, 7, 42, "Print",
+   CellTags->"Info3713030548-8535015"]},
+ "Info3713030594-8535015"->{
+  Cell[691949, 12174, 629, 9, 60, "Print",
+   CellTags->"Info3713030594-8535015"]}
  }
 *)
 (*CellTagsIndex
 CellTagsIndex->{
- {"Info3712576067-1169993", 1011597, 18123},
- {"Info3712576069-1169993", 1011706, 18126},
- {"Info3712576070-1169993", 1011815, 18129},
- {"Info3712576071-1169993", 1012006, 18134},
- {"Info3712576072-1169993", 1012195, 18139},
- {"Info3712576076-1169993", 1012384, 18144}
+ {"Info3713030540-8535015", 1012156, 18138},
+ {"Info3713030541-8535015", 1012265, 18141},
+ {"Info3713030542-8535015", 1012374, 18144},
+ {"Info3713030543-8535015", 1012485, 18147},
+ {"Info3713030544-8535015", 1012595, 18150},
+ {"Info3713030545-8535015", 1012705, 18153},
+ {"Info3713030547-8535015", 1012814, 18156},
+ {"Info3713030548-8535015", 1012924, 18159},
+ {"Info3713030594-8535015", 1013033, 18162}
  }
 *)
 (*NotebookFileOutline
@@ -18172,245 +18193,249 @@ Cell[1504, 51, 275, 7, 32, "Input"],
 Cell[1782, 60, 119, 1, 30, "Text"],
 Cell[CellGroupData[{
 Cell[1926, 65, 119, 2, 32, "Input"],
-Cell[2048, 69, 778, 11, 62, "Print",
- CellTags->"Info3712576067-1169993"]
+Cell[2048, 69, 776, 11, 62, "Print",
+ CellTags->"Info3713030540-8535015"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[2863, 85, 118, 2, 32, "Input"],
-Cell[2984, 89, 858, 13, 61, "Print",
- CellTags->"Info3712576069-1169993"]
+Cell[2861, 85, 118, 2, 32, "Input"],
+Cell[2982, 89, 816, 12, 61, "Print",
+ CellTags->"Info3713030541-8535015"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[3879, 107, 116, 2, 32, "Input"],
-Cell[3998, 111, 1063, 16, 80, "Print",
- CellTags->"Info3712576070-1169993"]
+Cell[3835, 106, 116, 2, 32, "Input"],
+Cell[3954, 110, 1005, 15, 80, "Print",
+ CellTags->"Info3713030542-8535015"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[5098, 132, 118, 2, 32, "Input"],
-Cell[5219, 136, 650, 10, 60, "Print",
- CellTags->"Info3712576070-1169993"]
+Cell[4996, 130, 118, 2, 32, "Input"],
+Cell[5117, 134, 608, 10, 60, "Print",
+ CellTags->"Info3713030543-8535015"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[5906, 151, 119, 2, 32, "Input"],
-Cell[6028, 155, 837, 12, 60, "Print",
- CellTags->"Info3712576071-1169993"]
+Cell[5762, 149, 119, 2, 32, "Input"],
+Cell[5884, 153, 797, 12, 60, "Print",
+ CellTags->"Info3713030544-8535015"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[6902, 172, 161, 3, 32, "Input"],
-Cell[7066, 177, 629, 9, 60, "Print",
- CellTags->"Info3712576071-1169993"]
+Cell[6718, 170, 161, 3, 32, "Input"],
+Cell[6882, 175, 628, 9, 60, "Print",
+ CellTags->"Info3713030545-8535015"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[7732, 191, 117, 2, 32, "Input"],
-Cell[7852, 195, 961, 14, 78, "Print",
- CellTags->"Info3712576072-1169993"]
+Cell[7547, 189, 117, 2, 32, "Input"],
+Cell[7667, 193, 923, 14, 78, "Print",
+ CellTags->"Info3713030547-8535015"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[8850, 214, 114, 2, 32, "Input"],
-Cell[8967, 218, 440, 7, 42, "Print",
- CellTags->"Info3712576072-1169993"]
+Cell[8627, 212, 114, 2, 32, "Input"],
+Cell[8744, 216, 440, 7, 42, "Print",
+ CellTags->"Info3713030548-8535015"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[9221, 228, 131, 2, 32, "Input"],
+Cell[9355, 232, 121, 1, 32, "Output"]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[9456, 231, 96, 1, 44, "Subsection"],
-Cell[9555, 234, 164, 2, 31, "Text"],
-Cell[9722, 238, 301, 7, 32, "Input"],
-Cell[10026, 247, 186, 2, 30, "Text"],
+Cell[9525, 239, 96, 1, 44, "Subsection"],
+Cell[9624, 242, 164, 2, 31, "Text"],
+Cell[9791, 246, 301, 7, 32, "Input"],
+Cell[10095, 255, 186, 2, 30, "Text"],
 Cell[CellGroupData[{
-Cell[10237, 253, 199, 5, 32, "Input"],
-Cell[10439, 260, 575, 11, 32, "Output"]
+Cell[10306, 261, 199, 5, 32, "Input"],
+Cell[10508, 268, 597, 11, 32, "Output"]
 }, Open  ]],
-Cell[11029, 274, 208, 4, 30, "Text"],
+Cell[11120, 282, 208, 4, 30, "Text"],
 Cell[CellGroupData[{
-Cell[11262, 282, 178, 4, 32, "Input"],
-Cell[11443, 288, 87, 1, 32, "Output"]
+Cell[11353, 290, 178, 4, 32, "Input"],
+Cell[11534, 296, 109, 1, 32, "Output"]
 }, Open  ]],
-Cell[11545, 292, 121, 1, 30, "Text"],
+Cell[11658, 300, 121, 1, 30, "Text"],
 Cell[CellGroupData[{
-Cell[11691, 297, 1202, 29, 143, "Input"],
-Cell[12896, 328, 98821, 1710, 235, "Output"]
+Cell[11804, 305, 1202, 29, 143, "Input"],
+Cell[13009, 336, 98845, 1710, 235, "Output"]
 }, Open  ]],
-Cell[111732, 2041, 124, 1, 30, "Text"],
+Cell[111869, 2049, 124, 1, 30, "Text"],
 Cell[CellGroupData[{
-Cell[111881, 2046, 320, 8, 32, "Input"],
-Cell[112204, 2056, 47799, 870, 239, "Output"]
+Cell[112018, 2054, 320, 8, 32, "Input"],
+Cell[112341, 2064, 47821, 870, 239, "Output"]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[160052, 2932, 96, 1, 44, "Subsection"],
-Cell[160151, 2935, 132, 2, 30, "Text"],
-Cell[160286, 2939, 271, 7, 32, "Input"],
-Cell[160560, 2948, 114, 1, 30, "Text"],
+Cell[160211, 2940, 96, 1, 44, "Subsection"],
+Cell[160310, 2943, 132, 2, 30, "Text"],
+Cell[160445, 2947, 271, 7, 32, "Input"],
+Cell[160719, 2956, 114, 1, 30, "Text"],
 Cell[CellGroupData[{
-Cell[160699, 2953, 229, 6, 32, "Input"],
-Cell[160931, 2961, 631, 12, 32, "Output"]
+Cell[160858, 2961, 229, 6, 32, "Input"],
+Cell[161090, 2969, 653, 12, 32, "Output"]
 }, Open  ]],
-Cell[161577, 2976, 318, 6, 30, "Text"],
+Cell[161758, 2984, 318, 6, 30, "Text"],
 Cell[CellGroupData[{
-Cell[161920, 2986, 844, 22, 77, "Input"],
-Cell[162767, 3010, 60354, 1092, 247, "Output"]
+Cell[162101, 2994, 844, 22, 77, "Input"],
+Cell[162948, 3018, 60376, 1092, 247, "Output"]
 }, Open  ]],
-Cell[223136, 4105, 313, 5, 31, "Text"],
+Cell[223339, 4113, 313, 5, 31, "Text"],
 Cell[CellGroupData[{
-Cell[223474, 4114, 173, 4, 32, "Input"],
-Cell[223650, 4120, 693, 13, 32, "Output"]
+Cell[223677, 4122, 173, 4, 32, "Input"],
+Cell[223853, 4128, 713, 13, 32, "Output"]
 }, Open  ]],
-Cell[224358, 4136, 160, 3, 30, "Text"],
+Cell[224581, 4144, 160, 3, 30, "Text"],
 Cell[CellGroupData[{
-Cell[224543, 4143, 1077, 28, 121, "Input"],
-Cell[225623, 4173, 26208, 497, 237, "Output"]
+Cell[224766, 4151, 1077, 28, 121, "Input"],
+Cell[225846, 4181, 26232, 497, 237, "Output"]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[251880, 4676, 103, 1, 44, "Subsection"],
-Cell[251986, 4679, 108, 1, 30, "Text"],
-Cell[252097, 4682, 260, 6, 32, "Input"],
-Cell[252360, 4690, 99, 1, 30, "Text"],
+Cell[252127, 4684, 103, 1, 44, "Subsection"],
+Cell[252233, 4687, 108, 1, 30, "Text"],
+Cell[252344, 4690, 260, 6, 32, "Input"],
+Cell[252607, 4698, 99, 1, 30, "Text"],
 Cell[CellGroupData[{
-Cell[252484, 4695, 201, 5, 32, "Input"],
-Cell[252688, 4702, 457, 9, 32, "Output"]
+Cell[252731, 4703, 201, 5, 32, "Input"],
+Cell[252935, 4710, 457, 9, 32, "Output"]
 }, Open  ]],
-Cell[253160, 4714, 111, 1, 30, "Text"],
+Cell[253407, 4722, 111, 1, 30, "Text"],
 Cell[CellGroupData[{
-Cell[253296, 4719, 279, 6, 32, "Input"],
-Cell[253578, 4727, 124, 2, 32, "Output"]
+Cell[253543, 4727, 279, 6, 32, "Input"],
+Cell[253825, 4735, 124, 2, 32, "Output"]
 }, Open  ]],
-Cell[253717, 4732, 173, 2, 30, "Text"],
+Cell[253964, 4740, 173, 2, 30, "Text"],
 Cell[CellGroupData[{
-Cell[253915, 4738, 174, 4, 32, "Input"],
-Cell[254092, 4744, 225, 5, 32, "Output"]
+Cell[254162, 4746, 174, 4, 32, "Input"],
+Cell[254339, 4752, 225, 5, 32, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[254354, 4754, 439, 12, 32, "Input"],
-Cell[254796, 4768, 297235, 4985, 246, 275556, 4628, "CachedBoxData", \
+Cell[254601, 4762, 439, 12, 32, "Input"],
+Cell[255043, 4776, 297235, 4985, 246, 275556, 4628, "CachedBoxData", \
 "BoxData", "Output"]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[552080, 9759, 147, 2, 44, "Subsection"],
-Cell[552230, 9763, 152, 2, 30, "Text"],
-Cell[552385, 9767, 352, 8, 32, "Input"],
-Cell[552740, 9777, 99, 1, 30, "Text"],
+Cell[552327, 9767, 147, 2, 44, "Subsection"],
+Cell[552477, 9771, 152, 2, 30, "Text"],
+Cell[552632, 9775, 352, 8, 32, "Input"],
+Cell[552987, 9785, 99, 1, 30, "Text"],
 Cell[CellGroupData[{
-Cell[552864, 9782, 199, 5, 32, "Input"],
-Cell[553066, 9789, 216, 5, 32, "Output"]
+Cell[553111, 9790, 199, 5, 32, "Input"],
+Cell[553313, 9797, 216, 5, 32, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[553319, 9799, 490, 13, 32, "Input"],
-Cell[553812, 9814, 137120, 2327, 243, "Output"]
+Cell[553566, 9807, 490, 13, 32, "Input"],
+Cell[554059, 9822, 137120, 2327, 243, "Output"]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[690981, 12147, 92, 1, 44, "Subsection"],
-Cell[691076, 12150, 481, 8, 49, "Text"],
+Cell[691228, 12155, 92, 1, 44, "Subsection"],
+Cell[691323, 12158, 481, 8, 49, "Text"],
 Cell[CellGroupData[{
-Cell[691582, 12162, 117, 2, 32, "Input"],
-Cell[691702, 12166, 629, 9, 60, "Print",
- CellTags->"Info3712576076-1169993"]
+Cell[691829, 12170, 117, 2, 32, "Input"],
+Cell[691949, 12174, 629, 9, 60, "Print",
+ CellTags->"Info3713030594-8535015"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[692368, 12180, 133, 2, 32, "Input"],
-Cell[692504, 12184, 2912, 58, 152, "Output"]
+Cell[692615, 12188, 133, 2, 32, "Input"],
+Cell[692751, 12192, 2939, 59, 152, "Output"]
 }, Open  ]],
-Cell[695431, 12245, 813, 21, 32, "Text"],
-Cell[696247, 12268, 1217, 21, 32, "Input"],
+Cell[695705, 12254, 813, 21, 32, "Text"],
+Cell[696521, 12277, 1269, 22, 32, "Input"],
 Cell[CellGroupData[{
-Cell[697489, 12293, 201, 5, 32, "Input"],
-Cell[697693, 12300, 1128, 21, 55, "Output"]
+Cell[697815, 12303, 201, 5, 32, "Input"],
+Cell[698019, 12310, 1153, 22, 55, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[698858, 12326, 128, 3, 32, "Input"],
-Cell[698989, 12331, 186, 4, 32, "Output"]
+Cell[699209, 12337, 128, 3, 32, "Input"],
+Cell[699340, 12342, 213, 5, 32, "Output"]
 }, Open  ]],
-Cell[699190, 12338, 104, 1, 30, "Text"],
+Cell[699568, 12350, 146, 2, 50, "Text"],
 Cell[CellGroupData[{
-Cell[699319, 12343, 164, 3, 32, "Input"],
-Cell[699486, 12348, 112, 1, 32, "Output"]
+Cell[699739, 12356, 164, 3, 32, "Input"],
+Cell[699906, 12361, 137, 2, 32, "Output"]
 }, Open  ]],
-Cell[699613, 12352, 239, 7, 32, "Text"],
+Cell[700058, 12366, 239, 7, 32, "Text"],
 Cell[CellGroupData[{
-Cell[699877, 12363, 169, 3, 32, "Input"],
-Cell[700049, 12368, 199, 5, 32, "Output"]
+Cell[700322, 12377, 169, 3, 32, "Input"],
+Cell[700494, 12382, 221, 5, 32, "Output"]
 }, Open  ]],
-Cell[700263, 12376, 169, 2, 30, "Text"],
+Cell[700730, 12390, 169, 2, 30, "Text"],
 Cell[CellGroupData[{
-Cell[700457, 12382, 851, 19, 32, "Input"],
-Cell[701311, 12403, 115069, 1929, 447, "Output"]
+Cell[700924, 12396, 851, 19, 32, "Input"],
+Cell[701778, 12417, 115094, 1930, 447, "Output"]
 }, Open  ]],
-Cell[816395, 14335, 188, 4, 30, "Text"],
+Cell[816887, 14350, 188, 4, 30, "Text"],
 Cell[CellGroupData[{
-Cell[816608, 14343, 175, 4, 32, "Input"],
-Cell[816786, 14349, 239, 6, 32, "Output"]
+Cell[817100, 14358, 175, 4, 32, "Input"],
+Cell[817278, 14364, 261, 6, 32, "Output"]
 }, Open  ]],
-Cell[817040, 14358, 1393, 32, 89, "Text"],
+Cell[817554, 14373, 1393, 32, 89, "Text"],
 Cell[CellGroupData[{
-Cell[818458, 14394, 332, 8, 32, "Input"],
-Cell[818793, 14404, 61055, 1100, 237, "Output"]
+Cell[818972, 14409, 332, 8, 32, "Input"],
+Cell[819307, 14419, 61079, 1100, 237, "Output"]
 }, Open  ]],
-Cell[879863, 15507, 187, 2, 30, "Text"],
+Cell[880401, 15522, 187, 2, 30, "Text"],
 Cell[CellGroupData[{
-Cell[880075, 15513, 730, 18, 32, "Input"],
-Cell[880808, 15533, 29070, 550, 240, "Output"]
+Cell[880613, 15528, 730, 18, 32, "Input"],
+Cell[881346, 15548, 29092, 550, 240, "Output"]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[909927, 16089, 143, 2, 44, "Subsection"],
-Cell[910073, 16093, 212, 4, 30, "Text"],
+Cell[910487, 16104, 143, 2, 44, "Subsection"],
+Cell[910633, 16108, 212, 4, 30, "Text"],
 Cell[CellGroupData[{
-Cell[910310, 16101, 131, 2, 32, "Input"],
-Cell[910444, 16105, 509, 13, 49, "Output"]
+Cell[910870, 16116, 131, 2, 32, "Input"],
+Cell[911004, 16120, 509, 13, 49, "Output"]
 }, Open  ]],
-Cell[910968, 16121, 316, 4, 30, "Text"],
+Cell[911528, 16136, 316, 4, 30, "Text"],
 Cell[CellGroupData[{
-Cell[911309, 16129, 705, 16, 32, "Input"],
-Cell[912017, 16147, 493, 10, 23, "Message"],
-Cell[912513, 16159, 518, 11, 23, "Message"],
-Cell[913034, 16172, 518, 11, 23, "Message"],
-Cell[913555, 16185, 518, 11, 23, "Message"],
-Cell[914076, 16198, 530, 11, 23, "Message"]
+Cell[911869, 16144, 705, 16, 32, "Input"],
+Cell[912577, 16162, 493, 10, 23, "Message"],
+Cell[913073, 16174, 518, 11, 23, "Message"],
+Cell[913594, 16187, 518, 11, 23, "Message"],
+Cell[914115, 16200, 518, 11, 23, "Message"],
+Cell[914636, 16213, 530, 11, 23, "Message"]
 }, Open  ]],
-Cell[914621, 16212, 99, 1, 30, "Text"],
+Cell[915181, 16227, 99, 1, 30, "Text"],
 Cell[CellGroupData[{
-Cell[914745, 16217, 249, 6, 32, "Input"],
-Cell[914997, 16225, 379, 8, 32, "Output"]
+Cell[915305, 16232, 249, 6, 32, "Input"],
+Cell[915557, 16240, 379, 8, 32, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[915413, 16238, 1152, 29, 77, "Input"],
-Cell[916568, 16269, 1427, 23, 100, "Message"],
-Cell[917998, 16294, 1427, 23, 100, "Message"],
-Cell[919428, 16319, 518, 11, 23, "Message"],
-Cell[919949, 16332, 520, 11, 23, "Message"],
-Cell[920472, 16345, 517, 11, 23, "Message"],
-Cell[920992, 16358, 528, 11, 23, "Message"],
-Cell[921523, 16371, 1425, 23, 100, "Message"],
-Cell[922951, 16396, 534, 11, 23, "Message"],
-Cell[923488, 16409, 558, 11, 23, "Message"],
-Cell[924049, 16422, 558, 11, 23, "Message"],
-Cell[924610, 16435, 560, 11, 23, "Message"],
-Cell[925173, 16448, 533, 11, 23, "Message"],
-Cell[925709, 16461, 27571, 578, 247, "Output"]
+Cell[915973, 16253, 1152, 29, 77, "Input"],
+Cell[917128, 16284, 1427, 23, 100, "Message"],
+Cell[918558, 16309, 1427, 23, 100, "Message"],
+Cell[919988, 16334, 518, 11, 23, "Message"],
+Cell[920509, 16347, 520, 11, 23, "Message"],
+Cell[921032, 16360, 517, 11, 23, "Message"],
+Cell[921552, 16373, 528, 11, 23, "Message"],
+Cell[922083, 16386, 1425, 23, 100, "Message"],
+Cell[923511, 16411, 534, 11, 23, "Message"],
+Cell[924048, 16424, 558, 11, 23, "Message"],
+Cell[924609, 16437, 558, 11, 23, "Message"],
+Cell[925170, 16450, 560, 11, 23, "Message"],
+Cell[925733, 16463, 533, 11, 23, "Message"],
+Cell[926269, 16476, 27571, 578, 247, "Output"]
 }, Open  ]],
-Cell[953295, 17042, 144, 1, 30, "Text"],
+Cell[953855, 17057, 144, 1, 30, "Text"],
 Cell[CellGroupData[{
-Cell[953464, 17047, 626, 17, 77, "Input"],
-Cell[954093, 17066, 1143, 20, 41, "Message"],
-Cell[955239, 17088, 1130, 19, 59, "Message"],
-Cell[956372, 17109, 10968, 155, 363, "Output"]
+Cell[954024, 17062, 626, 17, 77, "Input"],
+Cell[954653, 17081, 1143, 20, 41, "Message"],
+Cell[955799, 17103, 1130, 19, 59, "Message"],
+Cell[956932, 17124, 10968, 155, 363, "Output"]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[967401, 17271, 92, 1, 80, "Section"],
-Cell[967496, 17274, 559, 9, 51, "Text"],
-Cell[968058, 17285, 1365, 28, 187, "Input"],
-Cell[969426, 17315, 97, 1, 30, "Text"],
+Cell[967961, 17286, 92, 1, 80, "Section"],
+Cell[968056, 17289, 559, 9, 51, "Text"],
+Cell[968618, 17300, 1365, 28, 187, "Input"],
+Cell[969986, 17330, 97, 1, 30, "Text"],
 Cell[CellGroupData[{
-Cell[969548, 17320, 177, 4, 32, "Input"],
-Cell[969728, 17326, 640, 12, 32, "Output"]
+Cell[970108, 17335, 177, 4, 32, "Input"],
+Cell[970288, 17341, 640, 12, 32, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[970405, 17343, 961, 25, 32, "Input"],
-Cell[971369, 17370, 39787, 736, 246, "Output"]
+Cell[970965, 17358, 961, 25, 32, "Input"],
+Cell[971929, 17385, 39787, 736, 246, "Output"]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]]

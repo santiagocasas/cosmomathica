@@ -1,8 +1,8 @@
 # Define your C compiler
-CC = gcc -O2 -Wall -lgfortran -fopenmp 
+CC = gcc -O2 -Wl,--no-as-needed -Wall -lgfortran -fopenmp -lm 
 
 # C++ compiler for copter
-CXX = g++ -O2 -fopenmp -Wall -pedantic
+CXX = g++ -O2 -Wl,--no-as-needed -fopenmp -Wall -pedantic -lm
 
 # Define your Fortran compiler (if you want to use CAMB) Must match CAMB
 # compiler
@@ -74,10 +74,10 @@ else
   COPLIBS += $(COPTER)/lib/libcopter.a  
 endif
 
-ifeq ($(wildcard class_v2.3.2/Makefile),)
+ifeq ($(wildcard class/Makefile),)
   CLASS = 
 else
-  CLASS = class_v2.3.2
+  CLASS = class
   DFLAGS += -DCLASS
   OFILES += class_wrapper.o  #$(CLASS)/build/output.o
   EXTRALIBS += $(CLASS)/libclass.a
@@ -122,9 +122,9 @@ $(HALOFIT):
 $(COSMICEMU):
 	+$(MAKE) -C $@
 
-$(CAMB):
+#$(CAMB):
 #	./patchmakefile.sh
-	+$(MAKE) -C $@
+#	+$(MAKE) -C $@
 
 $(CLASS):
 	+$(MAKE) -C $@
@@ -151,7 +151,7 @@ clean:
 	rm -f $(COSMICEMU)/*{o,exe}
 	if [ ! -z $(FRANKENEMU) ]; then $(MAKE) -C $(FRANKENEMU) clean ; fi
 	if [ ! -z $(HALOFIT) ]; then $(MAKE) -C $(HALOFIT) clean ; fi
-	if [ ! -z $(CAMB) ]; then $(MAKE) -C $(CAMB) clean ; fi
+#	if [ ! -z $(CAMB) ]; then $(MAKE) -C $(CAMB) clean ; fi
 	if [ ! -z $(COPTER) ]; then $(MAKE) -C $(COPTER) uninstall clean distclean ; fi
 	if [ ! -z $(CLASS) ]; then $(MAKE) -C $(CLASS) clean ; fi
 

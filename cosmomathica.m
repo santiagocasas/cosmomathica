@@ -1,6 +1,5 @@
 (* ::Package:: *)
 
-
 (*Cosmomathica version 0.9, September 2017. By Santiago Casas, Adrian Vollmer, Institute for Theoretical Physics, University Heidelberg.*)
 
 
