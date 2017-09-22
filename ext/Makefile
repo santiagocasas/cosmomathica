@@ -1,8 +1,8 @@
 # Define your C compiler
-CC = gcc -O2 -Wl,--no-as-needed -Wall -lgfortran -fopenmp -lm 
+CC = gcc -O2 -Wl,--no-as-needed -Wall -lgfortran -fopenmp -lm -ldl 
 
 # C++ compiler for copter
-CXX = g++ -O2 -Wl,--no-as-needed -fopenmp -Wall -pedantic -lm
+CXX = g++ -O2 -Wl,--no-as-needed -fopenmp -Wall -pedantic -lm -ldl
 
 # Define your Fortran compiler (if you want to use CAMB) Must match CAMB
 # compiler
@@ -86,14 +86,14 @@ endif
 all: math_link math_link2
 
 math_link: $(HALOFIT) $(COSMICEMU) $(CAMB) $(CLASS) $(COPTER) $(OFILES) Makefile
-	${CC} ${DFLAGS} -I${INCDIR} -L${LIBDIR} -l${MLLIB}			   \
+	${CC} -DMLINTERFACE=4 ${DFLAGS} -I${INCDIR} -L${LIBDIR} -l${MLLIB} -luuid \
 		$(OFILES) $(CAMBOFILES) -o $@ $(EXTRALIBS)  \
 		$(EMULIBS) $(COPLIBS)
 
 # The second math_link is for FrankenEmu only, since it contains symbols
 # with the same name as symbols from CosmicEmu
 math_link2: math_link2.o $(FRANKENEMU) $(FRANKENOFILES) Makefile
-	${CC} -I${INCDIR} -L${LIBDIR} -l${MLLIB} $(FRANKENOFILES) \
+	${CC} -DMLINTERFACE=4 -I${INCDIR} -L${LIBDIR} -l${MLLIB} -luuid $(FRANKENOFILES) \
 			-DFRANKENEMU -o $@ $(EXTRALIBS) $(EMULIBS)
 
 math_link2.o: math_link.c
