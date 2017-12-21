@@ -58,7 +58,7 @@ endif
 ifeq ($(wildcard camb/camb.f90),)
   CAMB = 
 else
-  CAMB = camb
+  CAMB = camb/Release
   OFILES += camb_wrapper.o 
   CAMBOFILES = $(CAMB)/*.o
   DFLAGS += -DCAMB
