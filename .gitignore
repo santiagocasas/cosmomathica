@@ -6,6 +6,7 @@ ext/camb/*
 ext/CosmicEmulator/*
 ext/FrankenEmu/*
 ext/halofit/*
+ext/tf/*
 ext/tf/*.o
 ext/math_link_tm.c
 ext/tags

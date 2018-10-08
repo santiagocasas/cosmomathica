@@ -8,8 +8,9 @@ wget http://background.uchicago.edu/~whu/transfer/power.c -q -O tf/power.c
 echo "Downloading Robert E. Smith's et al. halofit code..."
 mkdir -p halofit
 wget http://www.roe.ac.uk/~jap/haloes/halofit+.tar -q -O - | tar x -C halofit
-# echo "Downloading CosmicEmulator..."
-# mkdir -p CosmicEmulator
+echo "Downloading FrankenEmulator..."
+mkdir -p FrankenEmu
+wget http://www.hep.anl.gov/cosmology/CosmicEmu/CosmicEmu_v2.tar.gz -q -O - | tar xz -C FrankenEmu --strip-components=1
 # wget http://www.lanl.gov/projects/cosmology/CosmicEmu/CosmicEmu_v1.1.tar.gz -q -O - | tar x -C CosmicEmulator
-echo "Please download CAMB yourself at http://camb.info/"
+#echo "Please download CAMB yourself at http://camb.info/"
 

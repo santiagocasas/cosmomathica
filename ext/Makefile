@@ -38,21 +38,22 @@ else
   DFLAGS += -DHALOFIT
 endif
 
-ifeq ($(wildcard CosmicEmulator/emu.c),)
-  COSMICEMU = 
-else
-  COSMICEMU = CosmicEmulator
-  OFILES += $(COSMICEMU)/hubble.o $(COSMICEMU)/emu.o 
-  EMULIBS = -lgsl -lgslcblas 
-  DFLAGS += -DCOSMICEMU
-endif
+#ifeq ($(wildcard CosmicEmulator/emu.c),)
+#  COSMICEMU = 
+#else
+#  COSMICEMU = CosmicEmulator
+#  OFILES += $(COSMICEMU)/hubble.o $(COSMICEMU)/emu.o 
+#  EMULIBS = -lgsl -lgslcblas 
+#  DFLAGS += -DCOSMICEMU
+#endif
 
 ifeq ($(wildcard FrankenEmu/emu.c),)
   FRANKENEMU = 
 else
   FRANKENEMU = FrankenEmu
-  FRANKENOFILES += math_link2.o math_link_tm.o $(addprefix $(FRANKENEMU)/, hubble.o emu.o emu_noh.o)
-  EMULIBS = -lgsl -lgslcblas 
+  OFILES += $(addprefix $(FRANKENEMU)/, hubble.o emu.o emu_noh.o)
+  EMULIBS = -lgsl -lgslcblas
+  DFLAGS += -DFRANKENEMU 
 endif
 
 ifeq ($(wildcard camb/camb.f90),)
@@ -73,21 +74,22 @@ else
   EXTRALIBS += $(CLASS)/libclass.a
 endif
 
-all: math_link math_link2
+all: math_link
 
-math_link: $(HALOFIT) $(COSMICEMU) $(CAMB) $(CLASS) $(OFILES) Makefile
+math_link: $(HALOFIT) $(FRANKENEMU) $(CAMB) $(CLASS) $(OFILES) Makefile
 	${CC} -DMLINTERFACE=4 ${DFLAGS} -I${INCDIR} -L${LIBDIR} -l${MLLIB} -luuid \
 		$(OFILES) $(CAMBOFILES) -o $@ $(EXTRALIBS)  \
-		$(EMULIBS) $(COPLIBS)
+		$(EMULIBS)
 
 # The second math_link is for FrankenEmu only, since it contains symbols
 # with the same name as symbols from CosmicEmu
-math_link2: math_link2.o $(FRANKENEMU) $(FRANKENOFILES) Makefile
-	${CC} -DMLINTERFACE=4 -I${INCDIR} -L${LIBDIR} -l${MLLIB} -luuid $(FRANKENOFILES) \
-			-DFRANKENEMU -o $@ $(EXTRALIBS) $(EMULIBS)
 
-math_link2.o: math_link.c
-	${CC} -DFRANKENEMU -c -I$(INCDIR) $< -o $@
+#math_link2: $(FRANKENEMU) $(FRANKENOFILES) math_link2.o Makefile  
+#	${CC} -DMLINTERFACE=4 -I${INCDIR} -L${LIBDIR} -l${MLLIB} -luuid $(FRANKENOFILES) \
+#			-DFRANKENEMU -o $@ $(EXTRALIBS) $(EMULIBS) 
+
+#math_link2.o: math_link.c  
+#	${CC} -DFRANKENEMU -c -I$(INCDIR) $< -o $@
 
 math_link_tm.c: math_link.tm
 	${MPREP} $? -o $@
@@ -104,15 +106,17 @@ class_wrapper.o: class_wrapper.c Makefile
 	$(CC) -c -I$(CLASS)/include $< -o $@
 
 $(HALOFIT):
+	./patchmakefile.sh
 	+$(MAKE) -C $@
 
 $(COSMICEMU):
 	+$(MAKE) -C $@
 
+$(FRANKENEMU):
+	+$(MAKE) -C $@
+
 $(CAMB):
 	+$(MAKE) -C $@
-#	this script changes the ifort compiler to the gfortran compiler. Works with 2013 versions of CAMB
-#       ./patchmakefile.sh
 
 $(CLASS):
 	+$(MAKE) -C $@
