@@ -1,5 +1,6 @@
 (* ::Package:: *)
 
+
 (*Cosmomathica version 0.9, September 2017. By Santiago Casas, Adrian Vollmer, Institute for Theoretical Physics, University Heidelberg.*)
 
 
@@ -18,7 +19,8 @@ CosmicEmu::usage="CosmicEmu[omegaM, omegaB, sigma8, ns, w] provides an interface
 
 FrankenEmu::usage="FrankenEmu[omegaM, omegaB, h, sigma8, ns, w] provides an interface to FrankenEmu by Earl Lawrence. It takes \!\(\*SubscriptBox[\(\[Omega]\), \(M\)]\), \!\(\*SubscriptBox[\(\[Omega]\), \(b\)]\), h, \!\(\*SubscriptBox[\(\[Sigma]\), \(8\)]\), \!\(\*SubscriptBox[\(n\), \(s\)]\), and the equation of state w, and returns the nonlinear matter power spectrum at five different redshifts as well as z, H, d (all at last scattering), and the sound horizon. The Hubble parameter h can also be omitted, in which case it will be determined from the CMB just as in CosmicEmu. Additional cosmological parameters are only returned if h is missing.";
 
-CAMB::usage="CAMB[OmegaC, OmegaB, OmegaL, h, w] provides an interface to CAMB by Antony Lewis and Anthony Challinor. It takes a few parameters as well as a number of options as input, and returns various cosmological quantities. The distinction between parameters and options is in principle arbitrary. However, since some physical parameters are often assumed to take on a default value, they are being interpreted as an option here. To see the default options, type `Options[CAMB]`.";
+CAMB::usage="CAMB[OmegaC, OmegaB, h] :
+provides an interface to CAMB by Antony Lewis and Anthony Challinor. It takes a few parameters as well as a number of options as input, and returns various cosmological quantities. The distinction between parameters and options is in principle arbitrary. However, since some physical parameters are often assumed to take on a default value, they are being interpreted as an option here. To see the default options, type `Options[CAMB]`.";
 
 Class::usage="Class[\"parameter1\" -> \"value1\",...] runs Class. You need to specifiy all Class parameters in the form of options. Cosmomathica then writes all options into an ini-file, where each line contains \"parameter = value\". This file is fed to Class and the output is returned."; 
 
@@ -26,9 +28,11 @@ Copter::usage="Copter[OmegaM, OmegaB, h, ns, sigma8, transfer, z, type] provides
 
 CopterGrowth::usage="CopterGrowth[OmegaM, OmegaB, h, ns, z] returns the growth function computed by Copter evaluated at each redshift contained in the list z.";
 
-
+w0ppf::usage="An option for CAMB";
+wappf::usage="An option for CAMB";
 Tcmb::usage="An option for CAMB";
 OmegaNu::usage="An option for CAMB";
+OmegaK0::usage="An option for CAMB";
 YHe::usage="An option for CAMB";
 MasslessNeutrinos::usage="An option for CAMB";
 MassiveNeutrinos::usage="An option for CAMB";
@@ -36,6 +40,8 @@ NuMassDegeneracies::usage="An option for CAMB";
 NuMassFractions::usage="An option for CAMB";
 ScalarInitialCondition::usage="An option for CAMB";
 NonLinear::usage="An option for CAMB";
+HalofitVersion::usage="An option for CAMB. Integer number that chooses the Halofit version used in the non-linear matter power spectrum.
+1: Original, 2: Bird, 3: Peacock, 4: Takahashi, 5: Mead, 6: Halo model, 7: Casarini";
 WantCMB::usage="An option for CAMB";
 WantTransfer::usage="An option for CAMB";
 WantCls::usage="An option for CAMB";
@@ -52,7 +58,9 @@ OpticalDepth::usage="An option for CAMB";
 ReionizationRedshift::usage="An option for CAMB";
 ReionizationFraction::usage="An option for CAMB";
 ReionizationDeltaRedshift::usage="An option for CAMB";
+AccuracyBoost::usage="An option for CAMB";
 TransferHighPrecision::usage="An option for CAMB";
+TransferInterpMatterPower::usage="An option for CAMB";
 WantScalars::usage="An option for CAMB";
 WantVectors::usage="An option for CAMB";
 WantTensors::usage="An option for CAMB";
@@ -73,6 +81,9 @@ DoLensing::usage="An option for CAMB";
 OnlyTransfers::usage="An option for CAMB";
 DerivedParameters::usage="An option for CAMB";
 MassiveNuMethod::usage="An option for CAMB";
+debugIntFloats::usage="An option for CAMB";
+
+
 zInitial::usage="Initial redshift for Copter";
 Neta::usage = "Number of time steps for Copter";
 kcut::usage="Cutoff wavenumber for Copter";
@@ -160,7 +171,9 @@ result
 ];
 
 
-CAMB[OmegaC_?NumericQ,OmegaB_?NumericQ,OmegaL_?NumericQ,h_?NumericQ,w_?NumericQ,opts:OptionsPattern[]]:=Module[{j,link,result,resultfloat,resultint,floats,ints,initialcond,nonlinear,massivenu,limits,check,getDimensions,dimensions,array,redshifts},
+CAMB[OmegaC_?NumericQ,OmegaB_?NumericQ,h_?NumericQ,opts:OptionsPattern[]]:=Module[{j,
+  link,result,resultfloat,resultint,floats,ints,initialcond,
+  nonlinear,massivenu,limits,check,getDimensions,dimensions,array,redshifts},
 
 getDimensions[list_]:=Module[{i,r},
 i=1;r={};
@@ -170,11 +183,12 @@ r];
 
 (*some parameters must be within certain limits*)
 limits={{ReionizationFraction,0,1.5},
-{OpticalDepth,0,.9},
-{h,"h",.2,1.},
-{Tcmb,2.7,2.8},
-{YHe,.2,.8},
-{MasslessNeutrinos,0,3.1},
+  {OpticalDepth,0,.9},
+  {h,"h",.2,1.},
+  {Tcmb,2.7,2.8},
+  {YHe,.2,.8},
+  {HalofitVersion, 1,7},
+  {MasslessNeutrinos,0,3.1},
 (*MassiveNeutrinos?*)
 {OmegaB,"\!\(\*SubscriptBox[\(\[CapitalOmega]\), \(B\)]\)",.001/h^2,1./h^2},
 {OmegaC ,"\!\(\*SubscriptBox[\(\[CapitalOmega]\), \(C\)]\)",0./h^2,3./h^2}
@@ -193,11 +207,30 @@ validatestring[OptionValue[ScalarInitialCondition],"ScalarInitialCondition",init
 validatestring[OptionValue[NonLinear],"NonLinear",nonlinear];
 validatestring[OptionValue[MassiveNuMethod],"MassiveNuMethod",massivenu];
 
-floats=Flatten@{OmegaC,OmegaB,OmegaL,h*100,OptionValue[#]&/@{OmegaNu,Tcmb,YHe,MasslessNeutrinos,NuMassDegeneracies,NuMassFractions,ScalarSpectralIndex,ScalarRunning,TensorSpectralIndex,RatioScalarTensorAmplitudes,ScalarPowerAmplitude,PivotScalar,PivotTensor,OpticalDepth,ReionizationRedshift,ReionizationFraction,ReionizationDeltaRedshift,MaxEtaK,MaxEtaKTensor,TransferKmax},Reverse@Sort@OptionValue@TransferRedshifts};
+tkmaxh=OptionValue[TransferKmax]*h;  (*rescale passed k_max with h, so that output of CAMB is correctly in h/Mpc*)
 
-ints=Flatten@{OptionValue[MassiveNeutrinos],Length@OptionValue[NuMassFractions],Position[initialcond,OptionValue[ScalarInitialCondition]][[1,1]]-1,Position[nonlinear,OptionValue[NonLinear]][[1,1]]-1,Length@OptionValue@ScalarSpectralIndex,bool2int/@OptionValue@{DoReionization,UseOpticalDepth,TransferHighPrecision,WantCMB,WantTransfer,WantCls,WantScalars,WantVectors,WantTensors,WantZstar, WantZdrag},OptionValue[#]&/@{OutputNormalization,MaxEll,MaxEllTensor,TransferKperLogInt},Length@OptionValue@TransferRedshifts,bool2int/@OptionValue@{AccuratePolarization,AccurateReionization,AccurateBB,DoLensing,OnlyTransfers,DerivedParameters},Position[massivenu,OptionValue[MassiveNuMethod]][[1,1]]-1};
+floats=Flatten@{OmegaC,OmegaB,h*100,OptionValue[#]&/@{OmegaNu,OmegaK0,w0ppf,wappf,Tcmb,YHe,MasslessNeutrinos,NuMassDegeneracies,
+  NuMassFractions,ScalarSpectralIndex,ScalarRunning,TensorSpectralIndex,RatioScalarTensorAmplitudes,
+  ScalarPowerAmplitude,PivotScalar,PivotTensor,OpticalDepth,ReionizationRedshift,ReionizationFraction,
+  ReionizationDeltaRedshift,AccuracyBoost,MaxEtaK,MaxEtaKTensor}, tkmaxh,Reverse@Sort@OptionValue@TransferRedshifts};
 
-(*Print[ints,floats];*)
+
+(*NuMassDegeneracies ignored at the moment in camb_wrapper*)
+ints=Flatten@{OptionValue[MassiveNeutrinos],Length@OptionValue[NuMassFractions],
+  Position[initialcond,OptionValue[ScalarInitialCondition]][[1,1]]-1,
+  Position[nonlinear,OptionValue[NonLinear]][[1,1]]-1,
+  OptionValue[HalofitVersion],
+  Length@OptionValue@ScalarSpectralIndex,
+  bool2int/@OptionValue@{DoReionization,UseOpticalDepth,TransferHighPrecision,
+    TransferInterpMatterPower,WantCMB,WantTransfer,
+    WantCls,WantScalars,WantVectors,WantTensors,WantZstar, WantZdrag},
+  OptionValue[#]&/@{OutputNormalization,MaxEll,MaxEllTensor,TransferKperLogInt},Length@OptionValue@TransferRedshifts,
+  bool2int/@OptionValue@{AccuratePolarization,AccurateReionization,AccurateBB,DoLensing,OnlyTransfers,DerivedParameters},
+  Position[massivenu,OptionValue[MassiveNuMethod]][[1,1]]-1};
+If[OptionValue[debugIntFloats]==True,
+  Print["list of ints and floats passed to camb_wrapper: "];
+  Print[ints,floats];
+];
 SetDirectory[$location<>"ext/camb"];
 link=Install[$location<>"ext/math_link"];
 result=Global`CAMBrun[N/@floats,ints];
@@ -238,7 +271,21 @@ CAMB["PSnonlinear"]->Table[Exp@Transpose@{resultfloat[[j]],resultfloat[[j+2,All,
 ](*,CAMB["ints"]->resultint,CAMB["floats"]->resultfloat*)
 },Null]
 ];
-Options[CAMB]={Tcmb->2.7255,OmegaNu->0,YHe->.24,MasslessNeutrinos->3.046,MassiveNeutrinos->0,NuMassDegeneracies->{0},NuMassFractions->{1},ScalarInitialCondition->"adiabatic",NonLinear->"none",WantCMB->True,WantTransfer->True,WantCls->True,ScalarSpectralIndex->{.96},ScalarRunning->{0},TensorSpectralIndex->{0},RatioScalarTensorAmplitudes->{1},ScalarPowerAmplitude->{2.1*^-9},PivotScalar->.05,PivotTensor->.05,DoReionization->True,UseOpticalDepth->False,OpticalDepth->0.,ReionizationRedshift->10.,ReionizationFraction->1.,ReionizationDeltaRedshift->.5,TransferHighPrecision->False,WantScalars->True,WantVectors->True,WantTensors->True,WantZstar->True, WantZdrag->True,OutputNormalization->1,MaxEll->1500,MaxEtaK->3000.,MaxEtaKTensor->800.,MaxEllTensor->400,TransferKmax->.9,TransferKperLogInt->0,TransferRedshifts->{0.},AccuratePolarization->True,AccurateReionization->False,AccurateBB->False,DoLensing->True,OnlyTransfers->False,DerivedParameters->True,MassiveNuMethod->"best"};
+Options[CAMB]={w0ppf->-1.0, wappf->0., Tcmb->2.7255,
+  OmegaNu->0, OmegaK0->0., YHe->.24,MasslessNeutrinos->3.046,
+  MassiveNeutrinos->0,NuMassDegeneracies->{0},NuMassFractions->{1},
+  ScalarInitialCondition->"adiabatic",NonLinear->"pk", HalofitVersion->4, WantCMB->True,WantTransfer->True,WantCls->False,
+  WantScalars->False,WantVectors->False,WantTensors->False,
+  ScalarSpectralIndex->{.96},ScalarRunning->{0},
+  TensorSpectralIndex->{0},RatioScalarTensorAmplitudes->{1},ScalarPowerAmplitude->{2.1*^-9},PivotScalar->.05,PivotTensor->.05,
+  DoReionization->True,UseOpticalDepth->False,OpticalDepth->0.,ReionizationRedshift->10.,ReionizationFraction->1.,ReionizationDeltaRedshift->.5,
+  AccuracyBoost->2,
+  TransferHighPrecision->True, TransferInterpMatterPower->False,
+  WantZstar->True, WantZdrag->True,OutputNormalization->1,MaxEll->1500,MaxEtaK->4000.,MaxEtaKTensor->800.,
+  MaxEllTensor->400,TransferKmax->5,TransferKperLogInt->50,TransferRedshifts->{0.},
+  AccuratePolarization->True,AccurateReionization->False,AccurateBB->False,DoLensing->False,
+  OnlyTransfers->False,DerivedParameters->True,MassiveNuMethod->"best",
+  debugIntFloats->False};
 Options[validatestring]=Options[CAMB];
 
 

@@ -15,6 +15,7 @@ module cambwrapper
     use ModelData
     use GaugeInterface
     use InitialPower
+    use NonLinear
     use Reionization
     use Recombination
     
@@ -112,6 +113,9 @@ contains
 
 
     subroutine runcamb(floats, floats_len, ints, ints_len, floats_out, floats_out_len, ints_out, ints_out_len) bind(c)
+        use LambdaGeneral
+        use NonLinear 
+        use Transfer
         implicit none
 
         integer(c_int), intent(in)    :: floats_len, ints_len
@@ -120,11 +124,13 @@ contains
         integer(c_int), intent(in)    :: ints(ints_len)
         real(c_double), intent(out)   :: floats_out(floats_out_len)
         integer(c_int), intent(out)   :: ints_out(ints_out_len)
-
+        double precision :: omegak
         integer error, fi, ii, eigenstates, fitemp, i, float_offset, int_offset
+        integer testkper
 
         Type(CAMBparams) P
         Type(MatterPowerData) PK_data
+        Type (CAMBdata)  :: OutData
 
         ! We have two arrays containing all the parameters: one full of doubles,
         ! one full of ints. We need to fill the structure P with it. See
@@ -167,9 +173,14 @@ contains
 
         P%omegac  = floats(fi); fi=fi+1
         P%omegab  = floats(fi); fi=fi+1
-        P%omegav  = floats(fi); fi=fi+1
         P%H0      = floats(fi); fi=fi+1
         P%omegan  = floats(fi); fi=fi+1
+        omegak    = floats(fi); fi=fi+1
+        P%omegav  = 1 - omegak - P%omegab-P%omegac - P%omegan
+       
+        use_tabulated_w = .false. 
+        w_lam     = floats(fi); fi=fi+1
+        wa_ppf    = floats(fi); fi=fi+1
 
         P%TCMB    = floats(fi); fi=fi+1
         P%YHe     = floats(fi); fi=fi+1
@@ -178,15 +189,16 @@ contains
         P%Num_Nu_massive      = ints(ii); ii=ii+1
         P%Nu_mass_eigenstates = ints(ii); ii=ii+1
         eigenstates = P%Nu_mass_eigenstates
-
-        P%Nu_mass_degeneracies(1:eigenstates) = floats(fi:fi+eigenstates)
+        P%share_delta_neff = .true.  
+        !temporary fix for standard neutrinos
+        !P%Nu_mass_degeneracies(1:eigenstates) = floats(fi:fi+eigenstates)
         fi = fi+eigenstates
         P%Nu_mass_fractions(1:eigenstates) = floats(fi:fi+eigenstates)
         fi = fi+eigenstates
 
         P%Scalar_initial_condition = ints(ii); ii=ii+1
         P%NonLinear                = ints(ii); ii=ii+1
-
+        halofit_version            = ints(ii); ii=ii+1
         ! call SetDefPowerParams(P%InitPower)
         ! Compare with SetDefPowerParams
         ! These are arrays with length nn
@@ -213,10 +225,12 @@ contains
          P%Reion%redshift          = floats(fi); fi=fi+1
          P%Reion%fraction          = floats(fi); fi=fi+1
          P%Reion%delta_redshift    = floats(fi); fi=fi+1
-
+        
+         AccuracyBoost             = floats(fi); fi=fi+1;
          !TODO bispectrum?
 
-        P%Transfer%high_precision = int2bool(ints(ii)); ii=ii+1
+        P%Transfer%high_precision   = int2bool(ints(ii)); ii=ii+1
+        transfer_interp_matterpower = int2bool(ints(ii)); ii=ii+1
 
         P%Want_CMB     = int2bool(ints(ii)); ii=ii+1
         P%PK_WantTransfer = int2bool(ints(ii)); ii=ii+1
@@ -235,7 +249,9 @@ contains
         P%Max_l_tensor     = ints(ii); ii=ii+1
         P%Max_eta_k_tensor = floats(fi); fi=fi+1
         P%Transfer%kmax          = floats(fi); fi=fi+1
-        P%Transfer%k_per_logint  = ints(ii); ii=ii+1
+        testkper  = ints(ii); ii=ii+1
+        P%Transfer%k_per_logint  = testkper
+        !P%Transfer%k_per_logint  = ints(ii); ii=ii+1
         P%Transfer%PK_num_redshifts = ints(ii); ii=ii+1
         ! This is an array with length num_redshifts
         P%Transfer%PK_redshifts     = floats(fi:fi+ints(ii-1)); fi=fi+ints(ii-1) 
@@ -258,8 +274,12 @@ contains
             stop
         endif
 
-
-        call Transfer_SetForNonlinearLensing(P%Transfer)
+        !call cmbmain
+        error = 0
+        call CAMB_GetTransfers(P, OutData, error)
+        !call Transfer_SetForNonlinearLensing(P%Transfer) 
+        !this routine resets the k_max_per_logint to 0
+        ! cannot use NonLinear = "both" anymore  
         call Transfer_SortAndIndexRedshifts(P%Transfer)
 
         error = 0
@@ -267,11 +287,24 @@ contains
         call  CAMBParams_Set(P, error, .false.)
         if (error>0) write(*,*) "Error: ",error,trim(global_error_message)
 
+        !call InitTransfer
+
         call CAMB_GetResults(P)
         if (global_error_flag/=0) then
             write (*,*) 'Error result '//trim(global_error_message)
             stop
         endif
+        open(23, file='./testprints.txt', status='REPLACE', ACTION="READWRITE")
+
+        write(23,*)  'File containing test prints'
+        write(23,*)  'num_q_trans=',MT%num_q_trans
+        write(23,*)  'kmax=',CP%Transfer%kmax
+        write(23,*)  'passed P : kmax=',P%Transfer%kmax
+        write(23,*)  'CP:  k_per_logint=',CP%Transfer%k_per_logint
+        write(23,*)  'passed P : k_per_logint=',P%Transfer%k_per_logint
+        write(23,*)  'really passed testkper: k_per_logint=',testkper
+        close(23)
+
         ! the global variables MT, Cl_scalar, Cl_vector, Cl_tensor now contain
         ! meaningful data
 
@@ -298,10 +331,11 @@ contains
             ThermoDerivedParams( derived_thetaEQ ) /),&
         floats_out, float_offset, ints_out, int_offset)
 
-
-        if(P%WantScalars) call add3darray(Cl_scalar, floats_out, float_offset, ints_out, int_offset)   !add1d(Cl_scalar)   !add3d
-        if(P%WantVectors) call add3darray(Cl_vector, floats_out, float_offset, ints_out, int_offset)   !add3d(Cl_vector)
-        if(P%WantTensors) call add3darray(Cl_tensor, floats_out, float_offset, ints_out, int_offset)   !add3d(Cl_tensor)
+        if (P%WantCls) then 
+           if(P%WantScalars) call add3darray(Cl_scalar, floats_out, float_offset, ints_out, int_offset)   !add1d(Cl_scalar)   !add3d
+           if(P%WantVectors) call add3darray(Cl_vector, floats_out, float_offset, ints_out, int_offset)   !add3d(Cl_vector)
+           if(P%WantTensors) call add3darray(Cl_tensor, floats_out, float_offset, ints_out, int_offset)   !add3d(Cl_tensor)
+       endif 
 
         if (P%WantTransfer) then
             do i=1,P%InitPower%nn     

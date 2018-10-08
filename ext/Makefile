@@ -1,5 +1,5 @@
 # Define your C compiler
-CC = gcc -O2 -Wl,--no-as-needed -Wall -lgfortran -fopenmp -lm -ldl 
+CC = gcc -O2 -Wl,--no-as-needed -Wall -lgfortran -fPIC -fopenmp -lm -ldl 
 
 # C++ compiler for copter
 CXX = g++ -O2 -Wl,--no-as-needed -fopenmp -Wall -pedantic -lm -ldl
