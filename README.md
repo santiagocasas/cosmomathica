@@ -24,15 +24,14 @@ http://arxiv.org/abs/1107.4379.
 Requirements
 ============
 
-  * Wolfram Mathematica version >=8
+  * Wolfram Mathematica version >=10
 
-  * For CosmicEmulator and FrankenEmu: GSL (GNU Scientific Library)
+  * GSL (GNU Scientific Library) 
+    You need gfortran and developer libraries for GSL.
 
   * For CAMB: Possibly cfitsio, healpix
 
-  * For Copter: The Boost C++ library headers
-
-  * The GNU Compiler Compilation (gcc) version >=4.6
+  * The GNU Compiler Compilation gcc and gfortran version >=4.6
 
 
 
@@ -43,6 +42,8 @@ Due to copyright issues, the external packages cannot be delivered as part
 of this package. You need to download the source code of the following
 programs yourself. To make sure you got the right version, the MD5 sums of
 the files in question are given here.
+
+For CAMB and CLASS, the best option is to clone them from their public git repositories.
 
   * Transfer function: 
     tf_fit.c
@@ -58,18 +59,6 @@ the files in question are given here.
     http://www.roe.ac.uk/~jap/haloes/
     Robert Smith et al, Martin Kilbinger
 
-  * CAMB (Nov 2013):
-    CAMB.tar.gz
-    473b1a87c9aa4972aedb0b5ba8ec037b
-    http://camb.info/
-    Antony Lewis and Anthony Challinor
-
-  * CLASS (v2.3.2):
-    class_v2.3.2.tar.gz
-    4ece1125f2cffc63ad2c4212441fea88
-    http://class-code.net/
-    Julien Lesgourges
-
   * CosmicEmulator "Coyote" (v1.1):
     CosmicEmu_v1.1.tar.gz   
     a3c7da2b41152b7d30ba458e56f7e4ab  
@@ -81,20 +70,21 @@ the files in question are given here.
     1018867d84d9e6820a9ae8ee2f213b06
     http://www.hep.anl.gov/cosmology/CosmicEmu/CosmicEmu_v2.tar.gz
     Earl Lawrence
+  
+  * CAMB
+    https://github.com/cmbant/CAMB.git
+    Anthony Lewis et al
 
-  * Copter (v0.8.7):
-    copter-0.8.7.tar.gz
-    397afcad4a0ace992fe23828b2071a32
-    http://mwhite.berkeley.edu/Copter/
-    Jordan Carlson et al
+  * CLASS
+    https://github.com/lesgourg/class_public.git
+    Julien Lesgourges et al 
 
 The (extracted) files need to placed in directories with names `tf`,
-`halofit`, `camb`, `CosmicEmulator`, `FrankenEmu`, `class_v2.3.2` and
-`copter-0.8.7`, respectively, inside the `ext` directory.
+`halofit`, `camb`, `CosmicEmulator`, `FrankenEmu`, and `class` 
+respectively, inside the `ext` directory.
 
-If you wish to use a different version of CAMB, for instance, cosmomathica
-may still work, but it has not been tested for it. If you use a modified
-version of CAMB, the same applies. In general, if you modify things like the
+If you use a modified
+version of CAMB, cosmomathica might stil work, provided you have the same set of parameters. In general, if you modify things like the
 type `CAMBparams`, you almost certainly will have to modify cosmomathica as
 well.
 
@@ -104,13 +94,20 @@ How to compile the MathLink
 
 The paths to the required Mathematica libraries are often different on every
 system, so first you should adjust the Mathematica-related lines in the
-Makefile, which is located in the `ext` directory. Next, change into the
-`ext` directory and type `make`. 
+`Makefile_mathlink` file, which is located in the `ext` directory. 
+For example:
+`MLINKDIR = /usr/local/Wolfram/Mathematica/11.2/SystemFiles/Links/MathLink/DeveloperKit`
+Next, change into the `ext` directory and type `make`. 
 
 CAMB uses the Intel Fortran compiler by default. Due to compatibility issues
 with linking the different object files, CAMB needs to be compiled with GNU
-gfortran. When building the MathLink, CAMB's Makefile is automatically
-changed accordingly.
+gfortran. Please make sure that CAMB inside the folder camb is compiled with gfortran, by changing the respective Makefile. 
+
+
+In `ext/halofit/Makefile` do this if you get an error message of libraries:
+put the library flags beyond the .o files:
+
+`$(CC) -o smith2demo smith2demo.o smith2.o $(lflags)`
 
 Note that all warnings and errors that you see may be cause by the external
 programs. Make sure the warning is not from compiling the MathLink and
@@ -122,7 +119,7 @@ How to use Cosmomathica
 =======================
 
 In general, each one of the functions `CAMB`, `Transfer`, `Halofit`, `Class`
-and `CosmicEmu` returns a list of replacement rules containing the raw data
+and `FrankenEmu` returns a list of replacement rules containing the raw data
 as computed by the respective program. See the notebook `demo.nb` for
 a demonstration. 
 
@@ -130,10 +127,10 @@ a demonstration.
 Version
 =======
 
-This is version 0.3. Since this is an alpha status, backwards compatibility
+This is version 1.0. Since this is an alpha status, backwards compatibility
 may be broken in future releases.
 
-This is a forked version by Santiago Casas, with some minor modifications, but same functionality.
+This is a forked version by Santiago Casas, with some major and minor modifications.
 
 
 Copyright and licensing

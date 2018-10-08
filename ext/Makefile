@@ -58,20 +58,10 @@ endif
 ifeq ($(wildcard camb/camb.f90),)
   CAMB = 
 else
-  CAMB = camb/Release
+  CAMB = camb
   OFILES += camb_wrapper.o 
-  CAMBOFILES = $(CAMB)/*.o
+  CAMBOFILES = $(CAMB)/Release/*.o
   DFLAGS += -DCAMB
-endif
-
-ifeq ($(wildcard copter-0.8.7/Makefile.am),)
-  COPTER = 
-else
-  COPTER = copter-0.8.7
-  OFILES += copter_wrapper.o
-  DFLAGS += -DCOPTER 
-  CXX += -I$(COPTER)/include 
-  COPLIBS += $(COPTER)/lib/libcopter.a  
 endif
 
 ifeq ($(wildcard class/Makefile),)
@@ -85,7 +75,7 @@ endif
 
 all: math_link math_link2
 
-math_link: $(HALOFIT) $(COSMICEMU) $(CAMB) $(CLASS) $(COPTER) $(OFILES) Makefile
+math_link: $(HALOFIT) $(COSMICEMU) $(CAMB) $(CLASS) $(OFILES) Makefile
 	${CC} -DMLINTERFACE=4 ${DFLAGS} -I${INCDIR} -L${LIBDIR} -l${MLLIB} -luuid \
 		$(OFILES) $(CAMBOFILES) -o $@ $(EXTRALIBS)  \
 		$(EMULIBS) $(COPLIBS)
@@ -108,10 +98,7 @@ math_link_tm.c: math_link.tm
 	$(CC) $(DFLAGS)  -c -I$(INCDIR) $< -o $@
 
 camb_wrapper.o: camb_wrapper.f90 Makefile
-	$(F90C) -c $< -o $@ -I$(CAMB) 
-
-copter_wrapper.o: copter_wrapper.cpp Makefile
-	$(CXX) -c $< -o $@
+	$(F90C) -c $< -o $@ -I$(CAMB)/Release 
 
 class_wrapper.o: class_wrapper.c Makefile
 	$(CC) -c -I$(CLASS)/include $< -o $@
@@ -122,28 +109,18 @@ $(HALOFIT):
 $(COSMICEMU):
 	+$(MAKE) -C $@
 
-#$(CAMB):
-#	./patchmakefile.sh
-#	+$(MAKE) -C $@
+$(CAMB):
+	+$(MAKE) -C $@
+#	this script changes the ifort compiler to the gfortran compiler. Works with 2013 versions of CAMB
+#       ./patchmakefile.sh
 
 $(CLASS):
 	+$(MAKE) -C $@
-
-$(COPTER): $(COPTER)/lib/libcopter.a
-
-$(COPTER)/lib/libcopter.a: $(COPTER)/Makefile $(COPTER)/src/*cpp
-	$(MAKE) -C $(COPTER) 
-	$(MAKE) -C $(COPTER) install 
-
-$(COPTER)/Makefile:
-	cd $(COPTER) && ./configure --prefix=`pwd`
 
 
 download:
 	./download.sh
 
-cleanall:
-	rm -rf  $(HALOFIT) $(COSMICEMU) $(TRANSFER) $(COPTER) $(CAMB) $(CLASS)
 
 clean:
 	rm -f *mod *o *tm.c math_link
@@ -151,8 +128,7 @@ clean:
 	rm -f $(COSMICEMU)/*{o,exe}
 	if [ ! -z $(FRANKENEMU) ]; then $(MAKE) -C $(FRANKENEMU) clean ; fi
 	if [ ! -z $(HALOFIT) ]; then $(MAKE) -C $(HALOFIT) clean ; fi
-#	if [ ! -z $(CAMB) ]; then $(MAKE) -C $(CAMB) clean ; fi
-	if [ ! -z $(COPTER) ]; then $(MAKE) -C $(COPTER) uninstall clean distclean ; fi
+	if [ ! -z $(CAMBROOT) ]; then $(MAKE) -C $(CAMBROOT) clean ; fi
 	if [ ! -z $(CLASS) ]; then $(MAKE) -C $(CLASS) clean ; fi
 
-.PHONY: clean $(HALOFIT) $(COSMICEMU) $(CAMB) $(COPTER) $(CLASS) download cleanall
+.PHONY: clean $(HALOFIT) $(COSMICEMU) $(CAMB) $(CLASS) download 
