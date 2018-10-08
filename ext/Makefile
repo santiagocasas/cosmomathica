@@ -1,8 +1,6 @@
 # Define your C compiler
-CC = gcc -O2 -Wl,--no-as-needed -Wall -lgfortran -fPIC -fopenmp -lm -ldl 
+CC = gcc -O2 -Wl,--no-as-needed -lgfortran -fPIC -fopenmp -lm -ldl 
 
-# C++ compiler for copter
-CXX = g++ -O2 -Wl,--no-as-needed -fopenmp -Wall -pedantic -lm -ldl
 
 # Define your Fortran compiler (if you want to use CAMB) Must match CAMB
 # compiler
@@ -38,22 +36,21 @@ else
   DFLAGS += -DHALOFIT
 endif
 
-#ifeq ($(wildcard CosmicEmulator/emu.c),)
-#  COSMICEMU = 
-#else
-#  COSMICEMU = CosmicEmulator
-#  OFILES += $(COSMICEMU)/hubble.o $(COSMICEMU)/emu.o 
-#  EMULIBS = -lgsl -lgslcblas 
-#  DFLAGS += -DCOSMICEMU
-#endif
+ifeq ($(wildcard CosmicEmulator/emu.c),)
+  COSMICEMU = 
+else
+  COSMICEMU = CosmicEmulator
+  OFILES += $(COSMICEMU)/hubble.o $(COSMICEMU)/emu.o 
+  EMULIBS = -lgsl -lgslcblas 
+  DFLAGS += -DCOSMICEMU
+endif
 
 ifeq ($(wildcard FrankenEmu/emu.c),)
   FRANKENEMU = 
 else
   FRANKENEMU = FrankenEmu
-  OFILES += $(addprefix $(FRANKENEMU)/, hubble.o emu.o emu_noh.o)
-  EMULIBS = -lgsl -lgslcblas
-  DFLAGS += -DFRANKENEMU 
+  FRANKENOFILES += math_link2.o math_link_tm.o $(addprefix $(FRANKENEMU)/, hubble.o emu.o emu_noh.o)
+  EMULIBS = -lgsl -lgslcblas 
 endif
 
 ifeq ($(wildcard camb/camb.f90),)
@@ -74,22 +71,21 @@ else
   EXTRALIBS += $(CLASS)/libclass.a
 endif
 
-all: math_link
+all: math_link math_link2
 
-math_link: $(HALOFIT) $(FRANKENEMU) $(CAMB) $(CLASS) $(OFILES) Makefile
+math_link: $(HALOFIT) $(COSMICEMU) $(CAMB) $(CLASS) $(OFILES) Makefile
 	${CC} -DMLINTERFACE=4 ${DFLAGS} -I${INCDIR} -L${LIBDIR} -l${MLLIB} -luuid \
 		$(OFILES) $(CAMBOFILES) -o $@ $(EXTRALIBS)  \
-		$(EMULIBS)
+		$(EMULIBS) $(COPLIBS)
 
 # The second math_link is for FrankenEmu only, since it contains symbols
 # with the same name as symbols from CosmicEmu
+math_link2: math_link2.o $(FRANKENEMU) $(FRANKENOFILES) Makefile
+	${CC} -DMLINTERFACE=4 -I${INCDIR} -L${LIBDIR} -l${MLLIB} -luuid $(FRANKENOFILES) \
+			-DFRANKENEMU -o $@ $(EXTRALIBS) $(EMULIBS)
 
-#math_link2: $(FRANKENEMU) $(FRANKENOFILES) math_link2.o Makefile  
-#	${CC} -DMLINTERFACE=4 -I${INCDIR} -L${LIBDIR} -l${MLLIB} -luuid $(FRANKENOFILES) \
-#			-DFRANKENEMU -o $@ $(EXTRALIBS) $(EMULIBS) 
-
-#math_link2.o: math_link.c  
-#	${CC} -DFRANKENEMU -c -I$(INCDIR) $< -o $@
+math_link2.o: math_link.c
+	${CC} -DFRANKENEMU -c -I$(INCDIR) $< -o $@
 
 math_link_tm.c: math_link.tm
 	${MPREP} $? -o $@
@@ -112,9 +108,6 @@ $(HALOFIT):
 $(COSMICEMU):
 	+$(MAKE) -C $@
 
-$(FRANKENEMU):
-	+$(MAKE) -C $@
-
 $(CAMB):
 	+$(MAKE) -C $@
 
@@ -135,4 +128,4 @@ clean:
 	if [ ! -z $(CAMBROOT) ]; then $(MAKE) -C $(CAMBROOT) clean ; fi
 	if [ ! -z $(CLASS) ]; then $(MAKE) -C $(CLASS) clean ; fi
 
-.PHONY: clean $(HALOFIT) $(COSMICEMU) $(CAMB) $(CLASS) download 
+.PHONY: clean $(HALOFIT) $(FRANKENEMU) $(CAMB) $(CLASS) download 
