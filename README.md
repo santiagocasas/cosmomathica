@@ -46,8 +46,16 @@ of this package. You need to download the source code of the following
 programs yourself. To make sure you got the right version, the MD5 sums of
 the files in question are given here.
 
-For CAMB and CLASS, the best option is to clone them from their public git repositories.
+Cosmomathica downloads all these codes for you. Just go to the folder `ext` and type:
+    `make download`
+The follow the user prompts. 
 
+The Transfer Function code will be placed in a folder named `tf`, Halofit will be placed in a folder named 
+`halofit` and the CosmicEmulator and FrankenEmulator will be placed in folders named `CosmicEmulator` and `FrankenEmu`, respectively.
+CLASS and CMAB will be cloned from their git repositories and placed in folders named `class` and `camb`.
+
+**File sources:**
+  
   * Transfer function: 
     tf_fit.c
     38ef737fe3bab405bac17db78815559f
@@ -82,10 +90,6 @@ For CAMB and CLASS, the best option is to clone them from their public git repos
     https://github.com/lesgourg/class_public.git
     Julien Lesgourges et al 
 
-The (extracted) files need to placed in directories with names `tf`,
-`halofit`, `camb`, `CosmicEmulator`, `FrankenEmu`, and `class` 
-respectively, inside the `ext` directory.
-
 If you use a modified
 version of CAMB, cosmomathica might stil work, provided you have the same set of parameters. In general, if you modify things like the
 type `CAMBparams`, you almost certainly will have to modify cosmomathica as
@@ -100,17 +104,16 @@ system, so first you should adjust the Mathematica-related lines in the
 `Makefile_mathlink` file, which is located in the `ext` directory. 
 For example:
 `MLINKDIR = /usr/local/Wolfram/Mathematica/11.2/SystemFiles/Links/MathLink/DeveloperKit`
-Next, change into the `ext` directory and type `make`. 
+
+
+To compile all codes and the mathlink, change into the `ext` directory and type `make`.
+Preferibly type `make clean` if you have previously compiled one of the cosmological codes.
+
 
 CAMB uses the Intel Fortran compiler by default. Due to compatibility issues
 with linking the different object files, CAMB needs to be compiled with GNU
 gfortran. Please make sure that CAMB inside the folder camb is compiled with gfortran, by changing the respective Makefile. 
 
-
-In `ext/halofit/Makefile` do this if you get an error message of libraries:
-put the library flags beyond the .o files:
-
-`$(CC) -o smith2demo smith2demo.o smith2.o $(lflags)`
 
 Note that all warnings and errors that you see may be cause by the external
 programs. Make sure the warning is not from compiling the MathLink and
