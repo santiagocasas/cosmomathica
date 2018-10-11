@@ -26,12 +26,15 @@ Requirements
 
   * Wolfram Mathematica version >=10
 
+  * The GNU Compiler Compilation (gcc) and (gfortran) version >=4.6
+  
   * GSL (GNU Scientific Library) 
-    You need gfortran and developer libraries for GSL.
-
-  * For CAMB: Possibly cfitsio, healpix
-
-  * The GNU Compiler Compilation gcc and gfortran version >=4.6
+    You need the developer libraries for GSL (gsl-bin, libgsl-dev)
+    
+  * Universally Unique ID library 
+    (uuid-dev) and (libuuid1)
+    
+  * Note: Library names could depend on your operating-system. Check compiler errors for the needed libraries.
 
 
 
