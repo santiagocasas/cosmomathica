@@ -5,7 +5,7 @@
 ##ITP computers:
 #MLINKDIR = /opt/Wolfram/Mathematica/9.0.1/SystemFiles/Links/MathLink/DeveloperKit
 #my laptop
-MLINKDIR = /usr/local/Wolfram/Mathematica/11.2/SystemFiles/Links/MathLink/DeveloperKit
+MLINKDIR = /local/home/scasas/usr/Wolfram/Mathematica/11.2/SystemFiles/Links/MathLink/DeveloperKit
 
 # Set this value with the result of evaluating $SystemID:
 SYS = Linux-x86-64

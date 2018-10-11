@@ -109,6 +109,7 @@ $(COSMICEMU):
 	+$(MAKE) -C $@
 
 $(CAMB):
+	./patchmakefile_camb.sh
 	+$(MAKE) -C $@
 
 $(CLASS):
