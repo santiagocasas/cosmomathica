@@ -102,6 +102,7 @@ Needs["NumericalCalculus`"]
 
 $location=DirectoryName[$InputFileName];
 
+$lightspeedc=299792.458;
 
 bool2int[b_]:=If[b,1,0];
 validatestring[val_,name_,poss_]:=If[!MemberQ[poss,val],Message[CAMB::InvalidOption,name,val,StringJoin@@Riffle[poss,", "]];Abort[]];
@@ -373,7 +374,8 @@ Halofit[OmegaM_?NumericQ,OmegaL_?NumericQ,gammaShape_?NumericQ,sigma8_?NumericQ,
 link=Install[$location<>"ext/math_link"];
 
 arange=Most[10^Range[-2,0,.1]]~Join~{.99999};
-krange=10^Range[-4,4,.1]*2998;(*halofit uses units c Mpc/h*)
+krange=10^Range[-4,4,.1];
+krange=krange*$lightspeedc;(*halofit uses units c Mpc/h*)
 ellrange=10^Range[-2,6,.1];
 
 labels={"\!\(\*SubscriptBox[\(\[CapitalOmega]\), \(M\)]\)","\!\(\*SubscriptBox[\(\[CapitalOmega]\), \(b\)]\)","\!\(\*SubscriptBox[\(\[Sigma]\), \(8\)]\)","\!\(\*SubscriptBox[\(n\), \(s\)]\)","Gamma","\!\(\*SubscriptBox[\(\[Beta]\), \(p\)]\)","\!\(\*SubscriptBox[\(z\), \(0\)]\)"};
@@ -397,11 +399,11 @@ Uninstall[link];
 arange[[-1]]=1.;
 (*Just return the raw numbers*)
 {Halofit["avalues"]->arange,
-Halofit["kvalues"]->krange,
+Halofit["kvalues"]->krange/$lightspeedc,
 Halofit["ellvalues"]->ellrange,
-Halofit["kappaBBKS"]->Kappa[[1]],Halofit["BBKS"]->Tf[[1]],
-Halofit["kappaPD96"]->Kappa[[2]],Halofit["PD96"]->Tf[[2]],
-Halofit["kappaHalofit"]->Kappa[[3]],Halofit["Halofit"]->Tf[[3]]}
+Halofit["kappaBBKS"]->Kappa[[1]],Halofit["BBKS"]->Tf[[1]]*($lightspeedc^3),
+Halofit["kappaPD96"]->Kappa[[2]],Halofit["PD96"]->Tf[[2]]*($lightspeedc^3),
+Halofit["kappaHalofit"]->Kappa[[3]],Halofit["Halofit"]->Tf[[3]]*($lightspeedc^3)}
 ];
 
 
