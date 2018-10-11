@@ -370,12 +370,13 @@ Table[{k,nonlinearPS[k]},{k,LinearPS[[All,1]]}]
 
 
 
-Halofit[OmegaM_?NumericQ,OmegaL_?NumericQ,gammaShape_?NumericQ,sigma8_?NumericQ,ns_?NumericQ,betaP_?NumericQ,z0_?NumericQ]:=Module[{link,Tf={},Kappa={},arange,krange,ellrange,labels,limits,parameters,check},
+Halofit[OmegaM_?NumericQ,OmegaL_?NumericQ,gammaShape_?NumericQ,sigma8_?NumericQ,ns_?NumericQ,betaP_?NumericQ,z0_?NumericQ]:=Module[{link,Tf={},Kappa={},unitsfact,arange,krange,ellrange,labels,limits,parameters,check},
 link=Install[$location<>"ext/math_link"];
 
 arange=Most[10^Range[-2,0,.1]]~Join~{.99999};
 krange=10^Range[-4,4,.1];
-krange=krange*$lightspeedc;(*halofit uses units c Mpc/h*)
+unitsfact=$lightspeedc/100;
+krange=krange*unitsfact;(*halofit uses units H0/c Mpc^-1*)
 ellrange=10^Range[-2,6,.1];
 
 labels={"\!\(\*SubscriptBox[\(\[CapitalOmega]\), \(M\)]\)","\!\(\*SubscriptBox[\(\[CapitalOmega]\), \(b\)]\)","\!\(\*SubscriptBox[\(\[Sigma]\), \(8\)]\)","\!\(\*SubscriptBox[\(n\), \(s\)]\)","Gamma","\!\(\*SubscriptBox[\(\[Beta]\), \(p\)]\)","\!\(\*SubscriptBox[\(z\), \(0\)]\)"};
@@ -399,11 +400,11 @@ Uninstall[link];
 arange[[-1]]=1.;
 (*Just return the raw numbers*)
 {Halofit["avalues"]->arange,
-Halofit["kvalues"]->krange/$lightspeedc,
+Halofit["kvalues"]->krange/(unitsfact),
 Halofit["ellvalues"]->ellrange,
-Halofit["kappaBBKS"]->Kappa[[1]],Halofit["BBKS"]->Tf[[1]]*($lightspeedc^3),
-Halofit["kappaPD96"]->Kappa[[2]],Halofit["PD96"]->Tf[[2]]*($lightspeedc^3),
-Halofit["kappaHalofit"]->Kappa[[3]],Halofit["Halofit"]->Tf[[3]]*($lightspeedc^3)}
+Halofit["kappaBBKS"]->Kappa[[1]],Halofit["BBKS"]->Tf[[1]]*((unitsfact)^3),
+Halofit["kappaPD96"]->Kappa[[2]],Halofit["PD96"]->Tf[[2]]*((unitsfact)^3),
+Halofit["kappaHalofit"]->Kappa[[3]],Halofit["Halofit"]->Tf[[3]]*((unitsfact)^3)}
 ];
 
 
