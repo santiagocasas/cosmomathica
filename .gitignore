@@ -2,12 +2,12 @@ ext/math_link
 ext/math_link2
 ext/testwrapper
 ext/HighLExtrapTemplate_lenspotentialCls.dat
-ext/camb/*
-ext/CosmicEmulator/*
-ext/FrankenEmu/*
-ext/halofit/*
-ext/tf/*
-ext/tf/*.o
+ext/camb
+ext/class
+ext/CosmicEmulator
+ext/FrankenEmu
+ext/halofit
+ext/tf
 ext/math_link_tm.c
 ext/tags
 doc/*log
@@ -21,7 +21,6 @@ ext/math_link.o
 ext/math_link2.o
 ext/math_link_tm.o
 backup/
-ext/class/*
 ext/Makefile-backup
 #ext/Makefile
 #ext/Makefile_mathlink
