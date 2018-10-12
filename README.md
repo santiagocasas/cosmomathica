@@ -41,12 +41,16 @@ Requirements
 External programs
 =================
 
-Due to copyright issues, the external packages cannot be delivered as part
-of this package. You need to download the source code of the following
-programs yourself. To make sure you got the right version, the MD5 sums of
-the files in question are given here.
+Cosmomathica interfaces with the `Transfer Function` code from Eisenstein&Hu, 
+`halofit` from Robert Smith et al and Martin Kilbinger,
+`CosmicEmulator` and `FrankenEmulator` from Kathrin Heitmann et al,
+`CAMB` from Anthony Lewis et al and `CLASS` from Julien Lesgourges et al.
 
-*Cosmomathica downloads all these codes for you*. Just go to the folder `ext` and type:
+Due to copyright issues, the external packages cannot be delivered as part
+of this package.
+
+**Cosmomathica downloads all these codes for you.**
+Just go to the folder `ext/` and type:
     `make download`
 Then follow the user prompts. 
 
@@ -54,7 +58,75 @@ The Transfer Function code will be placed in a folder named `tf`, Halofit will b
 `halofit` and the CosmicEmulator and FrankenEmulator will be placed in folders named `CosmicEmulator` and `FrankenEmu`, respectively.
 CLASS and CMAB will be cloned from their git repositories and placed in folders named `class` and `camb`.
 
-**File sources:**
+If you use a modified
+version of *CAMB* or *CLASS*, cosmomathica might stil work. 
+In general, if you modify things like the
+type `CAMBparams`, you almost certainly will have to modify cosmomathica as
+well. 
+See the `camb_wrapper.f90` and the `class_wrapper.c` under `ext/`.
+
+
+How to compile the MathLink
+===========================
+
+The paths to the required Mathematica libraries are often different on every
+system, so first you should adjust the Mathematica-related lines in the
+`Makefile_mathlink` file, which is located in the `ext` directory. 
+
+This line:
+`MLINKDIR = /usr/local/Wolfram/Mathematica/11.2/SystemFiles/Links/MathLink/DeveloperKit`
+has to be adapted to your file system.
+
+
+**First**, if you haven't, change to the directory `ext/` and type: `make download`. 
+Follow the user prompts to download the external packages.
+
+
+**As a second step**, compile all codes and the mathlink by typing `make` inside the `ext/` directory.
+Preferibly type `make clean` before, if you have previously compiled one of the cosmological codes.
+
+
+CAMB uses the Intel Fortran compiler by default. Due to compatibility issues
+with linking the different object files, CAMB needs to be compiled with GNU
+**gfortran**. 
+Please make sure that CAMB inside the folder camb is compiled with **gfortran**, by changing the respective Makefile. 
+
+
+Note that all warnings and errors that you see may be cause by the external
+programs. Make sure the warning is not from compiling the MathLink and
+contact the respective authors if you have concerns. Otherwise, feel free to
+file a bug report on GitHub.
+
+
+How to use Cosmomathica
+=======================
+
+In general, each one of the functions `CAMB`, `Transfer`, `Halofit`, `Class`
+and `FrankenEmu` returns lists containing the raw data
+as computed by the respective program. 
+
+
+See the notebook `demo.nb` for a demonstration. 
+
+
+Version
+=======
+
+This is version 1.0.
+
+Version 1.0: Release by Santiago Casas
+
+Previous versions: Forked from Adrian Vollmer's original cosmomathica.
+
+
+Copyright and licensing
+=======================
+
+Cosmomathica is released under the GPL2. Contributions are welcome. Note
+that the copyright of the external software packages belong to their
+respective owners. Read their copyright remarks before using them.
+
+**Sources of external packages: **
   
   * Transfer function: 
     tf_fit.c
@@ -90,58 +162,3 @@ CLASS and CMAB will be cloned from their git repositories and placed in folders 
     https://github.com/lesgourg/class_public.git
     Julien Lesgourges et al 
 
-If you use a modified
-version of CAMB, cosmomathica might stil work, provided you have the same set of parameters. In general, if you modify things like the
-type `CAMBparams`, you almost certainly will have to modify cosmomathica as
-well.
-
-
-How to compile the MathLink
-===========================
-
-The paths to the required Mathematica libraries are often different on every
-system, so first you should adjust the Mathematica-related lines in the
-`Makefile_mathlink` file, which is located in the `ext` directory. 
-For example:
-`MLINKDIR = /usr/local/Wolfram/Mathematica/11.2/SystemFiles/Links/MathLink/DeveloperKit`
-
-
-To compile all codes and the mathlink, change into the `ext` directory and type `make`.
-Preferibly type `make clean` if you have previously compiled one of the cosmological codes.
-
-
-CAMB uses the Intel Fortran compiler by default. Due to compatibility issues
-with linking the different object files, CAMB needs to be compiled with GNU
-gfortran. Please make sure that CAMB inside the folder camb is compiled with gfortran, by changing the respective Makefile. 
-
-
-Note that all warnings and errors that you see may be cause by the external
-programs. Make sure the warning is not from compiling the MathLink and
-contact the respective authors if you have concerns. Otherwise, feel free to
-file a bug report on GitHub.
-
-
-How to use Cosmomathica
-=======================
-
-In general, each one of the functions `CAMB`, `Transfer`, `Halofit`, `Class`
-and `FrankenEmu` returns a list of replacement rules containing the raw data
-as computed by the respective program. See the notebook `demo.nb` for
-a demonstration. 
-
-
-Version
-=======
-
-This is version 1.0. Since this is an alpha status, backwards compatibility
-may be broken in future releases.
-
-This is a forked version by Santiago Casas, with some major and minor modifications.
-
-
-Copyright and licensing
-=======================
-
-Cosmomathica is released under the GPL2. Contributions are welcome. Note
-that the copyright of the external software packages belong to their
-respective owners. Read their copyright remarks before using them.
