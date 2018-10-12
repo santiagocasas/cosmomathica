@@ -46,9 +46,9 @@ of this package. You need to download the source code of the following
 programs yourself. To make sure you got the right version, the MD5 sums of
 the files in question are given here.
 
-Cosmomathica downloads all these codes for you. Just go to the folder `ext` and type:
+*Cosmomathica downloads all these codes for you*. Just go to the folder `ext` and type:
     `make download`
-The follow the user prompts. 
+Then follow the user prompts. 
 
 The Transfer Function code will be placed in a folder named `tf`, Halofit will be placed in a folder named 
 `halofit` and the CosmicEmulator and FrankenEmulator will be placed in folders named `CosmicEmulator` and `FrankenEmu`, respectively.
