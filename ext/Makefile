@@ -71,12 +71,22 @@ else
   EXTRALIBS += $(CLASS)/libclass.a
 endif
 
+ifeq ($(wildcard mgcamb/camb.f90),)
+  MGCAMB = 
+else
+  MGCAMB = mgcamb
+  OFILES += mgcamb_wrapper.o 
+  MGCAMBOFILES = $(MGCAMB)/Release/*.o
+  DFLAGS += -DMGCAMB
+endif
+
+
 all: math_link math_link2
 
-math_link: $(HALOFIT) $(COSMICEMU) $(CAMB) $(CLASS) $(OFILES) Makefile
+math_link: $(HALOFIT) $(COSMICEMU) $(CAMB) $(MGCAMB) $(CLASS) $(OFILES) Makefile
 	${CC} -DMLINTERFACE=4 ${DFLAGS} -I${INCDIR} -L${LIBDIR} -l${MLLIB} -luuid \
-		$(OFILES) $(CAMBOFILES) -o $@ $(EXTRALIBS)  \
-		$(EMULIBS) $(COPLIBS)
+		$(OFILES) $(CAMBOFILES) $(MGCAMBOFILES) -o $@ $(EXTRALIBS)  \
+		$(EMULIBS)
 
 # The second math_link is for FrankenEmu only, since it contains symbols
 # with the same name as symbols from CosmicEmu
@@ -98,6 +108,9 @@ math_link_tm.c: math_link.tm
 camb_wrapper.o: camb_wrapper.f90 Makefile
 	$(F90C) -c $< -o $@ -I$(CAMB)/Release 
 
+mgcamb_wrapper.o: mgcamb_wrapper.f90 Makefile
+	$(F90C) -c $< -o $@ -I$(MGCAMB)/Release 
+
 class_wrapper.o: class_wrapper.c Makefile
 	$(CC) -c -I$(CLASS)/include $< -o $@
 
@@ -115,6 +128,8 @@ $(CAMB):
 $(CLASS):
 	+$(MAKE) -C $@
 
+$(MGCAMB):
+	+$(MAKE) -C $@
 
 download:
 	./download.sh

@@ -3,6 +3,8 @@ ext/math_link2
 ext/testwrapper
 ext/HighLExtrapTemplate_lenspotentialCls.dat
 ext/camb
+ext/x_camb
+ext/x_camb*
 ext/mgcamb
 ext/class
 ext/CosmicEmulator
@@ -15,6 +17,7 @@ doc/*log
 doc/*aux
 #ext/patchmakefile.sh
 ext/camb_wrapper.o
+ext/mgcamb_wrapper.o
 ext/cambwrapper.mod
 ext/class_wrapper.o
 #ext/extcosmo.zip

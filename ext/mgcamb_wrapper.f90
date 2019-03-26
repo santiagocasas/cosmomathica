@@ -3,6 +3,7 @@ module cambwrapper
     use iso_c_binding
 
     use CAMB
+    use MGCAMB
     use LambdaGeneral
     use Lensing
     use AMLUtils
@@ -131,7 +132,7 @@ contains
         Type(CAMBparams) P
         Type(MatterPowerData) PK_data
         Type (CAMBdata)  :: OutData
-
+        Type (MGCAMB_parameter_cache) :: mgcamb_par_cache
         ! We have two arrays containing all the parameters: one full of doubles,
         ! one full of ints. We need to fill the structure P with it. See
         ! camb/inidriver.f90 for how it works. We avoid passing structures
@@ -178,12 +179,34 @@ contains
         omegak    = floats(fi); fi=fi+1
         P%omegav  = 1 - omegak - P%omegab-P%omegac - P%omegan
        
-        use_tabulated_w = .false. 
-        w_lam     = floats(fi); fi=fi+1
-        wa_ppf    = floats(fi); fi=fi+1
+        !use_tabulated_w = .false. 
+        w0DE     = floats(fi); fi=fi+1
+        waDE    = floats(fi); fi=fi+1
 
         P%TCMB    = floats(fi); fi=fi+1
         P%YHe     = floats(fi); fi=fi+1
+
+
+        !> MGCAMB MOD START
+         MG_flag=3
+         QSA_flag=4
+         F_R0 = 0.0001d0
+         FRn = 1.d0
+
+
+         mgcamb_par_cache%omegab = P%omegab
+         mgcamb_par_cache%omegac = P%omegac
+         mgcamb_par_cache%omegav = P%omegav
+         mgcamb_par_cache%h0     = P%H0
+         mgcamb_par_cache%h0_Mpc = P%H0 * (1.d3/c)
+         ! mgcamb_par_cache%output_root = outroot
+        !< MGCAMB MOD END
+ 
+     !> MGCAMB MOD START: reading models and params
+         call MGCAMB_read_model_params( mgcamb_par_cache )
+     !< MGCAMB MOD END
+
+
 
         P%Num_Nu_massless     = floats(fi); fi=fi+1
         P%Num_Nu_massive      = ints(ii); ii=ii+1
