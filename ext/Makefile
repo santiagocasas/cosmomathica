@@ -126,7 +126,7 @@ clean:
 	rm -f $(COSMICEMU)/*{o,exe}
 	if [ ! -z $(FRANKENEMU) ]; then $(MAKE) -C $(FRANKENEMU) clean ; fi
 	if [ ! -z $(HALOFIT) ]; then $(MAKE) -C $(HALOFIT) clean ; fi
-	if [ ! -z $(CAMBROOT) ]; then $(MAKE) -C $(CAMBROOT) clean ; fi
+	if [ ! -z $(CAMB) ]; then $(MAKE) -C $(CAMB) clean ; fi
 	if [ ! -z $(CLASS) ]; then $(MAKE) -C $(CLASS) clean ; fi
 
 .PHONY: clean $(HALOFIT) $(FRANKENEMU) $(CAMB) $(CLASS) download 
