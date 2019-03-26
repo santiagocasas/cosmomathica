@@ -3,6 +3,7 @@ ext/math_link2
 ext/testwrapper
 ext/HighLExtrapTemplate_lenspotentialCls.dat
 ext/camb
+ext/mgcamb
 ext/class
 ext/CosmicEmulator
 ext/FrankenEmu

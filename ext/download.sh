@@ -6,6 +6,7 @@ halofitdir="halofit"
 frankendir="FrankenEmu"
 cambdir="camb"
 classdir="class"
+mgcambdir="mgcamb"
 
 echo "Downloading of cosmological codes started"
 
@@ -71,6 +72,24 @@ case ${answer:0:1} in
     ;;
     * )
         echo No CLASS repo downloaded. You can add manually your own. Make sure the wrapper is still valid.
+    ;;
+esac
+
+read -p "Download and clone MGCAMB git repository (y/n)? " answer
+case ${answer:0:1} in
+    y|Y )
+	echo "removing mgcamb/ folder if existent"
+        if [ ! -d "$mgcambdir" ]; then
+		rm -rv $mgcambdir
+	fi
+        echo "Cloning MGCAMB git repo"
+	git clone https://github.com/sfu-cosmo/MGCAMB.git
+	sleep 2s
+	echo "Renaming MGCAMB to $mgcambdir"
+	mv MGCAMB/ "$mgcambdir/"
+    ;;
+    * )
+        echo No MGCAMB repo downloaded. You can add manually your own. Make sure the wrapper is still valid.
     ;;
 esac
 
