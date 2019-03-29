@@ -148,63 +148,36 @@ contains
         fi = 1
         ii = 1
 
-    
-        !function nextfloat(fi)
-        !    double precision nf
-        !    nf = floats(fi)
-        !    fi=fi+1
-        !    return nf
-        !end function nextfloat
-        !
-        !function nextint(ii)
-        !    integer :: ni
-        !    ni = ints(ii)
-        !    ii=ii+1
-        !    return ni
-        !end function nextint
-        !
-        !function nextbool(ii)
-        !    logical :: nb
-        !    nb = int2bool(ints(ii))
-        !    ii=ii+1
-        !    return nb
-        !end function nextbool
 
-        !> MGCAMB MOD START
-         !###### Part 1. Choose the Modified Growth flag
-         !
-         !# MG_flag = 0 :  default GR
-         !# MG_flag = 1 :  pure MG models
-         !# MG_flag = 2 :  alternative MG models
-         !# MG_flag = 3 :  QSA models
-        MG_flag=ints(ii); ii=ii+1
-        !###### Part 2.1 - Pure MG models
-        !# pure_MG_flag = 1 : mu, gamma parametrization
-        !# pure_MG_flag = 2 : mu, sigma parametrization
-        !# pure_MG_flag = 3 : Q, R  parametrization
-        pure_MG_flag = ints(ii); ii=ii+1
-        !###### Part 2.2 - Alternative MG models
-        !# alt_MG_flag = 1 : Linder Gamma parametrization ( introduced in arXiv:0507263 )
-        alt_MG_flag = ints(ii); ii=ii+1
-         !###### Part 2.3 - QSA models
-         !# QSA_flag = 1 : f(R)
-         !# QSA_flag = 2 : Symmetron
-         !# QSA_flag = 3 : Dilaton
-         !# QSA_flag = 4 : Hu-Sawicki f(R)
-        QSA_flag= ints(ii); ii=ii+1
-         !###### Part 3.1.1. - mu, gamma functions
-         !# mugamma_par = 1 : BZ parametrization(arXiv:0809.3791 )
-         !# mugamma_par = 2 : Planck parametrization
-        mugamma_par = ints(ii); ii=ii+1
-         !###### Part 3.1.2. - mu, Sigma functions
-         !# musigma_par = 1 : DES parametrization
-        musigma_par = ints(ii); ii=ii+1
-          !###### Part 3.1.3. - Q,R functions
-          !# QR_par = 1 : (Q,R)(arXiv:1002.4197 )
-          !# QR_par = 2 : (Q0,R0,s)(arXiv:1002.4197 )
-        QR_par = ints(ii); ii=ii+1
-        DE_model = ints(ii); ii=ii+1
-        ! Floats, parameters for above parametrizations
+        
+
+
+        !### Standard CAMB parameters
+        P%omegac  = floats(fi); fi=fi+1
+        P%omegab  = floats(fi); fi=fi+1
+        P%H0      = floats(fi); fi=fi+1
+        P%omegan  = floats(fi); fi=fi+1
+        omegak    = floats(fi); fi=fi+1
+        P%omegav  = 1 - omegak - P%omegab-P%omegac - P%omegan
+       
+        !use_tabulated_w = .false. 
+        w0DE     = floats(fi); fi=fi+1
+        waDE    = floats(fi); fi=fi+1
+
+        P%TCMB    = floats(fi); fi=fi+1
+        P%YHe     = floats(fi); fi=fi+1
+
+        !## Fill mgcamb_par_cache      
+         mgcamb_par_cache%omegab = P%omegab
+         mgcamb_par_cache%omegac = P%omegac
+         mgcamb_par_cache%omegav = P%omegav
+         mgcamb_par_cache%h0     = P%H0
+         mgcamb_par_cache%h0_Mpc = P%H0 * (1.d3/c)
+         ! mgcamb_par_cache%output_root = outroot
+ 
+
+
+        !###### Floats, parameters for above parametrizations
         !# Choose at which time to turn on MG
         GRtrans = floats(fi); fi=fi+1
         !#BZ parameters:
@@ -247,37 +220,52 @@ contains
         !##### Part 3.3.4 - QSA Hu-Sawicki f(R)
         F_R0 = floats(fi); fi=fi+1 
         FRn = floats(fi); fi=fi+1
+        !< MGCAMB MOD END
 
 
-        !### Standard CAMB parameters
-        P%omegac  = floats(fi); fi=fi+1
-        P%omegab  = floats(fi); fi=fi+1
-        P%H0      = floats(fi); fi=fi+1
-        P%omegan  = floats(fi); fi=fi+1
-        omegak    = floats(fi); fi=fi+1
-        P%omegav  = 1 - omegak - P%omegab-P%omegac - P%omegan
-       
-        !use_tabulated_w = .false. 
-        w0DE     = floats(fi); fi=fi+1
-        waDE    = floats(fi); fi=fi+1
-
-        P%TCMB    = floats(fi); fi=fi+1
-        P%YHe     = floats(fi); fi=fi+1
-
-        !## Fill mgcamb_par_cache      
-         mgcamb_par_cache%omegab = P%omegab
-         mgcamb_par_cache%omegac = P%omegac
-         mgcamb_par_cache%omegav = P%omegav
-         mgcamb_par_cache%h0     = P%H0
-         mgcamb_par_cache%h0_Mpc = P%H0 * (1.d3/c)
-         ! mgcamb_par_cache%output_root = outroot
- 
+        !> MGCAMB MOD START
+         !###### Part 1. Choose the Modified Growth flag
+         !
+         !# MG_flag = 0 :  default GR
+         !# MG_flag = 1 :  pure MG models
+         !# MG_flag = 2 :  alternative MG models
+         !# MG_flag = 3 :  QSA models
+        MG_flag=ints(ii); ii=ii+1
+        !###### Part 2.1 - Pure MG models
+        !# pure_MG_flag = 1 : mu, gamma parametrization
+        !# pure_MG_flag = 2 : mu, sigma parametrization
+        !# pure_MG_flag = 3 : Q, R  parametrization
+        pure_MG_flag = ints(ii); ii=ii+1
+        !###### Part 2.2 - Alternative MG models
+        !# alt_MG_flag = 1 : Linder Gamma parametrization ( introduced in arXiv:0507263 )
+        alt_MG_flag = ints(ii); ii=ii+1
+         !###### Part 2.3 - QSA models
+         !# QSA_flag = 1 : f(R)
+         !# QSA_flag = 2 : Symmetron
+         !# QSA_flag = 3 : Dilaton
+         !# QSA_flag = 4 : Hu-Sawicki f(R)
+        QSA_flag= ints(ii); ii=ii+1
+         !###### Part 3.1.1. - mu, gamma functions
+         !# mugamma_par = 1 : BZ parametrization(arXiv:0809.3791 )
+         !# mugamma_par = 2 : Planck parametrization
+        mugamma_par = ints(ii); ii=ii+1
+         !###### Part 3.1.2. - mu, Sigma functions
+         !# musigma_par = 1 : DES parametrization
+        musigma_par = ints(ii); ii=ii+1
+          !###### Part 3.1.3. - Q,R functions
+          !# QR_par = 1 : (Q,R)(arXiv:1002.4197 )
+          !# QR_par = 2 : (Q0,R0,s)(arXiv:1002.4197 )
+        QR_par = ints(ii); ii=ii+1
+          !##DE_model = 0 : LCDM
+          !##DE_model = 1 : wCDM                
+          !##DE_model = 2 : (w0,wa)CDM          
+          !##DE_model = 3 : user defined                
+        DE_model = ints(ii); ii=ii+1
      !> MGCAMB MOD START: reading models and params
          call MGCAMB_read_model_params( mgcamb_par_cache )
      !< MGCAMB MOD END
 
-
-
+        !! ### Neutrino Parameters!!
         P%Num_Nu_massless     = floats(fi); fi=fi+1
         P%Num_Nu_massive      = ints(ii); ii=ii+1
         P%Nu_mass_eigenstates = ints(ii); ii=ii+1

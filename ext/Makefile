@@ -53,14 +53,14 @@ else
   EMULIBS = -lgsl -lgslcblas 
 endif
 
-ifeq ($(wildcard camb/camb.f90),)
-  CAMB = 
-else
-  CAMB = camb
-  OFILES += camb_wrapper.o 
-  CAMBOFILES = $(CAMB)/Release/*.o
-  DFLAGS += -DCAMB
-endif
+#ifeq ($(wildcard camb/camb.f90),)
+#  CAMB = 
+#else
+#  CAMB = camb
+#  OFILES += camb_wrapper.o 
+#  CAMBOFILES = $(CAMB)/Release/*.o
+#  DFLAGS += -DCAMB
+#endif
 
 ifeq ($(wildcard class/Makefile),)
   CLASS = 
@@ -105,8 +105,8 @@ math_link_tm.c: math_link.tm
 %.o: %.c
 	$(CC) $(DFLAGS)  -c -I$(INCDIR) $< -o $@
 
-camb_wrapper.o: camb_wrapper.f90 Makefile
-	$(F90C) -c $< -o $@ -I$(CAMB)/Release 
+#camb_wrapper.o: camb_wrapper.f90 Makefile
+#	$(F90C) -c $< -o $@ -I$(CAMB)/Release 
 
 mgcamb_wrapper.o: mgcamb_wrapper.f90 Makefile
 	$(F90C) -c $< -o $@ -I$(MGCAMB)/Release 
@@ -121,9 +121,9 @@ $(HALOFIT):
 $(COSMICEMU):
 	+$(MAKE) -C $@
 
-$(CAMB):
-	./patchmakefile_camb.sh
-	+$(MAKE) -C $@
+#$(CAMB):
+#	./patchmakefile_camb.sh
+#	+$(MAKE) -C $@
 
 $(CLASS):
 	+$(MAKE) -C $@
@@ -141,8 +141,9 @@ clean:
 	rm -f $(COSMICEMU)/*{o,exe}
 	if [ ! -z $(FRANKENEMU) ]; then $(MAKE) -C $(FRANKENEMU) clean ; fi
 	if [ ! -z $(HALOFIT) ]; then $(MAKE) -C $(HALOFIT) clean ; fi
-	if [ ! -z $(CAMB) ]; then $(MAKE) -C $(CAMB) clean ; fi
+	#if [ ! -z $(CAMB) ]; then $(MAKE) -C $(CAMB) clean ; fi
 	if [ ! -z $(MGCAMB) ]; then $(MAKE) -C $(MGCAMB) clean ; fi
 	if [ ! -z $(CLASS) ]; then $(MAKE) -C $(CLASS) clean ; fi
 
-.PHONY: clean $(HALOFIT) $(FRANKENEMU) $(CAMB) $(MGCAMB) $(CLASS) download 
+#.PHONY: clean $(HALOFIT) $(FRANKENEMU) $(CAMB) $(MGCAMB) $(CLASS) download 
+.PHONY: clean $(HALOFIT) $(FRANKENEMU) $(MGCAMB) $(CLASS) download 

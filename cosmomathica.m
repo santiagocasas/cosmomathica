@@ -26,6 +26,70 @@ Class::usage="Class[\"parameter1\" -> \"value1\",...] runs Class. You need to sp
 
 
 
+
+MGflag::usage="An option for CAMB/MGCAMB: 
+          MG_flag = 0 :  default GR
+          MG_flag = 1 :  pure MG models
+          MG_flag = 2 :  alternative MG models
+          MG_flag = 3 :  QSA models
+"
+pureMGflag::usage="An option for CAMB/MGCAMB: 
+pure_MG_flag = 1 : mu, gamma parametrization
+pure_MG_flag = 2 : mu, sigma parametrization
+pure_MG_flag = 3 : Q, R  parametrization
+"
+altMGflag::usage="An option for CAMB/MGCAMB: alt_MG_flag = 1 : Linder Gamma parametrization"
+
+QSAflag::usage="An option for CAMB/MGCAMB: 
+QSA_flag = 1 : f(R)
+QSA_flag = 2 : Symmetron      
+QSA_flag = 3 : Dilaton
+QSA_flag = 4 : Hu-Sawicki f(R)"
+
+mugammapar::usage="An option for CAMB/MGCAMB
+mugamma_par = 1 : BZ parametrization
+mugamma_par = 2 : Planck parametrization
+"
+musigmapar::usage="An option for CAMB/MGCAMB:
+musigma_par = 1 : DES parametrization
+"
+QRpar::usage="An option for CAMB/MGCAMB:
+QR_par = 1 : (Q,R)(arXiv:1002.4197 )
+QR_par = 2 : (Q0,R0,s)(arXiv:1002.4197 )"
+
+DEmodel::usage="An option for CAMB/MGCAMB:
+DE_model = 0 : LCDM
+DE_model = 1 : wCDM        
+DE_model = 2 : (w0,wa)CDM  
+DE_model = 3 : user defined
+"
+
+GRtrans::usage="Parameter options for MGCAMB"
+B1::usage="Parameter options for MGCAMB"
+lambda12::usage="Parameter options for MGCAMB"
+B2::usage="Parameter options for MGCAMB"
+lambda22::usage="Parameter options for MGCAMB"
+ss::usage="Parameter options for MGCAMB"
+E11::usage="Parameter options for MGCAMB"
+E22::usage="Parameter options for MGCAMB"
+mu0::usage="Parameter options for MGCAMB"
+sigma0::usage="Parameter options for MGCAMB"
+MGQfix::usage="Parameter options for MGCAMB"
+MGRfix::usage="Parameter options for MGCAMB"       
+Qnot::usage="Parameter options for MGCAMB"
+Rnot::usage="Parameter options for MGCAMB"
+sss::usage="Parameter options for MGCAMB"
+Lindergamma::usage="Parameter options for MGCAMB"
+betastar::usage="Parameter options for MGCAMB"
+astar::usage="Parameter options for MGCAMB"
+xistar::usage="Parameter options for MGCAMB"
+beta0::usage="Parameter options for MGCAMB"
+xi0::usage="Parameter options for MGCAMB"
+DilS::usage="Parameter options for MGCAMB"
+DilR::usage="Parameter options for MGCAMB"
+FR0::usage="Parameter options for MGCAMB" 
+FRn::usage="Parameter options for MGCAMB"
+
 w0ppf::usage="An option for CAMB";
 wappf::usage="An option for CAMB";
 Tcmb::usage="An option for CAMB";
@@ -198,14 +262,18 @@ validatestring[OptionValue[MassiveNuMethod],"MassiveNuMethod",massivenu];
 
 tkmaxh=OptionValue[TransferKmax]*h;  (*rescale passed k_max with h, so that output of CAMB is correctly in h/Mpc*)
 
-floats=Flatten@{OmegaC,OmegaB,h*100,OptionValue[#]&/@{OmegaNu,OmegaK0,w0ppf,wappf,Tcmb,YHe,MasslessNeutrinos,NuMassDegeneracies,
-  NuMassFractions,ScalarSpectralIndex,ScalarRunning,TensorSpectralIndex,RatioScalarTensorAmplitudes,
-  ScalarPowerAmplitude,PivotScalar,PivotTensor,OpticalDepth,ReionizationRedshift,ReionizationFraction,
-  ReionizationDeltaRedshift,AccuracyBoost,MaxEtaK,MaxEtaKTensor}, tkmaxh,Reverse@Sort@OptionValue@TransferRedshifts};
+floatsMG=OptionValue[#]&/@{GRtrans,B1,lambda12,B2,lambda22,ss,E11,E22,mu0,sigma0,MGQfix,MGRfix,Qnot,Rnot,sss,Lindergamma,betastar,astar,xistar,beta0,xi0,DilS,DilR,FR0,FRn};
 
+floats=Flatten@{OmegaC,OmegaB,h*100,OptionValue[#]&/@{OmegaNu,OmegaK0,w0ppf,wappf,Tcmb,YHe,
+                floatsMG,
+                MasslessNeutrinos,NuMassDegeneracies,
+                NuMassFractions,ScalarSpectralIndex,ScalarRunning,TensorSpectralIndex,RatioScalarTensorAmplitudes,
+                ScalarPowerAmplitude,PivotScalar,PivotTensor,OpticalDepth,ReionizationRedshift,ReionizationFraction,
+                ReionizationDeltaRedshift,AccuracyBoost,MaxEtaK,MaxEtaKTensor}, tkmaxh,Reverse@Sort@OptionValue@TransferRedshifts};
 
+intsMG=OptionValue[#]&/@{MGflag,pureMGflag,altMGflag,QSAflag,mugammapar,musigmapar,QRpar,DEmodel};
 (*NuMassDegeneracies ignored at the moment in camb_wrapper*)
-ints=Flatten@{OptionValue[MassiveNeutrinos],Length@OptionValue[NuMassFractions],
+ints=Flatten@{intsMG, OptionValue[MassiveNeutrinos],Length@OptionValue[NuMassFractions],
   Position[initialcond,OptionValue[ScalarInitialCondition]][[1,1]]-1,
   Position[nonlinear,OptionValue[NonLinear]][[1,1]]-1,
   OptionValue[HalofitVersion],
@@ -216,6 +284,7 @@ ints=Flatten@{OptionValue[MassiveNeutrinos],Length@OptionValue[NuMassFractions],
   OptionValue[#]&/@{OutputNormalization,MaxEll,MaxEllTensor,TransferKperLogInt},Length@OptionValue@TransferRedshifts,
   bool2int/@OptionValue@{AccuratePolarization,AccurateReionization,AccurateBB,DoLensing,OnlyTransfers,DerivedParameters},
   Position[massivenu,OptionValue[MassiveNuMethod]][[1,1]]-1};
+
 If[OptionValue[debugIntFloats]==True,
   Print["list of ints and floats passed to camb_wrapper: "];
   Print[ints,floats];
@@ -260,7 +329,34 @@ CAMB["PSnonlinear"]->Table[Exp@Transpose@{resultfloat[[j]],resultfloat[[j+2,All,
 ](*,CAMB["ints"]->resultint,CAMB["floats"]->resultfloat*)
 },Null]
 ];
-Options[CAMB]={w0ppf->-1.0, wappf->0., Tcmb->2.7255,
+Options[CAMB]={
+MGflag->0, pureMGflag->1, altMGflag->1, QSAflag->1, mugammapar->2, musigmapar->1, QRpar->1, DEmodel->1,
+GRtrans->0.001,
+B1->0.0,
+lambda12->0.0,
+B2->0.0,
+lambda22->0.0,
+ss->4.0,
+E11->0.0,
+E22->0.0,
+mu0->-1.0,
+sigma0->0.0,
+MGQfix->0.0,
+MGRfix->0.0,
+Qnot->1.0,
+Rnot->1.0,
+sss->0.0,
+Lindergamma->0.545,
+betastar->0.0,
+astar->0.5,
+xistar->0.001,
+beta0->1.0,
+xi0->0.0001,
+DilS->0.24,
+DilR->1.0,
+FR0->0.0001,
+FRn->1.0, 
+w0ppf->-1.0, wappf->0., Tcmb->2.7255,
   OmegaNu->0, OmegaK0->0., YHe->.24,MasslessNeutrinos->3.046,
   MassiveNeutrinos->0,NuMassDegeneracies->{0},NuMassFractions->{1},
   ScalarInitialCondition->"adiabatic",NonLinear->"pk", HalofitVersion->4, WantCMB->True,WantTransfer->True,WantCls->False,
@@ -275,8 +371,8 @@ Options[CAMB]={w0ppf->-1.0, wappf->0., Tcmb->2.7255,
   AccuratePolarization->True,AccurateReionization->False,AccurateBB->False,DoLensing->False,
   OnlyTransfers->False,DerivedParameters->True,MassiveNuMethod->"best",
   debugIntFloats->False};
-Options[validatestring]=Options[CAMB];
 
+Options[validatestring]=Options[CAMB];
 
 (*Transfer function*)
 Transfer[OmegaM_?NumericQ,fBaryon_?NumericQ,Tcmb_?NumericQ,h_?NumericQ]:=Module[{result,link,krange,fitonek,horizon,peak,OmegaC},
