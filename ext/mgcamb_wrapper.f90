@@ -262,7 +262,7 @@ contains
           !##DE_model = 3 : user defined                
         DE_model = ints(ii); ii=ii+1
      !> MGCAMB MOD START: reading models and params
-         call MGCAMB_read_model_params( mgcamb_par_cache )
+      !     call MGCAMB_read_model_params( mgcamb_par_cache )
      !< MGCAMB MOD END
 
         !! ### Neutrino Parameters!!
