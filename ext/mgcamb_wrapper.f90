@@ -349,9 +349,12 @@ contains
         CP%DerivedParameters = .true.
         !TODO DoTensorNeutrinos? ThreadNum?
 
-        if (ii-1 /= ints_len .or. fi-1 /= floats_len) then
-            write(*,*) "Wrong number of parameters: ", fi-1,ii-1
-            write(*,*) "Expected: ", floats_len, ints_len
+            write(42,*) "Wrong number of parameters: ", fi-1,ii-1
+            write(42,*) "Expected: ", floats_len, ints_len
+        
+       if (ii-1 /= ints_len .or. fi-1 /= floats_len) then
+            write(42,*) "Wrong number of parameters: ", fi-1,ii-1
+            write(42,*) "Expected: ", floats_len, ints_len
             stop
         endif
 
