@@ -264,12 +264,14 @@ tkmaxh=OptionValue[TransferKmax]*h;  (*rescale passed k_max with h, so that outp
 
 floatsMG=OptionValue[#]&/@{GRtrans,B1,lambda12,B2,lambda22,ss,E11,E22,mu0,sigma0,MGQfix,MGRfix,Qnot,Rnot,sss,Lindergamma,betastar,astar,xistar,beta0,xi0,DilS,DilR,FR0,FRn};
 
-floats=Flatten@{OmegaC,OmegaB,h*100,OptionValue[#]&/@{OmegaNu,OmegaK0,w0ppf,wappf,Tcmb,YHe,
+floats=Flatten@{OmegaC,OmegaB,h*100,OptionValue[#]&/@{OmegaNu,OmegaK0,w0ppf,wappf,Tcmb,YHe},
                 floatsMG,
-                MasslessNeutrinos,NuMassDegeneracies,
+                OptionValue[#]&/@{MasslessNeutrinos,NuMassDegeneracies,
                 NuMassFractions,ScalarSpectralIndex,ScalarRunning,TensorSpectralIndex,RatioScalarTensorAmplitudes,
-                ScalarPowerAmplitude,PivotScalar,PivotTensor,OpticalDepth,ReionizationRedshift,ReionizationFraction,
-                ReionizationDeltaRedshift,AccuracyBoost,MaxEtaK,MaxEtaKTensor}, tkmaxh,Reverse@Sort@OptionValue@TransferRedshifts};
+                ScalarPowerAmplitude,PivotScalar,PivotTensor,
+                OpticalDepth,ReionizationRedshift,ReionizationFraction,
+                ReionizationDeltaRedshift,AccuracyBoost,MaxEtaK,MaxEtaKTensor}, tkmaxh,
+                Reverse@Sort@OptionValue@TransferRedshifts};
 
 intsMG=OptionValue[#]&/@{MGflag,pureMGflag,altMGflag,QSAflag,mugammapar,musigmapar,QRpar,DEmodel};
 (*NuMassDegeneracies ignored at the moment in camb_wrapper*)
@@ -289,7 +291,7 @@ If[OptionValue[debugIntFloats]==True,
   Print["list of ints and floats passed to camb_wrapper: "];
   Print[ints,floats];
 ];
-SetDirectory[$location<>"ext/camb"];
+SetDirectory[$location<>"ext/mgcamb"];
 link=Install[$location<>"ext/math_link"];
 result=Global`CAMBrun[N/@floats,ints];
 ResetDirectory[];

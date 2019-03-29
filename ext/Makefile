@@ -83,11 +83,15 @@ endif
 
 all: math_link math_link2
 
-math_link: $(HALOFIT) $(COSMICEMU) $(CAMB) $(MGCAMB) $(CLASS) $(OFILES) Makefile
-	${CC} -DMLINTERFACE=4 ${DFLAGS} -I${INCDIR} -L${LIBDIR} -l${MLLIB} -luuid \
-		$(OFILES) $(CAMBOFILES) $(MGCAMBOFILES) -o $@ $(EXTRALIBS)  \
-		$(EMULIBS)
+#math_link: $(HALOFIT) $(COSMICEMU) $(CAMB) $(MGCAMB) $(CLASS) $(OFILES) Makefile
+#	${CC} -DMLINTERFACE=4 ${DFLAGS} -I${INCDIR} -L${LIBDIR} -l${MLLIB} -luuid \
+#		$(OFILES) $(CAMBOFILES) $(MGCAMBOFILES) -o $@ $(EXTRALIBS)  \
+#		$(EMULIBS)
 
+math_link: $(HALOFIT) $(COSMICEMU) $(MGCAMB) $(CLASS) $(OFILES) Makefile
+	${CC} -DMLINTERFACE=4 ${DFLAGS} -I${INCDIR} -L${LIBDIR} -l${MLLIB} -luuid \
+		$(OFILES) $(MGCAMBOFILES) -o $@ $(EXTRALIBS)  \
+		$(EMULIBS)
 # The second math_link is for FrankenEmu only, since it contains symbols
 # with the same name as symbols from CosmicEmu
 math_link2: math_link2.o $(FRANKENEMU) $(FRANKENOFILES) Makefile
