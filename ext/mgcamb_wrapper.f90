@@ -170,8 +170,86 @@ contains
         !    return nb
         !end function nextbool
 
+        !> MGCAMB MOD START
+         !###### Part 1. Choose the Modified Growth flag
+         !
+         !# MG_flag = 0 :  default GR
+         !# MG_flag = 1 :  pure MG models
+         !# MG_flag = 2 :  alternative MG models
+         !# MG_flag = 3 :  QSA models
+        MG_flag=ints(ii); ii=ii+1
+        !###### Part 2.1 - Pure MG models
+        !# pure_MG_flag = 1 : mu, gamma parametrization
+        !# pure_MG_flag = 2 : mu, sigma parametrization
+        !# pure_MG_flag = 3 : Q, R  parametrization
+        pure_MG_flag = ints(ii); ii=ii+1
+        !###### Part 2.2 - Alternative MG models
+        !# alt_MG_flag = 1 : Linder Gamma parametrization ( introduced in arXiv:0507263 )
+        alt_MG_flag = ints(ii); ii=ii+1
+         !###### Part 2.3 - QSA models
+         !# QSA_flag = 1 : f(R)
+         !# QSA_flag = 2 : Symmetron
+         !# QSA_flag = 3 : Dilaton
+         !# QSA_flag = 4 : Hu-Sawicki f(R)
+        QSA_flag= ints(ii); ii=ii+1
+         !###### Part 3.1.1. - mu, gamma functions
+         !# mugamma_par = 1 : BZ parametrization(arXiv:0809.3791 )
+         !# mugamma_par = 2 : Planck parametrization
+        mugamma_par = ints(ii); ii=ii+1
+         !###### Part 3.1.2. - mu, Sigma functions
+         !# musigma_par = 1 : DES parametrization
+        musigma_par = ints(ii); ii=ii+1
+          !###### Part 3.1.3. - Q,R functions
+          !# QR_par = 1 : (Q,R)(arXiv:1002.4197 )
+          !# QR_par = 2 : (Q0,R0,s)(arXiv:1002.4197 )
+        QR_par = ints(ii); ii=ii+1
+        DE_model = ints(ii); ii=ii+1
+        ! Floats, parameters for above parametrizations
+        !# Choose at which time to turn on MG
+        GRtrans = floats(fi); fi=fi+1
+        !#BZ parameters:
+        B1   = floats(fi); fi=fi+1
+        lambda1_2 = floats(fi); fi=fi+1
+        B2 = floats(fi); fi=fi+1
+        lambda2_2 = floats(fi); fi=fi+1
+        ss = floats(fi); fi=fi+1
+        !#Planck parameters
+        E11 = floats(fi); fi=fi+1
+        E22 =  floats(fi); fi=fi+1
+       !###### Part 3.1.2. - mu, Sigma functions
+        !# musigma_par = 1 : DES parametrization
+        mu0 =  floats(fi); fi=fi+1
+        sigma0 =  floats(fi); fi=fi+1
+       !###### Part 3.1.3. - Q,R functions
+        !#Bean parameters :
+        !#(Q,R)
+        MGQfix= floats(fi); fi=fi+1
+        MGRfix= floats(fi); fi=fi+1       
+        !#(Q0,R0,s)
+        Qnot=floats(fi); fi=fi+1
+        Rnot=floats(fi); fi=fi+1
+        sss=floats(fi); fi=fi+1
+        !##### Part 3.2.1 - Linder Gamma
+        ! Linder's gamma :
+        Linder_gamma =floats(fi); fi=fi+1
+        !##### Part 3.3.1 - QSA f(R) model
+        !B0 =floats(fi); fi=fi+1   !! not declared in mgcamb.f90
+        !##### Part 3.3.2 - QSA Symmetron model
+        beta_star = floats(fi); fi=fi+1
+        a_star = floats(fi); fi=fi+1
+        xi_star = floats(fi); fi=fi+1
+        !##### Part 3.3.3 - QSA Dilaton model
+        beta0 = floats(fi); fi=fi+1
+        xi0 = floats(fi); fi=fi+1
+        DilS = floats(fi); fi=fi+1
+        DilR = floats(fi); fi=fi+1
+        !!A2 = floats(fi); fi=fi+1!! not declared in mgcamb.f90
+        !##### Part 3.3.4 - QSA Hu-Sawicki f(R)
+        F_R0 = floats(fi); fi=fi+1 
+        FRn = floats(fi); fi=fi+1
 
 
+        !### Standard CAMB parameters
         P%omegac  = floats(fi); fi=fi+1
         P%omegab  = floats(fi); fi=fi+1
         P%H0      = floats(fi); fi=fi+1
@@ -186,21 +264,13 @@ contains
         P%TCMB    = floats(fi); fi=fi+1
         P%YHe     = floats(fi); fi=fi+1
 
-
-        !> MGCAMB MOD START
-         MG_flag=3
-         QSA_flag=4
-         F_R0 = 0.0001d0
-         FRn = 1.d0
-
-
+        !## Fill mgcamb_par_cache      
          mgcamb_par_cache%omegab = P%omegab
          mgcamb_par_cache%omegac = P%omegac
          mgcamb_par_cache%omegav = P%omegav
          mgcamb_par_cache%h0     = P%H0
          mgcamb_par_cache%h0_Mpc = P%H0 * (1.d3/c)
          ! mgcamb_par_cache%output_root = outroot
-        !< MGCAMB MOD END
  
      !> MGCAMB MOD START: reading models and params
          call MGCAMB_read_model_params( mgcamb_par_cache )
