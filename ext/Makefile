@@ -77,7 +77,7 @@ else
   MGCAMB = mgcamb
   OFILES += mgcamb_wrapper.o 
   MGCAMBOFILES = $(MGCAMB)/Release/*.o
-  DFLAGS += -DMGCAMB
+  DFLAGS += -DCAMB
 endif
 
 

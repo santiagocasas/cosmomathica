@@ -132,7 +132,7 @@ contains
         Type(CAMBparams) P
         Type(MatterPowerData) PK_data
         Type (CAMBdata)  :: OutData
-        Type (MGCAMB_parameter_cache) :: mgcamb_par_cache
+        !Type (MGCAMB_parameter_cache) :: mgcamb_par_cache
         ! We have two arrays containing all the parameters: one full of doubles,
         ! one full of ints. We need to fill the structure P with it. See
         ! camb/inidriver.f90 for how it works. We avoid passing structures
@@ -150,6 +150,9 @@ contains
 
 
         
+     !> MGCAMB MOD START: reading default models and params
+           call MGCAMB_read_model_params( mgcamb_par_cache )
+     !< MGCAMB MOD END
 
 
         !### Standard CAMB parameters
@@ -261,9 +264,6 @@ contains
           !##DE_model = 2 : (w0,wa)CDM          
           !##DE_model = 3 : user defined                
         DE_model = ints(ii); ii=ii+1
-     !> MGCAMB MOD START: reading models and params
-      !     call MGCAMB_read_model_params( mgcamb_par_cache )
-     !< MGCAMB MOD END
 
         !! ### Neutrino Parameters!!
         P%Num_Nu_massless     = floats(fi); fi=fi+1
