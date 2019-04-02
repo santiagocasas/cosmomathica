@@ -75,7 +75,7 @@ case ${answer:0:1} in
     ;;
 esac
 
-read -p "Download and clone MGCAMB git repository (y/n)? " answer
+read -p "Download and clone forked MGCAMB git repository (y/n)? " answer
 case ${answer:0:1} in
     y|Y )
 	echo "removing mgcamb/ folder if existent"
@@ -83,7 +83,7 @@ case ${answer:0:1} in
 		rm -rv $mgcambdir
 	fi
         echo "Cloning MGCAMB git repo"
-	git clone https://github.com/sfu-cosmo/MGCAMB.git
+	git clone https://github.com/santiagocasas/MGCAMB.git
 	sleep 2s
 	echo "Renaming MGCAMB to $mgcambdir"
 	mv MGCAMB/ "$mgcambdir/"

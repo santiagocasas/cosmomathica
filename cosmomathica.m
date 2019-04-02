@@ -103,7 +103,8 @@ NuMassFractions::usage="An option for CAMB";
 ScalarInitialCondition::usage="An option for CAMB";
 NonLinear::usage="An option for CAMB";
 HalofitVersion::usage="An option for CAMB. Integer number that chooses the Halofit version used in the non-linear matter power spectrum.
-1: Original, 2: Bird, 3: Peacock, 4: Takahashi, 5: Mead, 6: Halo model, 7: Casarini";
+1: Original, 2: Bird, 3: Peacock, 4: Takahashi, 5: Mead, 6: Halo model, 7: Casarini,
+8: Mead2015, 9: Winther-f(R)";
 WantCMB::usage="An option for CAMB";
 WantTransfer::usage="An option for CAMB";
 WantCls::usage="An option for CAMB";
@@ -240,7 +241,7 @@ limits={{ReionizationFraction,0,1.5},
   {h,"h",.2,1.},
   {Tcmb,2.7,2.8},
   {YHe,.2,.8},
-  {HalofitVersion, 1,7},
+  {HalofitVersion, 1,9},
   {MasslessNeutrinos,0,3.1},
 (*MassiveNeutrinos?*)
 {OmegaB,"\!\(\*SubscriptBox[\(\[CapitalOmega]\), \(B\)]\)",.001/h^2,1./h^2},
