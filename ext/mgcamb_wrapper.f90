@@ -128,6 +128,7 @@ contains
         double precision :: omegak
         integer error, fi, ii, eigenstates, fitemp, i, float_offset, int_offset
         integer testkper
+        integer debugAll
 
         Type(CAMBparams) P
         Type(MatterPowerData) PK_data
@@ -148,10 +149,10 @@ contains
         fi = 1
         ii = 1
 
-
+        debugAll=1  ! if debugAll==1, then print All variables to a file to test
         
      !> MGCAMB MOD START: reading default models and params
-           call MGCAMB_read_model_params( mgcamb_par_cache )
+           !call MGCAMB_read_model_params( mgcamb_par_cache )
      !< MGCAMB MOD END
 
 
@@ -349,8 +350,6 @@ contains
         CP%DerivedParameters = .true.
         !TODO DoTensorNeutrinos? ThreadNum?
 
-            write(42,*) "Wrong number of parameters: ", fi-1,ii-1
-            write(42,*) "Expected: ", floats_len, ints_len
         
        if (ii-1 /= ints_len .or. fi-1 /= floats_len) then
             write(42,*) "Wrong number of parameters: ", fi-1,ii-1
@@ -378,16 +377,63 @@ contains
             write (*,*) 'Error result '//trim(global_error_message)
             stop
         endif
-        open(23, file='./testprints.txt', status='REPLACE', ACTION="READWRITE")
+        
+        if (debugAll==1) then
+            open(23, file='./testprints.txt', status='REPLACE', ACTION="READWRITE")
+            
+            write(23,*)  'File containing test prints'
+            write(23,*)  'num_q_trans=',MT%num_q_trans
+            write(23,*)  'kmax=',CP%Transfer%kmax
+            write(23,*)  'passed P : kmax=',P%Transfer%kmax
+            write(23,*)  'passed P : k_per_logint=',P%Transfer%k_per_logint
+            write(23,*)  'halofit_version=', halofit_version
+            write(23,*)  'P%NonLinear=', P%NonLinear
+                         
+         write(23,*) 'mgcamb_par_cache%omegab: ',mgcamb_par_cache%omegab 
+        write(23,*)  'mgcamb_par_cache%omegac: ',mgcamb_par_cache%omegac 
+        write(23,*)  'mgcamb_par_cache%omegav: ',mgcamb_par_cache%omegav 
+        write(23,*)  'mgcamb_par_cache%h0    : ',mgcamb_par_cache%h0     
+        write(23,*)  'mgcamb_par_cache%h0_Mpc: ',mgcamb_par_cache%h0_Mpc 
+ 
 
-        write(23,*)  'File containing test prints'
-        write(23,*)  'num_q_trans=',MT%num_q_trans
-        write(23,*)  'kmax=',CP%Transfer%kmax
-        write(23,*)  'passed P : kmax=',P%Transfer%kmax
-        write(23,*)  'CP:  k_per_logint=',CP%Transfer%k_per_logint
-        write(23,*)  'passed P : k_per_logint=',P%Transfer%k_per_logint
-        write(23,*)  'really passed testkper: k_per_logint=',testkper
-        close(23)
+
+        !###### Floats, parameters for above parametrizations
+        !# Choose at which time to turn on MG
+        write(23,*)  'GRtrans     : ', GRtrans 
+        write(23,*)  'B1          : ', B1   
+        write(23,*)  'lambda1_2   : ', lambda1_2 
+        write(23,*)  'B2          : ', B2 
+        write(23,*)  'lambda2_2   : ', lambda2_2 
+        write(23,*)  'ss          : ', ss 
+        write(23,*)  'E11         : ', E11 
+        write(23,*)  'E22         : ', E22
+        write(23,*)  'mu0         : ', mu0
+        write(23,*)  'sigma0      : ', sigma0
+        write(23,*)  'MGQfix      : ', MGQfix
+        write(23,*)  'MGRfix      : ', MGRfix       
+        write(23,*)  'Qnot        : ', Qnot
+        write(23,*)  'Rnot        : ', Rnot
+        write(23,*)  'sss         : ', sss
+        write(23,*)  'Linder_gamma: ', Linder_gamma 
+        write(23,*)  'beta_star   : ', beta_star 
+        write(23,*)  'a_star      : ', a_star 
+        write(23,*)  'xi_star     : ', xi_star 
+        write(23,*)  'beta0       : ', beta0 
+        write(23,*)  'xi0         : ', xi0 
+        write(23,*)  'DilS        : ', DilS 
+        write(23,*)  'DilR        : ', DilR 
+        write(23,*)  'F_R0        : ', F_R0  
+        write(23,*)  'FRn         : ', FRn 
+        write(23,*)  'MG_flag     : ', MG_flag 
+        write(23,*)  'pure_MG_flag: ', pure_MG_flag 
+        write(23,*)  'alt_MG_flag : ', alt_MG_flag 
+        write(23,*)  'QSA_flag    : ', QSA_flag
+        write(23,*)  'mugamma_par : ', mugamma_par 
+        write(23,*)  'musigma_par : ', musigma_par 
+        write(23,*)  'QR_par      : ', QR_par 
+        write(23,*)  'DE_model    : ', DE_model    
+            close(23)
+        endif
 
         ! the global variables MT, Cl_scalar, Cl_vector, Cl_tensor now contain
         ! meaningful data
