@@ -141,7 +141,7 @@ contains
         ! arrays.
 
 
-        ! call CAMB_SetDefParams(P)
+        !call CAMB_SetDefParams(P)
         ! Compare the following to the function CAMB_SetDefParams.
         ! Obviously the order of the following matters a lot - don't change it
         ! unless you really know what you're doing.
@@ -151,9 +151,6 @@ contains
 
         debugAll=1  ! if debugAll==1, then print All variables to a file to test
         
-     !> MGCAMB MOD START: reading default models and params
-           !call MGCAMB_read_model_params( mgcamb_par_cache )
-     !< MGCAMB MOD END
 
 
         !### Standard CAMB parameters
@@ -180,6 +177,9 @@ contains
          ! mgcamb_par_cache%output_root = outroot
  
 
+     !> MGCAMB MOD START: reading default models and params
+           call MGCAMB_read_model_params( mgcamb_par_cache )
+     !< MGCAMB MOD END
 
         !###### Floats, parameters for above parametrizations
         !# Choose at which time to turn on MG
