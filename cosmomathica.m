@@ -290,7 +290,7 @@ ints=Flatten@{intsMG, OptionValue[MassiveNeutrinos],Length@OptionValue[NuMassFra
 
 If[OptionValue[debugIntFloats]==True,
   Print["list of ints and floats passed to camb_wrapper: "];
-  Print[ints,floats];
+  Print[N@(ints),N@(floats)];
 ];
 SetDirectory[$location<>"ext/mgcamb"];
 link=Install[$location<>"ext/math_link"];
