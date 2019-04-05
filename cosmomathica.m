@@ -320,11 +320,13 @@ CAMB["kD"]->resultfloat[[1,7]],
 CAMB["100thetaD"]->resultfloat[[1,8]],
 CAMB["zEQ"]->resultfloat[[1,9]],
 CAMB["100thetaEQ"]->resultfloat[[1,10]],
-CAMB["sigma8"]->resultfloat[[-1]],
+CAMB["sigma8(z)"]->Flatten[resultfloat[[-2]]],
+CAMB["f(z)"]->Flatten[resultfloat[[-1]]/((resultfloat[[-2]])^2)], (* sigma2_vdelta_8 / sigma_8 ^2 = f(z)*)
+CAMB["D+(z)"]->Flatten[resultfloat[[-2]]]/(Flatten[resultfloat[[-2]]][[-1]]),
 If[OptionValue[WantScalars],CAMB["CLscalar"]->Transpose@First@Transpose[resultfloat[[j++]]]],
 If[OptionValue[WantVectors],CAMB["CLvector"]->Transpose@First@Transpose[resultfloat[[j++]]]],
 If[OptionValue[WantTensors],CAMB["CLtensor"]->Transpose@First@Transpose[resultfloat[[j++]]]],
-If[OptionValue[WantTransfer],CAMB["redshifts"]->(redshifts=resultfloat[[-2]])],
+If[OptionValue[WantTransfer],CAMB["redshifts"]->(redshifts=resultfloat[[-3]])],
 If[OptionValue[WantTransfer],Sequence@@Flatten@{
 CAMB["PSlinear"]->Table[Exp@Transpose@{resultfloat[[j]],resultfloat[[j+1,All,k]]},{k,Length@redshifts}],
 CAMB["PSnonlinear"]->Table[Exp@Transpose@{resultfloat[[j]],resultfloat[[j+2,All,k]]},{k,Length@redshifts}

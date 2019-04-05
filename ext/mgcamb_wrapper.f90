@@ -129,7 +129,6 @@ contains
         integer error, fi, ii, eigenstates, fitemp, i, float_offset, int_offset
         integer testkper
         integer debugAll
-
         Type(CAMBparams) P
         Type(MatterPowerData) PK_data
         Type (CAMBdata)  :: OutData
@@ -485,6 +484,8 @@ contains
             call add1darray(PK_data%redshifts, floats_out, float_offset, ints_out, int_offset) !add1d(PK_data%redshifts)
             call Transfer_Get_sigma8(MT, 8d0)
             call add2darray(MT%sigma_8, floats_out, float_offset, ints_out, int_offset) !add2d(MT%sigma_8)
+           ! sigma2_vdelta_8/sigma_8 = fsigma8(z)   
+            call add2darray(MT%sigma2_vdelta_8, floats_out, float_offset, ints_out, int_offset)
         endif
 
 
