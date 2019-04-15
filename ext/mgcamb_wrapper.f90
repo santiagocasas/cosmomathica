@@ -117,6 +117,7 @@ contains
         use LambdaGeneral
         use NonLinear 
         use Transfer
+        use ModelParams
         implicit none
 
         integer(c_int), intent(in)    :: floats_len, ints_len
@@ -129,6 +130,8 @@ contains
         integer error, fi, ii, eigenstates, fitemp, i, float_offset, int_offset
         integer testkper
         integer debugAll
+        integer numz
+        real(dl), allocatable :: H(:)
         Type(CAMBparams) P
         Type(MatterPowerData) PK_data
         Type (CAMBdata)  :: OutData
@@ -340,6 +343,7 @@ contains
         P%Transfer%k_per_logint  = testkper
         !P%Transfer%k_per_logint  = ints(ii); ii=ii+1
         P%Transfer%PK_num_redshifts = ints(ii); ii=ii+1
+        numz = P%Transfer%PK_num_redshifts
         ! This is an array with length num_redshifts
         P%Transfer%PK_redshifts     = floats(fi:fi+ints(ii-1)); fi=fi+ints(ii-1) 
 
@@ -482,10 +486,14 @@ contains
             end do
             call add3darray(dble(MT%TransferData), floats_out, float_offset, ints_out, int_offset) !add3d(dble(MT%TransferData))
             call add1darray(PK_data%redshifts, floats_out, float_offset, ints_out, int_offset) !add1d(PK_data%redshifts)
+            allocate(H(numz))
+            call HofzArr(H, PK_data%redshifts, numz)
+            call add1darray(H , floats_out, float_offset, ints_out, int_offset)
             call Transfer_Get_sigma8(MT, 8d0)
             call add2darray(MT%sigma_8, floats_out, float_offset, ints_out, int_offset) !add2d(MT%sigma_8)
            ! sigma2_vdelta_8/sigma_8 = fsigma8(z)   
             call add2darray(MT%sigma2_vdelta_8, floats_out, float_offset, ints_out, int_offset)
+            deallocate(H)
         endif
 
 
