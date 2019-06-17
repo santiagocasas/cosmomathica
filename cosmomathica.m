@@ -148,6 +148,8 @@ debugIntFloats::usage="An option for CAMB";
 
 
 
+CAMB::WrongOptionsFloat="List of floats passed to CAMB contains non-numeric values. Check arguments and passed options."
+CAMB::WrongOptionsInteger="List of integers passed to CAMB contains non-integer values. Check arguments and passed options."
 CAMB::Eigenstates="NuMassEigenstates and NuMassFractions must have the same length  (can be zero).";
 CAMB::InvalidOption="Option `1` is '`2`', but must be one of the following: `3`";
 CAMB::Lists="The following options need to be non-empty lists of the same length: `1`";
@@ -287,6 +289,15 @@ ints=Flatten@{intsMG, OptionValue[MassiveNeutrinos],Length@OptionValue[NuMassFra
   OptionValue[#]&/@{OutputNormalization,MaxEll,MaxEllTensor,TransferKperLogInt},Length@OptionValue@TransferRedshifts,
   bool2int/@OptionValue@{AccuratePolarization,AccurateReionization,AccurateBB,DoLensing,OnlyTransfers,DerivedParameters},
   Position[massivenu,OptionValue[MassiveNuMethod]][[1,1]]-1};
+
+If[AllTrue[floats, NumericQ]==False,
+  Message[CAMB::WrongOptionsFloat];
+  Return[$Failed];Abort[]
+];
+If[AllTrue[ints, IntegerQ]==False,
+ Message[CAMB::WrongOptionsInteger];
+  Return[$Failed];Abort[]
+];
 
 If[OptionValue[debugIntFloats]==True,
   Print["list of ints and floats passed to camb_wrapper: "];
