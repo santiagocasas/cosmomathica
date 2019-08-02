@@ -290,19 +290,20 @@ ints=Flatten@{intsMG, OptionValue[MassiveNeutrinos],Length@OptionValue[NuMassFra
   bool2int/@OptionValue@{AccuratePolarization,AccurateReionization,AccurateBB,DoLensing,OnlyTransfers,DerivedParameters},
   Position[massivenu,OptionValue[MassiveNuMethod]][[1,1]]-1};
 
-If[AllTrue[floats, NumericQ]==False,
-  Message[CAMB::WrongOptionsFloat];
-  Return[$Failed];Abort[]
-];
-If[AllTrue[ints, IntegerQ]==False,
- Message[CAMB::WrongOptionsInteger];
-  Return[$Failed];Abort[]
-];
-
 If[OptionValue[debugIntFloats]==True,
   Print["list of ints and floats passed to camb_wrapper: "];
   Print[N@(ints),N@(floats)];
 ];
+
+If[AllTrue[floats, NumericQ]==False,
+  Message[CAMB::WrongOptionsFloat];
+  Abort[]
+];
+If[AllTrue[ints, IntegerQ]==False,
+ Message[CAMB::WrongOptionsInteger];
+  Abort[]
+];
+
 SetDirectory[$location<>"ext/mgcamb"];
 link=Install[$location<>"ext/math_link"];
 result=Global`CAMBrun[N/@floats,ints];
