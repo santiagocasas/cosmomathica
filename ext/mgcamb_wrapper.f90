@@ -165,6 +165,7 @@ contains
        
         !use_tabulated_w = .false. 
         w0DE     = floats(fi); fi=fi+1
+        w_lam     = w0DE
         waDE    = floats(fi); fi=fi+1
 
         P%TCMB    = floats(fi); fi=fi+1
