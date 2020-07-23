@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       157,          7]
-NotebookDataLength[    726190,      13388]
+NotebookDataLength[    726184,      13388]
 NotebookOptionsPosition[    710001,      13120]
-NotebookOutlinePosition[    711963,      13167]
-CellTagsIndexPosition[    711599,      13156]
+NotebookOutlinePosition[    711957,      13167]
+CellTagsIndexPosition[    711593,      13156]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -13118,8 +13118,8 @@ FRg1sqlIQdzo1k13Ap39zV6vXkJFbUefn9DxIND/bZPn0g==
 }, Open  ]]
 }, Open  ]]
 },
-WindowSize->{1920, 1051},
-WindowMargins->{{-1920, Automatic}, {-26, Automatic}},
+WindowSize->{1920, 498},
+WindowMargins->{{0, Automatic}, {Automatic, 29}},
 PrivateNotebookOptions->{"VersionedStylesheet"->{"Default.nb"[8.] -> False}},
 ShowSelection->True,
 FrontEndVersion->"11.2 for Linux x86 (64-bit) (September 10, 2017)",
@@ -13155,13 +13155,13 @@ CellTagsIndex->{
 *)
 (*CellTagsIndex
 CellTagsIndex->{
- {"Info33748270661-2736362", 710410, 13132},
- {"Info83748270662-2736362", 710577, 13135},
- {"Info103748270662-2736362", 710747, 13138},
- {"Info183748270663-2736362", 710920, 13141},
- {"Info243748270663-2736362", 711092, 13144},
- {"Info303748270663-2736362", 711264, 13147},
- {"Info323748270663-2736362", 711436, 13150}
+ {"Info33748270661-2736362", 710404, 13132},
+ {"Info83748270662-2736362", 710571, 13135},
+ {"Info103748270662-2736362", 710741, 13138},
+ {"Info183748270663-2736362", 710914, 13141},
+ {"Info243748270663-2736362", 711086, 13144},
+ {"Info303748270663-2736362", 711258, 13147},
+ {"Info323748270663-2736362", 711430, 13150}
  }
 *)
 (*NotebookFileOutline
